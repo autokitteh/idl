@@ -14,3 +14,5 @@ find /gen/proto/src -mindepth 1 -type d | while read -r indir; do
     --openapi_out="/gen/openapi/$(basename ${indir})" \
     "${indir}"/*
 done
+
+cp /scripts/openapi.go_ /gen/openapi/openapi.go
