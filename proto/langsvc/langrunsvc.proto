@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.langsvc;
 
-option go_package = "go.autokitteh.dev/idl/langsvc";
+option go_package = "go.autokitteh.dev/idl/go/langsvc";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -15,26 +15,26 @@ import "values/values.proto";
 
 
 message RunRequest {
-  string                    scope    = 1 {{ Scope }};
-  string                    id       = 2 {{ RunID }};
+  string                    scope    = 1 ;
+  string                    id       = 2 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   program.Module            module   = 3 [(validate.rules).message.required = true];
-  map<string, values.Value> predecls = 4 {{ VarMap }};
+  map<string, values.Value> predecls = 4 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message CallFunctionRequest {
-  string                    run_id = 1 {{ RunID }};
+  string                    run_id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   values.Value              f      = 2 [(validate.rules).message.required = true];
   repeated values.Value     args   = 3;
-  map<string, values.Value> kwargs = 4 {{ VarMap }};
+  map<string, values.Value> kwargs = 4 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message RunGetRequest {
-  string run_id      = 1 {{ RunID }};
+  string run_id      = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   bool   get_summary = 2;
 }
 
 message RunDiscardRequest {
-  string id = 1 {{ RunID }};
+  string id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
 }
 
 message RunDiscardResponse {}
@@ -44,14 +44,14 @@ message RunGetResponse {
 }
 
 message RunUpdate {
-  string                    run_id = 1 {{ RunID }};
+  string                    run_id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   google.protobuf.Timestamp t      = 2 [(validate.rules).timestamp.required = true];
   lang.RunState             prev   = 3; // will be nil on first update.
   lang.RunState             next   = 4 [(validate.rules).message.required = true];
 }
 
 message RunCallReturnRequest {
-  string                run_id = 1 {{ RunID }};
+  string                run_id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   program.Error         error  = 2;
   values.Value          retval = 3;
 }
@@ -59,16 +59,16 @@ message RunCallReturnRequest {
 message RunCallReturnResponse {}
 
 message RunLoadReturnRequest {
-  string                    run_id      = 1 {{ RunID }};
+  string                    run_id      = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   program.Error             error       = 2;
   lang.RunSummary           run_summary = 3;
-  map<string, values.Value> values      = 4 {{ VarMap }};
+  map<string, values.Value> values      = 4 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message RunLoadReturnResponse {}
 
 message RunCancelRequest {
-  string run_id = 1 {{ RunID }};
+  string run_id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
   string reason = 2;
 }
 
@@ -77,7 +77,7 @@ message RunCancelResponse {}
 message ListRunsRequest {}
 
 message ListRun {
-  string id = 1 {{ RunID }};
+  string id = 1 [(validate.rules).string.pattern = "^R[0-9a-f.]+$"];
 }
 
 message ListRuns {

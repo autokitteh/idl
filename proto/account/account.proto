@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.account;
 
-option go_package = "go.autokitteh.dev/idl/account";
+option go_package = "go.autokitteh.dev/idl/go/account";
 
 import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
@@ -17,7 +17,7 @@ message AccountSettings {
 }
 
 message Account {
-  string          name = 1 {{ AccountName }};
+  string          name = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+$"];
   AccountSettings settings = 2;
 
   google.protobuf.Timestamp created_at = 100;

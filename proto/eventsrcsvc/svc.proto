@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.eventsrcsvc;
 
-option go_package = "go.autokitteh.dev/idl/eventsrcsvc";
+option go_package = "go.autokitteh.dev/idl/go/eventsrcsvc";
 
 import "validate/validate.proto";
 
@@ -10,21 +10,21 @@ import "eventsrc/src.proto";
 
 
 message AddEventSourceRequest {
-  string                       id       = 1 {{ EventSourceID }};
+  string                       id       = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
   eventsrc.EventSourceSettings settings = 2;
 }
 
 message AddEventSourceResponse {}
 
 message UpdateEventSourceRequest {
-  string                       id       = 1 {{ EventSourceID }};
+  string                       id       = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
   eventsrc.EventSourceSettings settings = 2 [(validate.rules).message.required = true];
 }
 
 message UpdateEventSourceResponse {}
 
 message GetEventSourceRequest {
-  string id = 1 {{ EventSourceID }};
+  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message GetEventSourceResponse {
@@ -32,17 +32,17 @@ message GetEventSourceResponse {
 }
 
 message ListEventSourcesRequest {
-  string account_name = 1 {{ MaybeAccountName }};
+  string account_name = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+$" }];
 }
 
 message ListEventSourcesResponse {
-  repeated string ids = 1 {{ RepeatedEventSourceID }};
+  repeated string ids = 1 [(validate.rules).repeated.items.string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message GetEventSourceProjectBindingsRequest {
-  string id                 = 1 {{ MaybeEventSourceID }}; // optional filter.
-  string project_id         = 3 {{ MaybeProjectID }}; // optional filter
-  string name               = 4 {{ MaybeVarName }}; // optional filter
+  string id                 = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$" }]; // optional filter.
+  string project_id         = 3 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$" }]; // optional filter
+  string name               = 4 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$" }]; // optional filter
   string association_token  = 5; // optional filter
   bool   include_unapproved = 6; // if true, include also unapproved.
 }
@@ -52,9 +52,9 @@ message GetEventSourceProjectBindingsResponse {
 }
 
 message AddEventSourceProjectBindingRequest {
-  string                                     src_id            = 1 {{ EventSourceID }};
-  string                                     project_id        = 3 {{ ProjectID }};
-  string                                     name              = 4 {{ MaybeVarName }};
+  string                                     src_id            = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
+  string                                     project_id        = 3 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
+  string                                     name              = 4 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$" }];
   string                                     association_token = 5;
   eventsrc.EventSourceProjectBindingSettings settings          = 6;
   string                                     source_config     = 7;
@@ -64,9 +64,9 @@ message AddEventSourceProjectBindingRequest {
 message AddEventSourceProjectBindingResponse {}
 
 message UpdateEventSourceProjectBindingRequest {
-  string                                     src_id     = 1 {{ EventSourceID }};
-  string                                     project_id = 2 {{ ProjectID }};
-  string                                     name       = 3 {{ VarName }};
+  string                                     src_id     = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
+  string                                     project_id = 2 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
+  string                                     name       = 3 [(validate.rules).string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   bool                                       approved   = 4;
   eventsrc.EventSourceProjectBindingSettings settings   = 5;
 }

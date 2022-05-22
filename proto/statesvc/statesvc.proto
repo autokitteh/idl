@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.statesvc;
 
-option go_package = "go.autokitteh.dev/idl/statesvc";
+option go_package = "go.autokitteh.dev/idl/go/statesvc";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -12,8 +12,8 @@ import "values/values.proto";
 
 
 message SetRequest {
-  string       project_id = 1 {{ ProjectID }};
-  string       name       = 2 {{ VarName }};
+  string       project_id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
+  string       name       = 2 [(validate.rules).string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   values.Value value      = 3; // omit to delete.
 }
 
@@ -24,8 +24,8 @@ message ValueMetadata {
 }
 
 message GetRequest {
-  string        project_id = 1 {{ ProjectID }};
-  string        name       = 2 {{ VarName }};
+  string        project_id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
+  string        name       = 2 [(validate.rules).string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   ValueMetadata metadata   = 3;
 }
 
@@ -35,7 +35,7 @@ message GetResponse {
 }
 
 message ListRequest {
-  string project_id = 1 {{ ProjectID }};
+  string project_id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
 }
 
 message ListResponse {

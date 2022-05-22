@@ -2,4 +2,4 @@ all: gen
 
 .PHONY: gen
 gen:
-	./scripts/gen.sh
+	./_scripts/gen.sh

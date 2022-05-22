@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.values;
 
-option go_package = "go.autokitteh.dev/idl/values";
+option go_package = "go.autokitteh.dev/idl/go/values";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
@@ -61,24 +61,24 @@ message Duration {
 }
 
 message Call {
-  string id              = 1 {{ CallID }};
-  string name            = 2 {{ CallName }};
+  string id              = 1 ;
+  string name            = 2 ;
   string issuer          = 3; // plugin id for plugins
   map<string,bool> flags = 4;
 }
 
 message Struct {
   Value              ctor   = 1 [(validate.rules).message.required = true];
-  map<string, Value> fields = 2 {{ VarMap }};
+  map<string, Value> fields = 2 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message Module {
-  string             name    = 1 {{ ModuleName }};
-  map<string, Value> members = 2 {{ VarMap }};
+  string             name    = 1 [(validate.rules).string.pattern = "^.+"];
+  map<string, Value> members = 2 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message Symbol {
-  string name = 1 {{ SymbolName }};
+  string name = 1 ;
 }
 
 message FunctionSignature {
@@ -92,8 +92,8 @@ message FunctionSignature {
 }
 
 message Function {
-  string            func_id    = 1 {{ FunctionID }};
-  string            lang       = 2 {{ Lang }};
+  string            func_id    = 1 [(validate.rules).string.pattern = "^F[0-9a-f.]+$"];
+  string            lang       = 2 [(validate.rules).string.pattern = "^[0-9a-zA-Z_-]+$"];
   string            scope      = 3;
   FunctionSignature sig        = 4; // optional - not necessary.
 }

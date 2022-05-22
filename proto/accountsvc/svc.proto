@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.accountsvc;
 
-option go_package = "go.autokitteh.dev/idl/accountsvc";
+option go_package = "go.autokitteh.dev/idl/go/accountsvc";
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
@@ -11,7 +11,7 @@ import "account/account.proto";
 
 
 message CreateAccountRequest {
-  string                  name     = 1 {{ AccountName }};
+  string                  name     = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+$"];
   account.AccountSettings settings = 2 [(validate.rules).message.required = true];
 }
 
@@ -19,14 +19,14 @@ message CreateAccountResponse {
 }
 
 message UpdateAccountRequest {
-  string                  name     = 1 {{ AccountName }};
+  string                  name     = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+$"];
   account.AccountSettings settings = 2 [(validate.rules).message.required = true];
 }
 
 message UpdateAccountResponse {}
 
 message GetAccountRequest {
-  string name = 1 {{ AccountName }};
+  string name = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message GetAccountResponse {
@@ -34,7 +34,7 @@ message GetAccountResponse {
 }
 
 message GetAccountsRequest {
-  repeated string names = 1 {{ RepeatedAccountName }};
+  repeated string names = 1 [(validate.rules).repeated.items.string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message GetAccountsResponse {

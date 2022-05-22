@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.program;
 
-option go_package = "go.autokitteh.dev/idl/program";
+option go_package = "go.autokitteh.dev/idl/go/program";
 
 import "validate/validate.proto";
 
@@ -20,8 +20,8 @@ message Location {
 }
 
 message Module {
-  string lang              = 1 {{ Lang }}; // starlark, lua, some-kind-of-yaml, etc...
-  repeated string predecls = 2 {{ RepeatedPredecl }};
+  string lang              = 1 [(validate.rules).string.pattern = "^[0-9a-zA-Z_-]+$"]; // starlark, lua, some-kind-of-yaml, etc...
+  repeated string predecls = 2 [(validate.rules).repeated.items.string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   string compiler_version  = 3;
   Path   source_path       = 4 [(validate.rules).message.required = true ];
   bytes  compiled_code     = 5; // if empty, fetch from path.

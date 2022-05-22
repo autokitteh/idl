@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.pluginsprovidersvc;
 
-option go_package = "go.autokitteh.dev/idl/pluginsprovidersvc";
+option go_package = "go.autokitteh.dev/idl/go/pluginsprovidersvc";
 
 import "validate/validate.proto";
 
@@ -14,11 +14,11 @@ import "program/error.proto";
 message ListRequest {}
 
 message ListResponse {
-  repeated string ids = 1 {{ RepeatedPluginID }};
+  repeated string ids = 1 [(validate.rules).repeated.items.string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message DescribeRequest {
-  string id = 1 {{ PluginID }};
+  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
 }
 
 message DescribeResponse {
@@ -26,19 +26,19 @@ message DescribeResponse {
 }
 
 message GetValuesRequest {
-  string          id    = 1 {{ PluginID }};
-  repeated string names = 2 {{ RepeatedVarName }}; // if empty, returns all.
+  string          id    = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
+  repeated string names = 2 [(validate.rules).repeated.items.string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"]; // if empty, returns all.
 }
 
 message GetValuesResponse {
-  map<string, values.Value> values = 1 {{ VarMap }};
+  map<string, values.Value> values = 1 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message CallValueRequest {
-  string                    id     = 1 {{ PluginID }};
+  string                    id     = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
   values.Value              value  = 2 [(validate.rules).message.required = true];
   repeated values.Value     args   = 3 [(validate.rules).repeated.items.message.required = true];
-  map<string, values.Value> kwargs = 4 {{ VarMap }};
+  map<string, values.Value> kwargs = 4 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
 }
 
 message CallValueResponse {
