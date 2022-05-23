@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package autokitteh.litterbox;
+
+option go_package = "go.autokitteh.dev/idl/go/litterboxsvc";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+import "lang/run.proto";
+import "values/values.proto";
+
+
+message SyntheticEvent {
+  string                    src_id      = 1 {{ EventSourceID }};
+  string                    type        = 2;
+  map<string, values.Value> data        = 3 {{ VarMap }};
+  string                    original_id = 4;
+
+  // for caller use only - not used in event processing.
+  map<string, string>       memo        = 50 [(validate.rules).map.keys.string.min_len = 1];
+}
+
+message RunRequest {
+  string              source  = 1;
+  SyntheticEvent      event   = 2 [(validate.rules).message.required = true];
+}
+
+message RunUpdate {
+  google.protobuf.Timestamp t     = 1 [(validate.rules).timestamp.required = true];
+  lang.RunState             state = 2 [(validate.rules).message.required = true];
+}
+
+service LitterBox {
+  rpc Run(RunRequest) returns (stream RunUpdate) {
+    option (google.api.http) = {
+      post: "/api/v1/litterbox/run",
+      body: "*"
+    };
+  }
+}
