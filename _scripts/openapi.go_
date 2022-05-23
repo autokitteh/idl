@@ -2,5 +2,5 @@ package openapi
 
 import "embed"
 
-//go:embed openapi
+//go:embed *
 var FS embed.FS
