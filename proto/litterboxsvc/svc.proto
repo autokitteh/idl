@@ -12,30 +12,55 @@ import "lang/run.proto";
 import "values/values.proto";
 
 
+message SetupRequest {}
+
+message SetupResponse {
+  string id = 1 [(validate.rules).string.pattern = "^B[0-9a-f]+$"];
+}
+
+message ScoopRequest {
+  string id = 1 [(validate.rules).string.pattern = "^B[0-9a-f]+$"];
+}
+
+message ScoopResponse {}
+
 message SyntheticEvent {
-  string                    src_id      = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
+  string                    src_binding = 1 [(validate.rules).string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   string                    type        = 2;
   map<string, values.Value> data        = 3 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
   string                    original_id = 4;
-
-  // for caller use only - not used in event processing.
-  map<string, string>       memo        = 50 [(validate.rules).map.keys.string.min_len = 1];
 }
 
 message RunRequest {
-  string              source  = 1;
-  SyntheticEvent      event   = 2 [(validate.rules).message.required = true];
+  // If id is empty, run will setup, use and scoop the litterbox by itself.
+  string         id    = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^B[0-9a-f]+$" }];
+  SyntheticEvent event = 2 [(validate.rules).message.required = true];
 }
 
 message RunUpdate {
   google.protobuf.Timestamp t     = 1 [(validate.rules).timestamp.required = true];
-  lang.RunState             state = 2 [(validate.rules).message.required = true];
+  string                    id    = 2 [(validate.rules).string.pattern = "^B[0-9a-f]+$"];
+  lang.RunState             state = 3 [(validate.rules).message.required = true];
 }
 
 service LitterBox {
+  rpc Setup(SetupRequest) returns (SetupResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/litterboxes",
+      body: "*"
+    };
+  }
+
   rpc Run(RunRequest) returns (stream RunUpdate) {
     option (google.api.http) = {
-      post: "/api/v1/litterbox/run",
+      post: "/api/v1/litterboxes/{id}/run",
+      body: "*"
+    };
+  }
+
+  rpc Scoop(ScoopRequest) returns (ScoopResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/litterboxes/{id}/scoop",
       body: "*"
     };
   }

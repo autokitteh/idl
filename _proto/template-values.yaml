@@ -11,12 +11,14 @@ ModuleName:          '[(validate.rules).string.pattern = {{ ModuleNamePattern }}
 PluginID:            '[(validate.rules).string.pattern = {{ PluginIDPattern }}]'
 ProjectID:           '[(validate.rules).string.pattern = {{ ProjectIDPattern }}]'
 RunID:               '[(validate.rules).string.pattern = {{ RunIDPattern }}]'
+LitterBoxID:         '[(validate.rules).string.pattern = {{ LitterBoxIDPattern }}]'
 
 MaybeVarName:         '[(validate.rules).string = {ignore_empty:true, pattern: {{ VarNamePattern }} }]'
 MaybeAccountName:     '[(validate.rules).string = {ignore_empty:true, pattern: {{ NamePattern }} }]'
 MaybeProjectID:       '[(validate.rules).string = {ignore_empty:true, pattern: {{ ProjectIDPattern }} }]'
 MaybeEventSourceName: '[(validate.rules).string = {ignore_empty:true, pattern: {{ NamePattern }} }]'
 MaybeEventSourceID:   '[(validate.rules).string = {ignore_empty:true, pattern: {{ EventSourceIDPattern }} }]'
+MaybeLitterBoxID:     '[(validate.rules).string = {ignore_empty:true, pattern: {{ LitterBoxIDPattern }} }]'
 
 RepeatedAccountName:     '[(validate.rules).repeated.items.string.pattern = {{ NamePattern }}]'
 RepeatedEventID:         '[(validate.rules).repeated.items.string.pattern = {{ EventIDPattern }}]'

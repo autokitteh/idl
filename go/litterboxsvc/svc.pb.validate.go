@@ -33,6 +33,284 @@ var (
 	_ = anypb.Any{}
 )
 
+// Validate checks the field values on SetupRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SetupRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// SetupRequestValidationError is the validation error returned by
+// SetupRequest.Validate if the designated constraints aren't met.
+type SetupRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetupRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetupRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetupRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetupRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetupRequestValidationError) ErrorName() string { return "SetupRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SetupRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetupRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetupRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetupRequestValidationError{}
+
+// Validate checks the field values on SetupResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SetupResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if !_SetupResponse_Id_Pattern.MatchString(m.GetId()) {
+		return SetupResponseValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// SetupResponseValidationError is the validation error returned by
+// SetupResponse.Validate if the designated constraints aren't met.
+type SetupResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetupResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetupResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetupResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetupResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetupResponseValidationError) ErrorName() string { return "SetupResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SetupResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetupResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetupResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetupResponseValidationError{}
+
+var _SetupResponse_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+
+// Validate checks the field values on ScoopRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ScoopRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if !_ScoopRequest_Id_Pattern.MatchString(m.GetId()) {
+		return ScoopRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// ScoopRequestValidationError is the validation error returned by
+// ScoopRequest.Validate if the designated constraints aren't met.
+type ScoopRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ScoopRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ScoopRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ScoopRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ScoopRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ScoopRequestValidationError) ErrorName() string { return "ScoopRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ScoopRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sScoopRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ScoopRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ScoopRequestValidationError{}
+
+var _ScoopRequest_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+
+// Validate checks the field values on ScoopResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ScoopResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ScoopResponseValidationError is the validation error returned by
+// ScoopResponse.Validate if the designated constraints aren't met.
+type ScoopResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ScoopResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ScoopResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ScoopResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ScoopResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ScoopResponseValidationError) ErrorName() string { return "ScoopResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ScoopResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sScoopResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ScoopResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ScoopResponseValidationError{}
+
 // Validate checks the field values on SyntheticEvent with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -41,10 +319,10 @@ func (m *SyntheticEvent) Validate() error {
 		return nil
 	}
 
-	if !_SyntheticEvent_SrcId_Pattern.MatchString(m.GetSrcId()) {
+	if !_SyntheticEvent_SrcBinding_Pattern.MatchString(m.GetSrcBinding()) {
 		return SyntheticEventValidationError{
-			field:  "SrcId",
-			reason: "value does not match regex pattern \"^[a-zA-Z][0-9a-zA-Z_-]+\\\\.[a-zA-Z][0-9a-zA-Z_-]+$\"",
+			field:  "SrcBinding",
+			reason: "value does not match regex pattern \"^[a-zA-Z_][a-zA-Z0-9_]*$\"",
 		}
 	}
 
@@ -80,19 +358,6 @@ func (m *SyntheticEvent) Validate() error {
 	}
 
 	// no validation rules for OriginalId
-
-	for key, val := range m.GetMemo() {
-		_ = val
-
-		if utf8.RuneCountInString(key) < 1 {
-			return SyntheticEventValidationError{
-				field:  fmt.Sprintf("Memo[%v]", key),
-				reason: "value length must be at least 1 runes",
-			}
-		}
-
-		// no validation rules for Memo[key]
-	}
 
 	return nil
 }
@@ -151,7 +416,7 @@ var _ interface {
 	ErrorName() string
 } = SyntheticEventValidationError{}
 
-var _SyntheticEvent_SrcId_Pattern = regexp.MustCompile("^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$")
+var _SyntheticEvent_SrcBinding_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 var _SyntheticEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
@@ -162,7 +427,16 @@ func (m *RunRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Source
+	if m.GetId() != "" {
+
+		if !_RunRequest_Id_Pattern.MatchString(m.GetId()) {
+			return RunRequestValidationError{
+				field:  "Id",
+				reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+			}
+		}
+
+	}
 
 	if m.GetEvent() == nil {
 		return RunRequestValidationError{
@@ -238,6 +512,8 @@ var _ interface {
 	ErrorName() string
 } = RunRequestValidationError{}
 
+var _RunRequest_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+
 // Validate checks the field values on RunUpdate with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *RunUpdate) Validate() error {
@@ -249,6 +525,13 @@ func (m *RunUpdate) Validate() error {
 		return RunUpdateValidationError{
 			field:  "T",
 			reason: "value is required",
+		}
+	}
+
+	if !_RunUpdate_Id_Pattern.MatchString(m.GetId()) {
+		return RunUpdateValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
 		}
 	}
 
@@ -325,3 +608,5 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RunUpdateValidationError{}
+
+var _RunUpdate_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")

@@ -84,6 +84,67 @@ proto.autokitteh.litterbox.LitterBoxPromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.autokitteh.litterbox.SetupRequest,
+ *   !proto.autokitteh.litterbox.SetupResponse>}
+ */
+const methodDescriptor_LitterBox_Setup = new grpc.web.MethodDescriptor(
+  '/autokitteh.litterbox.LitterBox/Setup',
+  grpc.web.MethodType.UNARY,
+  proto.autokitteh.litterbox.SetupRequest,
+  proto.autokitteh.litterbox.SetupResponse,
+  /**
+   * @param {!proto.autokitteh.litterbox.SetupRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.autokitteh.litterbox.SetupResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.autokitteh.litterbox.SetupRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.autokitteh.litterbox.SetupResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.autokitteh.litterbox.SetupResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.autokitteh.litterbox.LitterBoxClient.prototype.setup =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/autokitteh.litterbox.LitterBox/Setup',
+      request,
+      metadata || {},
+      methodDescriptor_LitterBox_Setup,
+      callback);
+};
+
+
+/**
+ * @param {!proto.autokitteh.litterbox.SetupRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.autokitteh.litterbox.SetupResponse>}
+ *     Promise that resolves to the response
+ */
+proto.autokitteh.litterbox.LitterBoxPromiseClient.prototype.setup =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/autokitteh.litterbox.LitterBox/Setup',
+      request,
+      metadata || {},
+      methodDescriptor_LitterBox_Setup);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.autokitteh.litterbox.RunRequest,
  *   !proto.autokitteh.litterbox.RunUpdate>}
  */
@@ -134,6 +195,67 @@ proto.autokitteh.litterbox.LitterBoxPromiseClient.prototype.run =
       request,
       metadata || {},
       methodDescriptor_LitterBox_Run);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.autokitteh.litterbox.ScoopRequest,
+ *   !proto.autokitteh.litterbox.ScoopResponse>}
+ */
+const methodDescriptor_LitterBox_Scoop = new grpc.web.MethodDescriptor(
+  '/autokitteh.litterbox.LitterBox/Scoop',
+  grpc.web.MethodType.UNARY,
+  proto.autokitteh.litterbox.ScoopRequest,
+  proto.autokitteh.litterbox.ScoopResponse,
+  /**
+   * @param {!proto.autokitteh.litterbox.ScoopRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.autokitteh.litterbox.ScoopResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.autokitteh.litterbox.ScoopRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.autokitteh.litterbox.ScoopResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.autokitteh.litterbox.ScoopResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.autokitteh.litterbox.LitterBoxClient.prototype.scoop =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/autokitteh.litterbox.LitterBox/Scoop',
+      request,
+      metadata || {},
+      methodDescriptor_LitterBox_Scoop,
+      callback);
+};
+
+
+/**
+ * @param {!proto.autokitteh.litterbox.ScoopRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.autokitteh.litterbox.ScoopResponse>}
+ *     Promise that resolves to the response
+ */
+proto.autokitteh.litterbox.LitterBoxPromiseClient.prototype.scoop =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/autokitteh.litterbox.LitterBox/Scoop',
+      request,
+      metadata || {},
+      methodDescriptor_LitterBox_Scoop);
 };
 
 

@@ -6,11 +6,42 @@ info:
     title: LitterBox API
     version: 0.0.1
 paths:
-    /api/v1/litterbox/run:
+    /api/v1/litterboxes:
+        post:
+            tags:
+                - LitterBox
+            operationId: LitterBox_Setup
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SetupRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SetupResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/litterboxes/{id}/run:
         post:
             tags:
                 - LitterBox
             operationId: LitterBox_Run
+            parameters:
+                - name: id
+                  in: path
+                  description: If id is empty, run will setup, use and scoop the litterbox by itself.
+                  required: true
+                  schema:
+                    type: string
             requestBody:
                 content:
                     application/json:
@@ -24,6 +55,36 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RunUpdate'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/litterboxes/{id}/scoop:
+        post:
+            tags:
+                - LitterBox
+            operationId: LitterBox_Scoop
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ScoopRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ScoopResponse'
                 default:
                     description: Default error response
                     content:
@@ -273,8 +334,9 @@ components:
         RunRequest:
             type: object
             properties:
-                source:
+                id:
                     type: string
+                    description: If id is empty, run will setup, use and scoop the litterbox by itself.
                 event:
                     $ref: '#/components/schemas/SyntheticEvent'
         RunState:
@@ -327,9 +389,19 @@ components:
                 t:
                     type: string
                     format: date-time
+                id:
+                    type: string
                 state:
                     $ref: '#/components/schemas/RunState'
         RunningRunState:
+            type: object
+            properties: {}
+        ScoopRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+        ScoopResponse:
             type: object
             properties: {}
         Set:
@@ -339,6 +411,14 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Value'
+        SetupRequest:
+            type: object
+            properties: {}
+        SetupResponse:
+            type: object
+            properties:
+                id:
+                    type: string
         Status:
             type: object
             properties:
@@ -377,7 +457,7 @@ components:
         SyntheticEvent:
             type: object
             properties:
-                srcId:
+                srcBinding:
                     type: string
                 type:
                     type: string
@@ -387,11 +467,6 @@ components:
                         $ref: '#/components/schemas/Value'
                 originalId:
                     type: string
-                memo:
-                    type: object
-                    additionalProperties:
-                        type: string
-                    description: for caller use only - not used in event processing.
         Time:
             type: object
             properties:
