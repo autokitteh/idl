@@ -1,0 +1,182 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "croneventsrc/svc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CronEventSource"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/cronsrc/bind": {
+      "post": {
+        "operationId": "CronEventSource_Bind",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/croneventsrcBindResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/croneventsrcBindRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CronEventSource"
+        ]
+      }
+    },
+    "/api/v1/cronsrc/tick": {
+      "post": {
+        "operationId": "CronEventSource_Tick",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/croneventsrcTickResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/croneventsrcTickRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CronEventSource"
+        ]
+      }
+    },
+    "/api/v1/cronsrc/unbind": {
+      "post": {
+        "operationId": "CronEventSource_Unbind",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/croneventsrcUnbindResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/croneventsrcUnbindRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CronEventSource"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "croneventsrcBindRequest": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "cronspec": {
+          "type": "string"
+        }
+      }
+    },
+    "croneventsrcBindResponse": {
+      "type": "object"
+    },
+    "croneventsrcTickRequest": {
+      "type": "object"
+    },
+    "croneventsrcTickResponse": {
+      "type": "object"
+    },
+    "croneventsrcUnbindRequest": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        }
+      }
+    },
+    "croneventsrcUnbindResponse": {
+      "type": "object"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

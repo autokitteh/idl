@@ -33,8 +33,9 @@ message SyntheticEvent {
 
 message RunRequest {
   // If id is empty, run will setup, use and scoop the litterbox by itself.
-  string         id    = 1 {{ MaybeLitterBoxID }};
-  SyntheticEvent event = 2 [(validate.rules).message.required = true];
+  string         id     = 1 {{ MaybeLitterBoxID }};
+  string         source = 2;
+  SyntheticEvent event  = 3 [(validate.rules).message.required = true];
 }
 
 message RunUpdate {

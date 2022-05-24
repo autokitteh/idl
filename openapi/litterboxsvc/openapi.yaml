@@ -337,6 +337,8 @@ components:
                 id:
                     type: string
                     description: If id is empty, run will setup, use and scoop the litterbox by itself.
+                source:
+                    type: string
                 event:
                     $ref: '#/components/schemas/SyntheticEvent'
         RunState:

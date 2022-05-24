@@ -1,0 +1,471 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "statesvc/statesvc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "State"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/states/{projectId}": {
+      "get": {
+        "operationId": "State_List",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statesvcListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "State"
+        ]
+      }
+    },
+    "/api/v1/states/{projectId}/{name}": {
+      "get": {
+        "operationId": "State_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statesvcGetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "metadata.updatedAt",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "State"
+        ]
+      },
+      "post": {
+        "operationId": "State_Set",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statesvcSetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "$ref": "#/definitions/valuesValue"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "State"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "autokittehvaluesDuration": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "statesvcGetResponse": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "metadata": {
+          "$ref": "#/definitions/statesvcValueMetadata"
+        }
+      }
+    },
+    "statesvcListResponse": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "statesvcSetResponse": {
+      "type": "object"
+    },
+    "statesvcValueMetadata": {
+      "type": "object",
+      "properties": {
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "valuesBoolean": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesBytes": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "valuesCall": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "valuesDict": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesDictItem"
+          }
+        }
+      }
+    },
+    "valuesDictItem": {
+      "type": "object",
+      "properties": {
+        "k": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "v": {
+          "$ref": "#/definitions/valuesValue"
+        }
+      }
+    },
+    "valuesFloat": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "valuesFunction": {
+      "type": "object",
+      "properties": {
+        "funcId": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "sig": {
+          "$ref": "#/definitions/valuesFunctionSignature"
+        }
+      }
+    },
+    "valuesFunctionSignature": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "nArgs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nKwonlyargs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "argsNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasVarargs": {
+          "type": "boolean"
+        },
+        "hasKwargs": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesInteger": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "valuesList": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      },
+      "description": "For Starlark, will be used for Tuple in return values."
+    },
+    "valuesModule": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "members": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesNone": {
+      "type": "object"
+    },
+    "valuesSet": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesString": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesStruct": {
+      "type": "object",
+      "properties": {
+        "ctor": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesSymbol": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesTime": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "valuesValue": {
+      "type": "object",
+      "properties": {
+        "none": {
+          "$ref": "#/definitions/valuesNone"
+        },
+        "string": {
+          "$ref": "#/definitions/valuesString"
+        },
+        "integer": {
+          "$ref": "#/definitions/valuesInteger"
+        },
+        "boolean": {
+          "$ref": "#/definitions/valuesBoolean"
+        },
+        "list": {
+          "$ref": "#/definitions/valuesList"
+        },
+        "dict": {
+          "$ref": "#/definitions/valuesDict"
+        },
+        "float": {
+          "$ref": "#/definitions/valuesFloat"
+        },
+        "set": {
+          "$ref": "#/definitions/valuesSet"
+        },
+        "bytes": {
+          "$ref": "#/definitions/valuesBytes"
+        },
+        "time": {
+          "$ref": "#/definitions/valuesTime"
+        },
+        "duration": {
+          "$ref": "#/definitions/autokittehvaluesDuration"
+        },
+        "symbol": {
+          "$ref": "#/definitions/valuesSymbol"
+        },
+        "struct": {
+          "$ref": "#/definitions/valuesStruct"
+        },
+        "module": {
+          "$ref": "#/definitions/valuesModule"
+        },
+        "function": {
+          "$ref": "#/definitions/valuesFunction"
+        },
+        "call": {
+          "$ref": "#/definitions/valuesCall"
+        }
+      }
+    }
+  }
+}

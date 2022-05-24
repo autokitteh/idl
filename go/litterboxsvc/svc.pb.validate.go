@@ -438,6 +438,8 @@ func (m *RunRequest) Validate() error {
 
 	}
 
+	// no validation rules for Source
+
 	if m.GetEvent() == nil {
 		return RunRequestValidationError{
 			field:  "Event",

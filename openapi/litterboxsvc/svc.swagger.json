@@ -1,0 +1,733 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "litterboxsvc/svc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "LitterBox"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/litterboxes": {
+      "post": {
+        "operationId": "LitterBox_Setup",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/litterboxSetupResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/litterboxSetupRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      }
+    },
+    "/api/v1/litterboxes/{id}/run": {
+      "post": {
+        "operationId": "LitterBox_Run",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/litterboxRunUpdate"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of litterboxRunUpdate"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "If id is empty, run will setup, use and scoop the litterbox by itself.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "event": {
+                  "$ref": "#/definitions/litterboxSyntheticEvent"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      }
+    },
+    "/api/v1/litterboxes/{id}/scoop": {
+      "post": {
+        "operationId": "LitterBox_Scoop",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/litterboxScoopResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "autokittehprogramLocation": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/programPath"
+        },
+        "line": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "column": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "autokittehvaluesDuration": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "type": "string"
+        }
+      }
+    },
+    "autokittehvaluesModule": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "members": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "langCallReturnedRunUpdate": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        },
+        "retval": {
+          "$ref": "#/definitions/valuesValue"
+        }
+      }
+    },
+    "langCallWaitRunState": {
+      "type": "object",
+      "properties": {
+        "call": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "kws": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "langCanceledRunState": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "callstack": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programCallFrame"
+          }
+        }
+      }
+    },
+    "langClientErrorRunState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "langCompletedRunState": {
+      "type": "object",
+      "properties": {
+        "vals": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "langErrorRunState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        }
+      }
+    },
+    "langLoadReturnedRunUpdate": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        },
+        "vals": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "langLoadWaitRunState": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/programPath"
+        }
+      }
+    },
+    "langPrintRunUpdate": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "langRunState": {
+      "type": "object",
+      "properties": {
+        "running": {
+          "$ref": "#/definitions/langRunningRunState"
+        },
+        "call": {
+          "$ref": "#/definitions/langCallWaitRunState"
+        },
+        "load": {
+          "$ref": "#/definitions/langLoadWaitRunState"
+        },
+        "completed": {
+          "$ref": "#/definitions/langCompletedRunState"
+        },
+        "canceled": {
+          "$ref": "#/definitions/langCanceledRunState"
+        },
+        "error": {
+          "$ref": "#/definitions/langErrorRunState"
+        },
+        "print": {
+          "$ref": "#/definitions/langPrintRunUpdate",
+          "description": "These are not a states, just logs of events that happened for the record."
+        },
+        "callret": {
+          "$ref": "#/definitions/langCallReturnedRunUpdate"
+        },
+        "loadret": {
+          "$ref": "#/definitions/langLoadReturnedRunUpdate"
+        },
+        "clientError": {
+          "$ref": "#/definitions/langClientErrorRunState",
+          "description": "Generated only in a client."
+        }
+      }
+    },
+    "langRunStateLogRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/langRunState"
+        },
+        "source": {
+          "$ref": "#/definitions/programPath"
+        }
+      }
+    },
+    "langRunSummary": {
+      "type": "object",
+      "properties": {
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/langRunStateLogRecord"
+          }
+        },
+        "prints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "langRunningRunState": {
+      "type": "object"
+    },
+    "litterboxRunUpdate": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/langRunState"
+        }
+      }
+    },
+    "litterboxScoopResponse": {
+      "type": "object"
+    },
+    "litterboxSetupRequest": {
+      "type": "object"
+    },
+    "litterboxSetupResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "litterboxSyntheticEvent": {
+      "type": "object",
+      "properties": {
+        "srcBinding": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "originalId": {
+          "type": "string"
+        }
+      }
+    },
+    "programCallFrame": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "loc": {
+          "$ref": "#/definitions/autokittehprogramLocation"
+        }
+      }
+    },
+    "programError": {
+      "type": "object",
+      "properties": {
+        "msg": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "callstack": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programCallFrame"
+          }
+        },
+        "next": {
+          "$ref": "#/definitions/programError"
+        }
+      }
+    },
+    "programPath": {
+      "type": "object",
+      "properties": {
+        "scheme": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "valuesBoolean": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesBytes": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "valuesCall": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "valuesDict": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesDictItem"
+          }
+        }
+      }
+    },
+    "valuesDictItem": {
+      "type": "object",
+      "properties": {
+        "k": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "v": {
+          "$ref": "#/definitions/valuesValue"
+        }
+      }
+    },
+    "valuesFloat": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "valuesFunction": {
+      "type": "object",
+      "properties": {
+        "funcId": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "sig": {
+          "$ref": "#/definitions/valuesFunctionSignature"
+        }
+      }
+    },
+    "valuesFunctionSignature": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "nArgs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nKwonlyargs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "argsNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasVarargs": {
+          "type": "boolean"
+        },
+        "hasKwargs": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesInteger": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "valuesList": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      },
+      "description": "For Starlark, will be used for Tuple in return values."
+    },
+    "valuesNone": {
+      "type": "object"
+    },
+    "valuesSet": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesString": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesStruct": {
+      "type": "object",
+      "properties": {
+        "ctor": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesSymbol": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesTime": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "valuesValue": {
+      "type": "object",
+      "properties": {
+        "none": {
+          "$ref": "#/definitions/valuesNone"
+        },
+        "string": {
+          "$ref": "#/definitions/valuesString"
+        },
+        "integer": {
+          "$ref": "#/definitions/valuesInteger"
+        },
+        "boolean": {
+          "$ref": "#/definitions/valuesBoolean"
+        },
+        "list": {
+          "$ref": "#/definitions/valuesList"
+        },
+        "dict": {
+          "$ref": "#/definitions/valuesDict"
+        },
+        "float": {
+          "$ref": "#/definitions/valuesFloat"
+        },
+        "set": {
+          "$ref": "#/definitions/valuesSet"
+        },
+        "bytes": {
+          "$ref": "#/definitions/valuesBytes"
+        },
+        "time": {
+          "$ref": "#/definitions/valuesTime"
+        },
+        "duration": {
+          "$ref": "#/definitions/autokittehvaluesDuration"
+        },
+        "symbol": {
+          "$ref": "#/definitions/valuesSymbol"
+        },
+        "struct": {
+          "$ref": "#/definitions/valuesStruct"
+        },
+        "module": {
+          "$ref": "#/definitions/autokittehvaluesModule"
+        },
+        "function": {
+          "$ref": "#/definitions/valuesFunction"
+        },
+        "call": {
+          "$ref": "#/definitions/valuesCall"
+        }
+      }
+    }
+  }
+}

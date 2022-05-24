@@ -87,19 +87,22 @@ global___SyntheticEvent = SyntheticEvent
 class RunRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ID_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
     EVENT_FIELD_NUMBER: builtins.int
     id: typing.Text
     """If id is empty, run will setup, use and scoop the litterbox by itself."""
 
+    source: typing.Text
     @property
     def event(self) -> global___SyntheticEvent: ...
     def __init__(self,
         *,
         id: typing.Text = ...,
+        source: typing.Text = ...,
         event: typing.Optional[global___SyntheticEvent] = ...,
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["event",b"event"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id","source",b"source"]) -> None: ...
 global___RunRequest = RunRequest
 
 class RunUpdate(google.protobuf.message.Message):

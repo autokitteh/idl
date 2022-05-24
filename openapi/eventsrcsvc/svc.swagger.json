@@ -1,0 +1,169 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eventsrcsvc/svc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "EventSources"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "eventsrcEventSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "settings": {
+          "$ref": "#/definitions/eventsrcEventSourceSettings"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "eventsrcEventSourceProjectBinding": {
+      "type": "object",
+      "properties": {
+        "srcId": {
+          "type": "string"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "associationToken": {
+          "type": "string"
+        },
+        "sourceConfig": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "boolean"
+        },
+        "settings": {
+          "$ref": "#/definitions/eventsrcEventSourceProjectBindingSettings"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "Need to negotiate with event source to determine if eligible to receive events.\nEssentially this should be carefully managed by the system and not the user\nto prevent unwanted projects getting events."
+    },
+    "eventsrcEventSourceProjectBindingSettings": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "eventsrcEventSourceSettings": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventsrcsvcAddEventSourceProjectBindingResponse": {
+      "type": "object"
+    },
+    "eventsrcsvcAddEventSourceResponse": {
+      "type": "object"
+    },
+    "eventsrcsvcGetEventSourceProjectBindingsResponse": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventsrcEventSourceProjectBinding"
+          }
+        }
+      }
+    },
+    "eventsrcsvcGetEventSourceResponse": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "$ref": "#/definitions/eventsrcEventSource"
+        }
+      }
+    },
+    "eventsrcsvcListEventSourcesResponse": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventsrcsvcUpdateEventSourceProjectBindingResponse": {
+      "type": "object"
+    },
+    "eventsrcsvcUpdateEventSourceResponse": {
+      "type": "object"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

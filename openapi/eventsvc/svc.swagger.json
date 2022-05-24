@@ -1,0 +1,1177 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eventsvc/svc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Events"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/events": {
+      "get": {
+        "operationId": "Events_ListEvents",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcListEventsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ofs",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "len",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      },
+      "post": {
+        "operationId": "Events_IngestEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcIngestEventResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/eventsvcIngestEventRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/events/{id}": {
+      "get": {
+        "operationId": "Events_GetEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcGetEventResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/events/{id}/projects/{projectId}/state": {
+      "get": {
+        "operationId": "Events_GetEventStateForProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcGetEventStateForProjectResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      },
+      "post": {
+        "operationId": "Events_UpdateEventStateForProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcUpdateEventStateForProjectResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/events/{id}/state": {
+      "get": {
+        "operationId": "Events_GetEventState",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcGetEventStateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      },
+      "post": {
+        "operationId": "Events_UpdateEventState",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcUpdateEventStateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/events": {
+      "get": {
+        "operationId": "Events_ListEvents2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcListEventsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ofs",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "len",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/waiting": {
+      "get": {
+        "operationId": "Events_GetProjectWaitingEvents",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/eventsvcGetProjectWaitingEventsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "autokittehprogramLocation": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/programPath"
+        },
+        "line": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "column": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "autokittehvaluesDuration": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "type": "string"
+        }
+      }
+    },
+    "autokittehvaluesModule": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "members": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "eventErrorEventState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "eventErrorProjectEventState": {
+      "type": "object",
+      "properties": {
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "eventEvent": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "srcId": {
+          "type": "string"
+        },
+        "associationToken": {
+          "type": "string"
+        },
+        "originalId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "memo": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventEventState": {
+      "type": "object",
+      "properties": {
+        "ignored": {
+          "$ref": "#/definitions/eventIgnoredEventState"
+        },
+        "error": {
+          "$ref": "#/definitions/eventErrorEventState"
+        },
+        "pending": {
+          "$ref": "#/definitions/eventPendingEventState"
+        },
+        "processing": {
+          "$ref": "#/definitions/eventProcessingEventState"
+        },
+        "processed": {
+          "$ref": "#/definitions/eventProcessedEventState"
+        }
+      }
+    },
+    "eventEventStateRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/eventEventState"
+        }
+      }
+    },
+    "eventIgnoredEventState": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "eventIgnoredProjectEventState": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "eventPendingEventState": {
+      "type": "object"
+    },
+    "eventPendingProjectEventState": {
+      "type": "object"
+    },
+    "eventProcessedEventState": {
+      "type": "object",
+      "properties": {
+        "projectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attnProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventProcessedProjectEventState": {
+      "type": "object",
+      "properties": {
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "eventProcessingEventState": {
+      "type": "object",
+      "properties": {
+        "projectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ignoredProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventProcessingProjectEventState": {
+      "type": "object"
+    },
+    "eventProjectEventState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/eventErrorProjectEventState"
+        },
+        "ignored": {
+          "$ref": "#/definitions/eventIgnoredProjectEventState"
+        },
+        "pending": {
+          "$ref": "#/definitions/eventPendingProjectEventState"
+        },
+        "processing": {
+          "$ref": "#/definitions/eventProcessingProjectEventState"
+        },
+        "waiting": {
+          "$ref": "#/definitions/eventWaitingProjectEventState"
+        },
+        "processed": {
+          "$ref": "#/definitions/eventProcessedProjectEventState"
+        }
+      }
+    },
+    "eventProjectEventStateRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/eventProjectEventState"
+        }
+      }
+    },
+    "eventWaitingProjectEventState": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "eventsvcGetEventResponse": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/eventEvent"
+        }
+      }
+    },
+    "eventsvcGetEventStateForProjectResponse": {
+      "type": "object",
+      "properties": {
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventProjectEventStateRecord"
+          }
+        }
+      }
+    },
+    "eventsvcGetEventStateResponse": {
+      "type": "object",
+      "properties": {
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventEventStateRecord"
+          }
+        }
+      }
+    },
+    "eventsvcGetProjectWaitingEventsResponse": {
+      "type": "object",
+      "properties": {
+        "eventIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "eventsvcIngestEventRequest": {
+      "type": "object",
+      "properties": {
+        "srcId": {
+          "type": "string"
+        },
+        "associationToken": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "originalId": {
+          "type": "string"
+        },
+        "memo": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "for caller use only - not used in event processing."
+        }
+      }
+    },
+    "eventsvcIngestEventResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "eventsvcListEventRecord": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/eventEvent"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventEventStateRecord"
+          }
+        }
+      }
+    },
+    "eventsvcListEventsResponse": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventsvcListEventRecord"
+          }
+        }
+      }
+    },
+    "eventsvcUpdateEventStateForProjectResponse": {
+      "type": "object"
+    },
+    "eventsvcUpdateEventStateResponse": {
+      "type": "object"
+    },
+    "langCallReturnedRunUpdate": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        },
+        "retval": {
+          "$ref": "#/definitions/valuesValue"
+        }
+      }
+    },
+    "langCallWaitRunState": {
+      "type": "object",
+      "properties": {
+        "call": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "kws": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "langCanceledRunState": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "callstack": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programCallFrame"
+          }
+        }
+      }
+    },
+    "langClientErrorRunState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "langCompletedRunState": {
+      "type": "object",
+      "properties": {
+        "vals": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "langErrorRunState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        }
+      }
+    },
+    "langLoadReturnedRunUpdate": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/programError"
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        },
+        "vals": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "langLoadWaitRunState": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/programPath"
+        }
+      }
+    },
+    "langPrintRunUpdate": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "langRunState": {
+      "type": "object",
+      "properties": {
+        "running": {
+          "$ref": "#/definitions/langRunningRunState"
+        },
+        "call": {
+          "$ref": "#/definitions/langCallWaitRunState"
+        },
+        "load": {
+          "$ref": "#/definitions/langLoadWaitRunState"
+        },
+        "completed": {
+          "$ref": "#/definitions/langCompletedRunState"
+        },
+        "canceled": {
+          "$ref": "#/definitions/langCanceledRunState"
+        },
+        "error": {
+          "$ref": "#/definitions/langErrorRunState"
+        },
+        "print": {
+          "$ref": "#/definitions/langPrintRunUpdate",
+          "description": "These are not a states, just logs of events that happened for the record."
+        },
+        "callret": {
+          "$ref": "#/definitions/langCallReturnedRunUpdate"
+        },
+        "loadret": {
+          "$ref": "#/definitions/langLoadReturnedRunUpdate"
+        },
+        "clientError": {
+          "$ref": "#/definitions/langClientErrorRunState",
+          "description": "Generated only in a client."
+        }
+      }
+    },
+    "langRunStateLogRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/langRunState"
+        },
+        "source": {
+          "$ref": "#/definitions/programPath"
+        }
+      }
+    },
+    "langRunSummary": {
+      "type": "object",
+      "properties": {
+        "log": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/langRunStateLogRecord"
+          }
+        },
+        "prints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "langRunningRunState": {
+      "type": "object"
+    },
+    "programCallFrame": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "loc": {
+          "$ref": "#/definitions/autokittehprogramLocation"
+        }
+      }
+    },
+    "programError": {
+      "type": "object",
+      "properties": {
+        "msg": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "callstack": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programCallFrame"
+          }
+        },
+        "next": {
+          "$ref": "#/definitions/programError"
+        }
+      }
+    },
+    "programPath": {
+      "type": "object",
+      "properties": {
+        "scheme": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "valuesBoolean": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesBytes": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "valuesCall": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "valuesDict": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesDictItem"
+          }
+        }
+      }
+    },
+    "valuesDictItem": {
+      "type": "object",
+      "properties": {
+        "k": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "v": {
+          "$ref": "#/definitions/valuesValue"
+        }
+      }
+    },
+    "valuesFloat": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "valuesFunction": {
+      "type": "object",
+      "properties": {
+        "funcId": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "sig": {
+          "$ref": "#/definitions/valuesFunctionSignature"
+        }
+      }
+    },
+    "valuesFunctionSignature": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "nArgs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nKwonlyargs": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "argsNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasVarargs": {
+          "type": "boolean"
+        },
+        "hasKwargs": {
+          "type": "boolean"
+        }
+      }
+    },
+    "valuesInteger": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "valuesList": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      },
+      "description": "For Starlark, will be used for Tuple in return values."
+    },
+    "valuesNone": {
+      "type": "object"
+    },
+    "valuesSet": {
+      "type": "object",
+      "properties": {
+        "vs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesString": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesStruct": {
+      "type": "object",
+      "properties": {
+        "ctor": {
+          "$ref": "#/definitions/valuesValue"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/valuesValue"
+          }
+        }
+      }
+    },
+    "valuesSymbol": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "valuesTime": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "valuesValue": {
+      "type": "object",
+      "properties": {
+        "none": {
+          "$ref": "#/definitions/valuesNone"
+        },
+        "string": {
+          "$ref": "#/definitions/valuesString"
+        },
+        "integer": {
+          "$ref": "#/definitions/valuesInteger"
+        },
+        "boolean": {
+          "$ref": "#/definitions/valuesBoolean"
+        },
+        "list": {
+          "$ref": "#/definitions/valuesList"
+        },
+        "dict": {
+          "$ref": "#/definitions/valuesDict"
+        },
+        "float": {
+          "$ref": "#/definitions/valuesFloat"
+        },
+        "set": {
+          "$ref": "#/definitions/valuesSet"
+        },
+        "bytes": {
+          "$ref": "#/definitions/valuesBytes"
+        },
+        "time": {
+          "$ref": "#/definitions/valuesTime"
+        },
+        "duration": {
+          "$ref": "#/definitions/autokittehvaluesDuration"
+        },
+        "symbol": {
+          "$ref": "#/definitions/valuesSymbol"
+        },
+        "struct": {
+          "$ref": "#/definitions/valuesStruct"
+        },
+        "module": {
+          "$ref": "#/definitions/autokittehvaluesModule"
+        },
+        "function": {
+          "$ref": "#/definitions/valuesFunction"
+        },
+        "call": {
+          "$ref": "#/definitions/valuesCall"
+        }
+      }
+    }
+  }
+}

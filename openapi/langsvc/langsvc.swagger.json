@@ -1,0 +1,327 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "langsvc/langsvc.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Lang"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/langs/compile": {
+      "post": {
+        "operationId": "Lang_CompileModule",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/langsvcCompileModuleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/langsvcCompileModuleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Lang"
+        ]
+      }
+    },
+    "/api/v1/langs/list": {
+      "get": {
+        "operationId": "Lang_ListLangs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/langsvcListLangsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Lang"
+        ]
+      }
+    },
+    "/api/v1/langs/module-deps": {
+      "post": {
+        "operationId": "Lang_GetModuleDependencies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/langsvcGetModuleDependenciesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/langsvcGetModuleDependenciesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Lang"
+        ]
+      }
+    },
+    "/api/v1/langs/{lang}/{ver}/support": {
+      "get": {
+        "operationId": "Lang_IsCompilerVersionSupported",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/langsvcIsCompilerVersionSupportedResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ver",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Lang"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "autokittehprogramModule": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "type": "string"
+        },
+        "predecls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "compilerVersion": {
+          "type": "string"
+        },
+        "sourcePath": {
+          "$ref": "#/definitions/programPath"
+        },
+        "compiledCode": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "langsvcCatalogLang": {
+      "type": "object",
+      "properties": {
+        "exts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "langsvcCompileModuleRequest": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "type": "string"
+        },
+        "predecls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "path": {
+          "$ref": "#/definitions/programPath"
+        },
+        "src": {
+          "type": "string",
+          "format": "byte"
+        },
+        "getDeps": {
+          "type": "boolean"
+        }
+      }
+    },
+    "langsvcCompileModuleResponse": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "$ref": "#/definitions/autokittehprogramModule"
+        },
+        "deps": {
+          "$ref": "#/definitions/langsvcDependencies"
+        }
+      }
+    },
+    "langsvcCycle": {
+      "type": "object",
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programPath"
+          }
+        }
+      }
+    },
+    "langsvcDependencies": {
+      "type": "object",
+      "properties": {
+        "ready": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programPath"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programPath"
+          }
+        },
+        "cycles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/langsvcCycle"
+          }
+        }
+      }
+    },
+    "langsvcGetModuleDependenciesRequest": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "$ref": "#/definitions/autokittehprogramModule"
+        }
+      }
+    },
+    "langsvcGetModuleDependenciesResponse": {
+      "type": "object",
+      "properties": {
+        "deps": {
+          "$ref": "#/definitions/langsvcDependencies"
+        }
+      }
+    },
+    "langsvcIsCompilerVersionSupportedResponse": {
+      "type": "object",
+      "properties": {
+        "supported": {
+          "type": "boolean"
+        }
+      }
+    },
+    "langsvcListLangsResponse": {
+      "type": "object",
+      "properties": {
+        "langs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/langsvcCatalogLang"
+          }
+        }
+      }
+    },
+    "programPath": {
+      "type": "object",
+      "properties": {
+        "scheme": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

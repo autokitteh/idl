@@ -12,6 +12,7 @@ find /gen/proto/src -mindepth 1 -type d | while read -r indir; do
     -I "/gen/proto/src" \
     -I "/proto" \
     --openapi_out="/gen/openapi/$(basename ${indir})" \
+    --openapiv2_out="/gen/openapi" \
     "${indir}"/*
 done
 

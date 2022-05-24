@@ -897,6 +897,7 @@ proto.autokitteh.litterbox.RunRequest.prototype.toObject = function(opt_includeI
 proto.autokitteh.litterbox.RunRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    source: jspb.Message.getFieldWithDefault(msg, 2, ""),
     event: (f = msg.getEvent()) && proto.autokitteh.litterbox.SyntheticEvent.toObject(includeInstance, f)
   };
 
@@ -939,6 +940,10 @@ proto.autokitteh.litterbox.RunRequest.deserializeBinaryFromReader = function(msg
       msg.setId(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSource(value);
+      break;
+    case 3:
       var value = new proto.autokitteh.litterbox.SyntheticEvent;
       reader.readMessage(value,proto.autokitteh.litterbox.SyntheticEvent.deserializeBinaryFromReader);
       msg.setEvent(value);
@@ -979,10 +984,17 @@ proto.autokitteh.litterbox.RunRequest.serializeBinaryToWriter = function(message
       f
     );
   }
+  f = message.getSource();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getEvent();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       proto.autokitteh.litterbox.SyntheticEvent.serializeBinaryToWriter
     );
@@ -1009,12 +1021,30 @@ proto.autokitteh.litterbox.RunRequest.prototype.setId = function(value) {
 
 
 /**
- * optional SyntheticEvent event = 2;
+ * optional string source = 2;
+ * @return {string}
+ */
+proto.autokitteh.litterbox.RunRequest.prototype.getSource = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.autokitteh.litterbox.RunRequest} returns this
+ */
+proto.autokitteh.litterbox.RunRequest.prototype.setSource = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional SyntheticEvent event = 3;
  * @return {?proto.autokitteh.litterbox.SyntheticEvent}
  */
 proto.autokitteh.litterbox.RunRequest.prototype.getEvent = function() {
   return /** @type{?proto.autokitteh.litterbox.SyntheticEvent} */ (
-    jspb.Message.getWrapperField(this, proto.autokitteh.litterbox.SyntheticEvent, 2));
+    jspb.Message.getWrapperField(this, proto.autokitteh.litterbox.SyntheticEvent, 3));
 };
 
 
@@ -1023,7 +1053,7 @@ proto.autokitteh.litterbox.RunRequest.prototype.getEvent = function() {
  * @return {!proto.autokitteh.litterbox.RunRequest} returns this
 */
 proto.autokitteh.litterbox.RunRequest.prototype.setEvent = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -1041,7 +1071,7 @@ proto.autokitteh.litterbox.RunRequest.prototype.clearEvent = function() {
  * @return {boolean}
  */
 proto.autokitteh.litterbox.RunRequest.prototype.hasEvent = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

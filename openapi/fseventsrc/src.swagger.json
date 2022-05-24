@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "fseventsrc/src.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "FSEventSource"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/fseventsrc/bind": {
+      "post": {
+        "operationId": "FSEventSource_Bind",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/fseventsrcBindResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fseventsrcBindRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FSEventSource"
+        ]
+      }
+    },
+    "/api/v1/fseventsrc/unbind": {
+      "post": {
+        "operationId": "FSEventSource_Unbind",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/fseventsrcUnbindResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fseventsrcUnbindRequest"
+            }
+          }
+        ],
+        "tags": [
+          "FSEventSource"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "fseventsrcBindRequest": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "ops": {
+          "$ref": "#/definitions/fseventsrcOps"
+        }
+      }
+    },
+    "fseventsrcBindResponse": {
+      "type": "object"
+    },
+    "fseventsrcOps": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean"
+        },
+        "write": {
+          "type": "boolean"
+        },
+        "remove": {
+          "type": "boolean"
+        },
+        "rename": {
+          "type": "boolean"
+        },
+        "chmod": {
+          "type": "boolean"
+        }
+      }
+    },
+    "fseventsrcUnbindRequest": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "fseventsrcUnbindResponse": {
+      "type": "object"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
