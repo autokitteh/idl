@@ -61,8 +61,7 @@ service LitterBox {
 
   rpc Scoop(ScoopRequest) returns (ScoopResponse) {
     option (google.api.http) = {
-      post: "/api/v1/litterboxes/{id}/scoop",
-      body: "*"
+      post: "/api/v1/litterboxes/{id}/scoop"
     };
   }
 }

@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-mkdir -p /gen/go
+mkdir -p /gen/go/go.autokitteh.dev/idl/go
+rm -fR /gen/go/go.autokitteh.dev/idl/go/*
 
 find /gen/proto/src -mindepth 1 -type d | while read -r indir; do
   echo "go protoc: ${indir}"

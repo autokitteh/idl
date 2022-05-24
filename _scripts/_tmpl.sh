@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+mkdir -p /gen/proto/src
+rm -fR /gen/proto/src/*
+
 p2 -t /proto/src/template-values.yaml -i /proto/src/patterns.yaml > /gen/proto/src/template-values.yaml
 
 find /proto/src -mindepth 1 -type d | while read -r indir; do

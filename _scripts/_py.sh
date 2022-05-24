@@ -3,6 +3,7 @@
 set -euo pipefail
 
 mkdir -p /gen/py
+rm -fR /gen/py/*
 
 gen() {
   python3 \
@@ -23,8 +24,6 @@ gen /proto/google/api/annotations.proto
 
 echo "py google.api.http: /proto/google/api/http"
 gen /proto/google/api/http.proto
-
-mv /gen/py/google/api /gen/py/googleapi && rm -fR /gen/py/google
 
 find /gen/proto/src -mindepth 1 -type d | while read -r indir; do
   echo "py protoc: ${indir}"
