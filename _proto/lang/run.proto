@@ -50,7 +50,6 @@ message CallWaitRunState {
   values.Value              call        = 1 [(validate.rules).message.required = true];
   repeated values.Value     args        = 2 [(validate.rules).repeated.items.message.required = true];
   map<string, values.Value> kws         = 3 {{ VarMap }};
-  RunSummary                run_summary = 4;
 }
 
 message LoadWaitRunState {

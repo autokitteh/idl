@@ -558,16 +558,6 @@ func (m *CallWaitRunState) Validate() error {
 
 	}
 
-	if v, ok := interface{}(m.GetRunSummary()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CallWaitRunStateValidationError{
-				field:  "RunSummary",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	return nil
 }
 

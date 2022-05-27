@@ -50,7 +50,6 @@ message CallWaitRunState {
   values.Value              call        = 1 [(validate.rules).message.required = true];
   repeated values.Value     args        = 2 [(validate.rules).repeated.items.message.required = true];
   map<string, values.Value> kws         = 3 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
-  RunSummary                run_summary = 4;
 }
 
 message LoadWaitRunState {

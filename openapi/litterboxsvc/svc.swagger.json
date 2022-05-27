@@ -202,9 +202,6 @@
           "additionalProperties": {
             "$ref": "#/definitions/valuesValue"
           }
-        },
-        "runSummary": {
-          "$ref": "#/definitions/langRunSummary"
         }
       }
     },
