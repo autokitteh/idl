@@ -3,11 +3,10 @@
 isort:skip_file
 """
 import builtins
+import event.project_state_pb2
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
-import google.protobuf.timestamp_pb2
-import lang.run_pb2
 import typing
 import typing_extensions
 import values.values_pb2
@@ -16,8 +15,13 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class SetupRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    NAME_FIELD_NUMBER: builtins.int
+    name: typing.Text
     def __init__(self,
+        *,
+        name: typing.Text = ...,
         ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["name",b"name"]) -> None: ...
 global___SetupRequest = SetupRequest
 
 class SetupResponse(google.protobuf.message.Message):
@@ -48,7 +52,7 @@ class ScoopResponse(google.protobuf.message.Message):
         ) -> None: ...
 global___ScoopResponse = ScoopResponse
 
-class SyntheticEvent(google.protobuf.message.Message):
+class LitterBoxEvent(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     class DataEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -82,7 +86,7 @@ class SyntheticEvent(google.protobuf.message.Message):
         original_id: typing.Text = ...,
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src_binding",b"src_binding","type",b"type"]) -> None: ...
-global___SyntheticEvent = SyntheticEvent
+global___LitterBoxEvent = LitterBoxEvent
 
 class RunRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -94,12 +98,12 @@ class RunRequest(google.protobuf.message.Message):
 
     source: typing.Text
     @property
-    def event(self) -> global___SyntheticEvent: ...
+    def event(self) -> global___LitterBoxEvent: ...
     def __init__(self,
         *,
         id: typing.Text = ...,
         source: typing.Text = ...,
-        event: typing.Optional[global___SyntheticEvent] = ...,
+        event: typing.Optional[global___LitterBoxEvent] = ...,
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["event",b"event"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id","source",b"source"]) -> None: ...
@@ -107,20 +111,16 @@ global___RunRequest = RunRequest
 
 class RunUpdate(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    T_FIELD_NUMBER: builtins.int
     ID_FIELD_NUMBER: builtins.int
     STATE_FIELD_NUMBER: builtins.int
-    @property
-    def t(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     id: typing.Text
     @property
-    def state(self) -> lang.run_pb2.RunState: ...
+    def state(self) -> event.project_state_pb2.ProjectEventStateRecord: ...
     def __init__(self,
         *,
-        t: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         id: typing.Text = ...,
-        state: typing.Optional[lang.run_pb2.RunState] = ...,
+        state: typing.Optional[event.project_state_pb2.ProjectEventStateRecord] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["state",b"state","t",b"t"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["id",b"id","state",b"state","t",b"t"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["state",b"state"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["id",b"id","state",b"state"]) -> None: ...
 global___RunUpdate = RunUpdate

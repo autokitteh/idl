@@ -93,7 +93,7 @@
                   "type": "string"
                 },
                 "event": {
-                  "$ref": "#/definitions/litterboxSyntheticEvent"
+                  "$ref": "#/definitions/litterboxLitterBoxEvent"
                 }
               }
             }
@@ -171,6 +171,88 @@
           "additionalProperties": {
             "$ref": "#/definitions/valuesValue"
           }
+        }
+      }
+    },
+    "eventErrorProjectEventState": {
+      "type": "object",
+      "properties": {
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "eventIgnoredProjectEventState": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "eventPendingProjectEventState": {
+      "type": "object"
+    },
+    "eventProcessedProjectEventState": {
+      "type": "object",
+      "properties": {
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "eventProcessingProjectEventState": {
+      "type": "object"
+    },
+    "eventProjectEventState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/eventErrorProjectEventState"
+        },
+        "ignored": {
+          "$ref": "#/definitions/eventIgnoredProjectEventState"
+        },
+        "pending": {
+          "$ref": "#/definitions/eventPendingProjectEventState"
+        },
+        "processing": {
+          "$ref": "#/definitions/eventProcessingProjectEventState"
+        },
+        "waiting": {
+          "$ref": "#/definitions/eventWaitingProjectEventState"
+        },
+        "processed": {
+          "$ref": "#/definitions/eventProcessedProjectEventState"
+        }
+      }
+    },
+    "eventProjectEventStateRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/eventProjectEventState"
+        }
+      }
+    },
+    "eventWaitingProjectEventState": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
         }
       }
     },
@@ -351,36 +433,7 @@
     "langRunningRunState": {
       "type": "object"
     },
-    "litterboxRunUpdate": {
-      "type": "object",
-      "properties": {
-        "t": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "id": {
-          "type": "string"
-        },
-        "state": {
-          "$ref": "#/definitions/langRunState"
-        }
-      }
-    },
-    "litterboxScoopResponse": {
-      "type": "object"
-    },
-    "litterboxSetupRequest": {
-      "type": "object"
-    },
-    "litterboxSetupResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
-    "litterboxSyntheticEvent": {
+    "litterboxLitterBoxEvent": {
       "type": "object",
       "properties": {
         "srcBinding": {
@@ -396,6 +449,36 @@
           }
         },
         "originalId": {
+          "type": "string"
+        }
+      }
+    },
+    "litterboxRunUpdate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/eventProjectEventStateRecord"
+        }
+      }
+    },
+    "litterboxScoopResponse": {
+      "type": "object"
+    },
+    "litterboxSetupRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "litterboxSetupResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
           "type": "string"
         }
       }

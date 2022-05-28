@@ -41,6 +41,8 @@ func (m *SetupRequest) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Name
+
 	return nil
 }
 
@@ -109,7 +111,7 @@ func (m *SetupResponse) Validate() error {
 	if !_SetupResponse_Id_Pattern.MatchString(m.GetId()) {
 		return SetupResponseValidationError{
 			field:  "Id",
-			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
 		}
 	}
 
@@ -170,7 +172,7 @@ var _ interface {
 	ErrorName() string
 } = SetupResponseValidationError{}
 
-var _SetupResponse_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+var _SetupResponse_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
 
 // Validate checks the field values on ScoopRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -183,7 +185,7 @@ func (m *ScoopRequest) Validate() error {
 	if !_ScoopRequest_Id_Pattern.MatchString(m.GetId()) {
 		return ScoopRequestValidationError{
 			field:  "Id",
-			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
 		}
 	}
 
@@ -244,7 +246,7 @@ var _ interface {
 	ErrorName() string
 } = ScoopRequestValidationError{}
 
-var _ScoopRequest_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+var _ScoopRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
 
 // Validate checks the field values on ScoopResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -311,16 +313,16 @@ var _ interface {
 	ErrorName() string
 } = ScoopResponseValidationError{}
 
-// Validate checks the field values on SyntheticEvent with the rules defined in
+// Validate checks the field values on LitterBoxEvent with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
-func (m *SyntheticEvent) Validate() error {
+func (m *LitterBoxEvent) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if !_SyntheticEvent_SrcBinding_Pattern.MatchString(m.GetSrcBinding()) {
-		return SyntheticEventValidationError{
+	if !_LitterBoxEvent_SrcBinding_Pattern.MatchString(m.GetSrcBinding()) {
+		return LitterBoxEventValidationError{
 			field:  "SrcBinding",
 			reason: "value does not match regex pattern \"^[a-zA-Z_][a-zA-Z0-9_]*$\"",
 		}
@@ -332,14 +334,14 @@ func (m *SyntheticEvent) Validate() error {
 		_ = val
 
 		if val == nil {
-			return SyntheticEventValidationError{
+			return LitterBoxEventValidationError{
 				field:  fmt.Sprintf("Data[%v]", key),
 				reason: "value cannot be sparse, all pairs must be non-nil",
 			}
 		}
 
-		if !_SyntheticEvent_Data_Pattern.MatchString(key) {
-			return SyntheticEventValidationError{
+		if !_LitterBoxEvent_Data_Pattern.MatchString(key) {
+			return LitterBoxEventValidationError{
 				field:  fmt.Sprintf("Data[%v]", key),
 				reason: "value does not match regex pattern \"^[a-zA-Z_][a-zA-Z0-9_]*$\"",
 			}
@@ -347,7 +349,7 @@ func (m *SyntheticEvent) Validate() error {
 
 		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return SyntheticEventValidationError{
+				return LitterBoxEventValidationError{
 					field:  fmt.Sprintf("Data[%v]", key),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -362,9 +364,9 @@ func (m *SyntheticEvent) Validate() error {
 	return nil
 }
 
-// SyntheticEventValidationError is the validation error returned by
-// SyntheticEvent.Validate if the designated constraints aren't met.
-type SyntheticEventValidationError struct {
+// LitterBoxEventValidationError is the validation error returned by
+// LitterBoxEvent.Validate if the designated constraints aren't met.
+type LitterBoxEventValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -372,22 +374,22 @@ type SyntheticEventValidationError struct {
 }
 
 // Field function returns field value.
-func (e SyntheticEventValidationError) Field() string { return e.field }
+func (e LitterBoxEventValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e SyntheticEventValidationError) Reason() string { return e.reason }
+func (e LitterBoxEventValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e SyntheticEventValidationError) Cause() error { return e.cause }
+func (e LitterBoxEventValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e SyntheticEventValidationError) Key() bool { return e.key }
+func (e LitterBoxEventValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e SyntheticEventValidationError) ErrorName() string { return "SyntheticEventValidationError" }
+func (e LitterBoxEventValidationError) ErrorName() string { return "LitterBoxEventValidationError" }
 
 // Error satisfies the builtin error interface
-func (e SyntheticEventValidationError) Error() string {
+func (e LitterBoxEventValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -399,14 +401,14 @@ func (e SyntheticEventValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sSyntheticEvent.%s: %s%s",
+		"invalid %sLitterBoxEvent.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = SyntheticEventValidationError{}
+var _ error = LitterBoxEventValidationError{}
 
 var _ interface {
 	Field() string
@@ -414,11 +416,11 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = SyntheticEventValidationError{}
+} = LitterBoxEventValidationError{}
 
-var _SyntheticEvent_SrcBinding_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
+var _LitterBoxEvent_SrcBinding_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
-var _SyntheticEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
+var _LitterBoxEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 // Validate checks the field values on RunRequest with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -432,7 +434,7 @@ func (m *RunRequest) Validate() error {
 		if !_RunRequest_Id_Pattern.MatchString(m.GetId()) {
 			return RunRequestValidationError{
 				field:  "Id",
-				reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+				reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
 			}
 		}
 
@@ -514,7 +516,7 @@ var _ interface {
 	ErrorName() string
 } = RunRequestValidationError{}
 
-var _RunRequest_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+var _RunRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
 
 // Validate checks the field values on RunUpdate with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -523,17 +525,10 @@ func (m *RunUpdate) Validate() error {
 		return nil
 	}
 
-	if m.GetT() == nil {
-		return RunUpdateValidationError{
-			field:  "T",
-			reason: "value is required",
-		}
-	}
-
 	if !_RunUpdate_Id_Pattern.MatchString(m.GetId()) {
 		return RunUpdateValidationError{
 			field:  "Id",
-			reason: "value does not match regex pattern \"^B[0-9a-f]+$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
 		}
 	}
 
@@ -611,4 +606,4 @@ var _ interface {
 	ErrorName() string
 } = RunUpdateValidationError{}
 
-var _RunUpdate_Id_Pattern = regexp.MustCompile("^B[0-9a-f]+$")
+var _RunUpdate_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
