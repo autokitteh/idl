@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from event import track_pb2 as event_dot_track__pb2
 from litterboxsvc import svc_pb2 as litterboxsvc_dot_svc__pb2
 
 
@@ -19,10 +20,10 @@ class LitterBoxStub(object):
                 request_serializer=litterboxsvc_dot_svc__pb2.SetupRequest.SerializeToString,
                 response_deserializer=litterboxsvc_dot_svc__pb2.SetupResponse.FromString,
                 )
-        self.Run = channel.unary_stream(
-                '/autokitteh.litterbox.LitterBox/Run',
-                request_serializer=litterboxsvc_dot_svc__pb2.RunRequest.SerializeToString,
-                response_deserializer=litterboxsvc_dot_svc__pb2.RunUpdate.FromString,
+        self.Event = channel.unary_stream(
+                '/autokitteh.litterbox.LitterBox/Event',
+                request_serializer=litterboxsvc_dot_svc__pb2.EventRequest.SerializeToString,
+                response_deserializer=event_dot_track__pb2.TrackIngestEventUpdate.FromString,
                 )
         self.Scoop = channel.unary_unary(
                 '/autokitteh.litterbox.LitterBox/Scoop',
@@ -40,7 +41,7 @@ class LitterBoxServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Run(self, request, context):
+    def Event(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -60,10 +61,10 @@ def add_LitterBoxServicer_to_server(servicer, server):
                     request_deserializer=litterboxsvc_dot_svc__pb2.SetupRequest.FromString,
                     response_serializer=litterboxsvc_dot_svc__pb2.SetupResponse.SerializeToString,
             ),
-            'Run': grpc.unary_stream_rpc_method_handler(
-                    servicer.Run,
-                    request_deserializer=litterboxsvc_dot_svc__pb2.RunRequest.FromString,
-                    response_serializer=litterboxsvc_dot_svc__pb2.RunUpdate.SerializeToString,
+            'Event': grpc.unary_stream_rpc_method_handler(
+                    servicer.Event,
+                    request_deserializer=litterboxsvc_dot_svc__pb2.EventRequest.FromString,
+                    response_serializer=event_dot_track__pb2.TrackIngestEventUpdate.SerializeToString,
             ),
             'Scoop': grpc.unary_unary_rpc_method_handler(
                     servicer.Scoop,
@@ -98,7 +99,7 @@ class LitterBox(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def Run(request,
+    def Event(request,
             target,
             options=(),
             channel_credentials=None,
@@ -108,9 +109,9 @@ class LitterBox(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/autokitteh.litterbox.LitterBox/Run',
-            litterboxsvc_dot_svc__pb2.RunRequest.SerializeToString,
-            litterboxsvc_dot_svc__pb2.RunUpdate.FromString,
+        return grpc.experimental.unary_stream(request, target, '/autokitteh.litterbox.LitterBox/Event',
+            litterboxsvc_dot_svc__pb2.EventRequest.SerializeToString,
+            event_dot_track__pb2.TrackIngestEventUpdate.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

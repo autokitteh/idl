@@ -15,27 +15,36 @@ _sym_db = _symbol_database.Default()
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from event import project_state_pb2 as event_dot_project__state__pb2
+from event import track_pb2 as event_dot_track__pb2
 from values import values_pb2 as values_dot_values__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16litterboxsvc/svc.proto\x12\x14\x61utokitteh.litterbox\x1a\x1cgoogle/api/annotations.proto\x1a\x17validate/validate.proto\x1a\x19\x65vent/project_state.proto\x1a\x13values/values.proto\"\x1c\n\x0cSetupRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"3\n\rSetupResponse\x12\"\n\x02id\x18\x01 \x01(\tB\x16\xfa\x42\x13r\x11\x32\x0f^[a-zA-Z0-9_-]$\"2\n\x0cScoopRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x16\xfa\x42\x13r\x11\x32\x0f^[a-zA-Z0-9_-]$\"\x0f\n\rScoopResponse\"\x96\x02\n\x0eLitterBoxEvent\x12\x34\n\x0bsrc_binding\x18\x01 \x01(\tB\x1f\xfa\x42\x1cr\x1a\x32\x18^[a-zA-Z_][a-zA-Z0-9_]*$\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x64\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32..autokitteh.litterbox.LitterBoxEvent.DataEntryB&\xfa\x42#\x9a\x01 \x18\x01\"\x1cr\x1a\x32\x18^[a-zA-Z_][a-zA-Z0-9_]*$\x12\x13\n\x0boriginal_id\x18\x04 \x01(\t\x1a\x45\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\'\n\x05value\x18\x02 \x01(\x0b\x32\x18.autokitteh.values.Value:\x02\x38\x01\"\x82\x01\n\nRunRequest\x12%\n\x02id\x18\x01 \x01(\tB\x19\xfa\x42\x16r\x14\x32\x0f^[a-zA-Z0-9_-]$\xd0\x01\x01\x12\x0e\n\x06source\x18\x02 \x01(\t\x12=\n\x05\x65vent\x18\x03 \x01(\x0b\x32$.autokitteh.litterbox.LitterBoxEventB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"s\n\tRunUpdate\x12\"\n\x02id\x18\x01 \x01(\tB\x16\xfa\x42\x13r\x11\x32\x0f^[a-zA-Z0-9_-]$\x12\x42\n\x05state\x18\x02 \x01(\x0b\x32).autokitteh.event.ProjectEventStateRecordB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\x32\xec\x02\n\tLitterBox\x12p\n\x05Setup\x12\".autokitteh.litterbox.SetupRequest\x1a#.autokitteh.litterbox.SetupResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x13/api/v1/litterboxes:\x01*\x12s\n\x03Run\x12 .autokitteh.litterbox.RunRequest\x1a\x1f.autokitteh.litterbox.RunUpdate\"\'\x82\xd3\xe4\x93\x02!\"\x1c/api/v1/litterboxes/{id}/run:\x01*0\x01\x12x\n\x05Scoop\x12\".autokitteh.litterbox.ScoopRequest\x1a#.autokitteh.litterbox.ScoopResponse\"&\x82\xd3\xe4\x93\x02 \"\x1e/api/v1/litterboxes/{id}/scoopB\'Z%go.autokitteh.dev/idl/go/litterboxsvcb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16litterboxsvc/svc.proto\x12\x14\x61utokitteh.litterbox\x1a\x1cgoogle/api/annotations.proto\x1a\x17validate/validate.proto\x1a\x19\x65vent/project_state.proto\x1a\x11\x65vent/track.proto\x1a\x13values/values.proto\"\xdd\x01\n\x0cSetupRequest\x12&\n\x02id\x18\x01 \x01(\tB\x1a\xfa\x42\x17r\x15\x32\x10^[a-zA-Z0-9_-]+$\xd0\x01\x01\x12G\n\x0bsources_map\x18\x02 \x03(\x0b\x32\x32.autokitteh.litterbox.SetupRequest.SourcesMapEntry\x12\x18\n\x10main_source_name\x18\x03 \x01(\t\x12\x0f\n\x07sources\x18\x04 \x01(\x0c\x1a\x31\n\x0fSourcesMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"4\n\rSetupResponse\x12#\n\x02id\x18\x01 \x01(\tB\x17\xfa\x42\x14r\x12\x32\x10^[a-zA-Z0-9_-]+$\"3\n\x0cScoopRequest\x12#\n\x02id\x18\x01 \x01(\tB\x17\xfa\x42\x14r\x12\x32\x10^[a-zA-Z0-9_-]+$\"\x0f\n\rScoopResponse\"\x96\x02\n\x0eLitterBoxEvent\x12\x34\n\x0bsrc_binding\x18\x01 \x01(\tB\x1f\xfa\x42\x1cr\x1a\x32\x18^[a-zA-Z_][a-zA-Z0-9_]*$\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x64\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32..autokitteh.litterbox.LitterBoxEvent.DataEntryB&\xfa\x42#\x9a\x01 \x18\x01\"\x1cr\x1a\x32\x18^[a-zA-Z_][a-zA-Z0-9_]*$\x12\x13\n\x0boriginal_id\x18\x04 \x01(\t\x1a\x45\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\'\n\x05value\x18\x02 \x01(\x0b\x32\x18.autokitteh.values.Value:\x02\x38\x01\"r\n\x0c\x45ventRequest\x12#\n\x02id\x18\x01 \x01(\tB\x17\xfa\x42\x14r\x12\x32\x10^[a-zA-Z0-9_-]+$\x12=\n\x05\x65vent\x18\x02 \x01(\x0b\x32$.autokitteh.litterbox.LitterBoxEventB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\x32\xad\x03\n\tLitterBox\x12\x9b\x01\n\x05Setup\x12\".autokitteh.litterbox.SetupRequest\x1a#.autokitteh.litterbox.SetupResponse\"I\x82\xd3\xe4\x93\x02\x43\"\x13/api/v1/litterboxes:\x07sourcesZ#\"\x18/api/v1/litterboxes/{id}:\x07sources\x12\x87\x01\n\x05\x45vent\x12\".autokitteh.litterbox.EventRequest\x1a(.autokitteh.event.TrackIngestEventUpdate\".\x82\xd3\xe4\x93\x02(\"\x1f/api/v1/litterboxes/{id}/events:\x05\x65vent0\x01\x12x\n\x05Scoop\x12\".autokitteh.litterbox.ScoopRequest\x1a#.autokitteh.litterbox.ScoopResponse\"&\x82\xd3\xe4\x93\x02 \"\x1e/api/v1/litterboxes/{id}/scoopB\'Z%go.autokitteh.dev/idl/go/litterboxsvcb\x06proto3')
 
 
 
 _SETUPREQUEST = DESCRIPTOR.message_types_by_name['SetupRequest']
+_SETUPREQUEST_SOURCESMAPENTRY = _SETUPREQUEST.nested_types_by_name['SourcesMapEntry']
 _SETUPRESPONSE = DESCRIPTOR.message_types_by_name['SetupResponse']
 _SCOOPREQUEST = DESCRIPTOR.message_types_by_name['ScoopRequest']
 _SCOOPRESPONSE = DESCRIPTOR.message_types_by_name['ScoopResponse']
 _LITTERBOXEVENT = DESCRIPTOR.message_types_by_name['LitterBoxEvent']
 _LITTERBOXEVENT_DATAENTRY = _LITTERBOXEVENT.nested_types_by_name['DataEntry']
-_RUNREQUEST = DESCRIPTOR.message_types_by_name['RunRequest']
-_RUNUPDATE = DESCRIPTOR.message_types_by_name['RunUpdate']
+_EVENTREQUEST = DESCRIPTOR.message_types_by_name['EventRequest']
 SetupRequest = _reflection.GeneratedProtocolMessageType('SetupRequest', (_message.Message,), {
+
+  'SourcesMapEntry' : _reflection.GeneratedProtocolMessageType('SourcesMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _SETUPREQUEST_SOURCESMAPENTRY,
+    '__module__' : 'litterboxsvc.svc_pb2'
+    # @@protoc_insertion_point(class_scope:autokitteh.litterbox.SetupRequest.SourcesMapEntry)
+    })
+  ,
   'DESCRIPTOR' : _SETUPREQUEST,
   '__module__' : 'litterboxsvc.svc_pb2'
   # @@protoc_insertion_point(class_scope:autokitteh.litterbox.SetupRequest)
   })
 _sym_db.RegisterMessage(SetupRequest)
+_sym_db.RegisterMessage(SetupRequest.SourcesMapEntry)
 
 SetupResponse = _reflection.GeneratedProtocolMessageType('SetupResponse', (_message.Message,), {
   'DESCRIPTOR' : _SETUPRESPONSE,
@@ -73,65 +82,58 @@ LitterBoxEvent = _reflection.GeneratedProtocolMessageType('LitterBoxEvent', (_me
 _sym_db.RegisterMessage(LitterBoxEvent)
 _sym_db.RegisterMessage(LitterBoxEvent.DataEntry)
 
-RunRequest = _reflection.GeneratedProtocolMessageType('RunRequest', (_message.Message,), {
-  'DESCRIPTOR' : _RUNREQUEST,
+EventRequest = _reflection.GeneratedProtocolMessageType('EventRequest', (_message.Message,), {
+  'DESCRIPTOR' : _EVENTREQUEST,
   '__module__' : 'litterboxsvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.litterbox.RunRequest)
+  # @@protoc_insertion_point(class_scope:autokitteh.litterbox.EventRequest)
   })
-_sym_db.RegisterMessage(RunRequest)
-
-RunUpdate = _reflection.GeneratedProtocolMessageType('RunUpdate', (_message.Message,), {
-  'DESCRIPTOR' : _RUNUPDATE,
-  '__module__' : 'litterboxsvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.litterbox.RunUpdate)
-  })
-_sym_db.RegisterMessage(RunUpdate)
+_sym_db.RegisterMessage(EventRequest)
 
 _LITTERBOX = DESCRIPTOR.services_by_name['LitterBox']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z%go.autokitteh.dev/idl/go/litterboxsvc'
+  _SETUPREQUEST_SOURCESMAPENTRY._options = None
+  _SETUPREQUEST_SOURCESMAPENTRY._serialized_options = b'8\001'
+  _SETUPREQUEST.fields_by_name['id']._options = None
+  _SETUPREQUEST.fields_by_name['id']._serialized_options = b'\372B\027r\0252\020^[a-zA-Z0-9_-]+$\320\001\001'
   _SETUPRESPONSE.fields_by_name['id']._options = None
-  _SETUPRESPONSE.fields_by_name['id']._serialized_options = b'\372B\023r\0212\017^[a-zA-Z0-9_-]$'
+  _SETUPRESPONSE.fields_by_name['id']._serialized_options = b'\372B\024r\0222\020^[a-zA-Z0-9_-]+$'
   _SCOOPREQUEST.fields_by_name['id']._options = None
-  _SCOOPREQUEST.fields_by_name['id']._serialized_options = b'\372B\023r\0212\017^[a-zA-Z0-9_-]$'
+  _SCOOPREQUEST.fields_by_name['id']._serialized_options = b'\372B\024r\0222\020^[a-zA-Z0-9_-]+$'
   _LITTERBOXEVENT_DATAENTRY._options = None
   _LITTERBOXEVENT_DATAENTRY._serialized_options = b'8\001'
   _LITTERBOXEVENT.fields_by_name['src_binding']._options = None
   _LITTERBOXEVENT.fields_by_name['src_binding']._serialized_options = b'\372B\034r\0322\030^[a-zA-Z_][a-zA-Z0-9_]*$'
   _LITTERBOXEVENT.fields_by_name['data']._options = None
   _LITTERBOXEVENT.fields_by_name['data']._serialized_options = b'\372B#\232\001 \030\001\"\034r\0322\030^[a-zA-Z_][a-zA-Z0-9_]*$'
-  _RUNREQUEST.fields_by_name['id']._options = None
-  _RUNREQUEST.fields_by_name['id']._serialized_options = b'\372B\026r\0242\017^[a-zA-Z0-9_-]$\320\001\001'
-  _RUNREQUEST.fields_by_name['event']._options = None
-  _RUNREQUEST.fields_by_name['event']._serialized_options = b'\372B\005\212\001\002\020\001'
-  _RUNUPDATE.fields_by_name['id']._options = None
-  _RUNUPDATE.fields_by_name['id']._serialized_options = b'\372B\023r\0212\017^[a-zA-Z0-9_-]$'
-  _RUNUPDATE.fields_by_name['state']._options = None
-  _RUNUPDATE.fields_by_name['state']._serialized_options = b'\372B\005\212\001\002\020\001'
+  _EVENTREQUEST.fields_by_name['id']._options = None
+  _EVENTREQUEST.fields_by_name['id']._serialized_options = b'\372B\024r\0222\020^[a-zA-Z0-9_-]+$'
+  _EVENTREQUEST.fields_by_name['event']._options = None
+  _EVENTREQUEST.fields_by_name['event']._serialized_options = b'\372B\005\212\001\002\020\001'
   _LITTERBOX.methods_by_name['Setup']._options = None
-  _LITTERBOX.methods_by_name['Setup']._serialized_options = b'\202\323\344\223\002\030\"\023/api/v1/litterboxes:\001*'
-  _LITTERBOX.methods_by_name['Run']._options = None
-  _LITTERBOX.methods_by_name['Run']._serialized_options = b'\202\323\344\223\002!\"\034/api/v1/litterboxes/{id}/run:\001*'
+  _LITTERBOX.methods_by_name['Setup']._serialized_options = b'\202\323\344\223\002C\"\023/api/v1/litterboxes:\007sourcesZ#\"\030/api/v1/litterboxes/{id}:\007sources'
+  _LITTERBOX.methods_by_name['Event']._options = None
+  _LITTERBOX.methods_by_name['Event']._serialized_options = b'\202\323\344\223\002(\"\037/api/v1/litterboxes/{id}/events:\005event'
   _LITTERBOX.methods_by_name['Scoop']._options = None
   _LITTERBOX.methods_by_name['Scoop']._serialized_options = b'\202\323\344\223\002 \"\036/api/v1/litterboxes/{id}/scoop'
-  _SETUPREQUEST._serialized_start=151
-  _SETUPREQUEST._serialized_end=179
-  _SETUPRESPONSE._serialized_start=181
-  _SETUPRESPONSE._serialized_end=232
-  _SCOOPREQUEST._serialized_start=234
-  _SCOOPREQUEST._serialized_end=284
-  _SCOOPRESPONSE._serialized_start=286
-  _SCOOPRESPONSE._serialized_end=301
-  _LITTERBOXEVENT._serialized_start=304
-  _LITTERBOXEVENT._serialized_end=582
-  _LITTERBOXEVENT_DATAENTRY._serialized_start=513
-  _LITTERBOXEVENT_DATAENTRY._serialized_end=582
-  _RUNREQUEST._serialized_start=585
-  _RUNREQUEST._serialized_end=715
-  _RUNUPDATE._serialized_start=717
-  _RUNUPDATE._serialized_end=832
-  _LITTERBOX._serialized_start=835
-  _LITTERBOX._serialized_end=1199
+  _SETUPREQUEST._serialized_start=171
+  _SETUPREQUEST._serialized_end=392
+  _SETUPREQUEST_SOURCESMAPENTRY._serialized_start=343
+  _SETUPREQUEST_SOURCESMAPENTRY._serialized_end=392
+  _SETUPRESPONSE._serialized_start=394
+  _SETUPRESPONSE._serialized_end=446
+  _SCOOPREQUEST._serialized_start=448
+  _SCOOPREQUEST._serialized_end=499
+  _SCOOPRESPONSE._serialized_start=501
+  _SCOOPRESPONSE._serialized_end=516
+  _LITTERBOXEVENT._serialized_start=519
+  _LITTERBOXEVENT._serialized_end=797
+  _LITTERBOXEVENT_DATAENTRY._serialized_start=728
+  _LITTERBOXEVENT_DATAENTRY._serialized_end=797
+  _EVENTREQUEST._serialized_start=799
+  _EVENTREQUEST._serialized_end=913
+  _LITTERBOX._serialized_start=916
+  _LITTERBOX._serialized_end=1345
 # @@protoc_insertion_point(module_scope)

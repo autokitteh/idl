@@ -10,15 +10,17 @@ import "validate/validate.proto";
 import "event/event.proto";
 import "event/event_state.proto";
 import "event/project_state.proto";
+import "event/track.proto";
 import "values/values.proto";
 
 
 message IngestEventRequest {
-  string                    src_id            = 1 {{ EventSourceID }};
-  string                    association_token = 2;
-  string                    type              = 3;
-  map<string, values.Value> data              = 4 {{ VarMap }};
-  string                    original_id       = 5;
+  string                    event_id          = 1 {{ MaybeEventID }};
+  string                    src_id            = 2 {{ EventSourceID }};
+  string                    association_token = 3;
+  string                    type              = 4;
+  map<string, values.Value> data              = 5 {{ VarMap }};
+  string                    original_id       = 6;
 
   // for caller use only - not used in event processing.
   map<string, string>       memo        = 50 [(validate.rules).map.keys.string.min_len = 1];
@@ -88,13 +90,20 @@ message GetProjectWaitingEventsRequest {
 }
 
 message GetProjectWaitingEventsResponse {
-  repeated string event_ids = 2 {{ RepeatedEventID }};
+  repeated string event_ids = 1 {{ RepeatedEventID }};
 }
 
 service Events {
   rpc IngestEvent(IngestEventRequest) returns (IngestEventResponse) {
     option (google.api.http) = {
       post: "/api/v1/events",
+      body: "*"
+    };
+  }
+
+  rpc TrackIngestEvent(IngestEventRequest) returns (stream event.TrackIngestEventUpdate) {
+    option (google.api.http) = {
+      post: "/api/v1/tracked-events",
       body: "*"
     };
   }

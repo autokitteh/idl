@@ -10,15 +10,17 @@ import "validate/validate.proto";
 import "event/event.proto";
 import "event/event_state.proto";
 import "event/project_state.proto";
+import "event/track.proto";
 import "values/values.proto";
 
 
 message IngestEventRequest {
-  string                    src_id            = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
-  string                    association_token = 2;
-  string                    type              = 3;
-  map<string, values.Value> data              = 4 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
-  string                    original_id       = 5;
+  string                    event_id          = 1 ;
+  string                    src_id            = 2 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z][0-9a-zA-Z_-]+$"];
+  string                    association_token = 3;
+  string                    type              = 4;
+  map<string, values.Value> data              = 5 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
+  string                    original_id       = 6;
 
   // for caller use only - not used in event processing.
   map<string, string>       memo        = 50 [(validate.rules).map.keys.string.min_len = 1];
@@ -88,13 +90,20 @@ message GetProjectWaitingEventsRequest {
 }
 
 message GetProjectWaitingEventsResponse {
-  repeated string event_ids = 2 [(validate.rules).repeated.items.string.pattern = "^E[0-9a-f]+$"];
+  repeated string event_ids = 1 [(validate.rules).repeated.items.string.pattern = "^E[0-9a-f]+$"];
 }
 
 service Events {
   rpc IngestEvent(IngestEventRequest) returns (IngestEventResponse) {
     option (google.api.http) = {
       post: "/api/v1/events",
+      body: "*"
+    };
+  }
+
+  rpc TrackIngestEvent(IngestEventRequest) returns (stream event.TrackIngestEventUpdate) {
+    option (google.api.http) = {
+      post: "/api/v1/tracked-events",
       body: "*"
     };
   }

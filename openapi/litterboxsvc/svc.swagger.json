@@ -39,8 +39,21 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/litterboxSetupRequest"
+              "type": "string",
+              "format": "byte"
             }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mainSourceName",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -48,23 +61,14 @@
         ]
       }
     },
-    "/api/v1/litterboxes/{id}/run": {
+    "/api/v1/litterboxes/{id}": {
       "post": {
-        "operationId": "LitterBox_Run",
+        "operationId": "LitterBox_Setup2",
         "responses": {
           "200": {
-            "description": "A successful response.(streaming responses)",
+            "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "$ref": "#/definitions/litterboxRunUpdate"
-                },
-                "error": {
-                  "$ref": "#/definitions/rpcStatus"
-                }
-              },
-              "title": "Stream result of litterboxRunUpdate"
+              "$ref": "#/definitions/litterboxSetupResponse"
             }
           },
           "default": {
@@ -77,7 +81,6 @@
         "parameters": [
           {
             "name": "id",
-            "description": "If id is empty, run will setup, use and scoop the litterbox by itself.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -87,15 +90,61 @@
             "in": "body",
             "required": true,
             "schema": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          {
+            "name": "mainSourceName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      }
+    },
+    "/api/v1/litterboxes/{id}/events": {
+      "post": {
+        "operationId": "LitterBox_Event",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
               "type": "object",
               "properties": {
-                "source": {
-                  "type": "string"
+                "result": {
+                  "$ref": "#/definitions/eventTrackIngestEventUpdate"
                 },
-                "event": {
-                  "$ref": "#/definitions/litterboxLitterBoxEvent"
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
                 }
-              }
+              },
+              "title": "Stream result of eventTrackIngestEventUpdate"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/litterboxLitterBoxEvent"
             }
           }
         ],
@@ -174,6 +223,14 @@
         }
       }
     },
+    "eventErrorEventState": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
     "eventErrorProjectEventState": {
       "type": "object",
       "properties": {
@@ -181,6 +238,46 @@
           "$ref": "#/definitions/langRunSummary"
         },
         "error": {
+          "type": "string"
+        }
+      }
+    },
+    "eventEventState": {
+      "type": "object",
+      "properties": {
+        "ignored": {
+          "$ref": "#/definitions/eventIgnoredEventState"
+        },
+        "error": {
+          "$ref": "#/definitions/eventErrorEventState"
+        },
+        "pending": {
+          "$ref": "#/definitions/eventPendingEventState"
+        },
+        "processing": {
+          "$ref": "#/definitions/eventProcessingEventState"
+        },
+        "processed": {
+          "$ref": "#/definitions/eventProcessedEventState"
+        }
+      }
+    },
+    "eventEventStateRecord": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/definitions/eventEventState"
+        }
+      }
+    },
+    "eventIgnoredEventState": {
+      "type": "object",
+      "properties": {
+        "reason": {
           "type": "string"
         }
       }
@@ -193,14 +290,51 @@
         }
       }
     },
+    "eventPendingEventState": {
+      "type": "object"
+    },
     "eventPendingProjectEventState": {
       "type": "object"
+    },
+    "eventProcessedEventState": {
+      "type": "object",
+      "properties": {
+        "projectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attnProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "eventProcessedProjectEventState": {
       "type": "object",
       "properties": {
         "runSummary": {
           "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
+    "eventProcessingEventState": {
+      "type": "object",
+      "properties": {
+        "projectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ignoredProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -239,6 +373,23 @@
         },
         "state": {
           "$ref": "#/definitions/eventProjectEventState"
+        }
+      }
+    },
+    "eventTrackIngestEventUpdate": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string"
+        },
+        "eventState": {
+          "$ref": "#/definitions/eventEventStateRecord"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "projectEventState": {
+          "$ref": "#/definitions/eventProjectEventStateRecord"
         }
       }
     },
@@ -453,27 +604,8 @@
         }
       }
     },
-    "litterboxRunUpdate": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "state": {
-          "$ref": "#/definitions/eventProjectEventStateRecord"
-        }
-      }
-    },
     "litterboxScoopResponse": {
       "type": "object"
-    },
-    "litterboxSetupRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
     },
     "litterboxSetupResponse": {
       "type": "object",

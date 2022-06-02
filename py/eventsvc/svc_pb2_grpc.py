@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from event import track_pb2 as event_dot_track__pb2
 from eventsvc import svc_pb2 as eventsvc_dot_svc__pb2
 
 
@@ -18,6 +19,11 @@ class EventsStub(object):
                 '/autokitteh.eventsvc.Events/IngestEvent',
                 request_serializer=eventsvc_dot_svc__pb2.IngestEventRequest.SerializeToString,
                 response_deserializer=eventsvc_dot_svc__pb2.IngestEventResponse.FromString,
+                )
+        self.TrackIngestEvent = channel.unary_stream(
+                '/autokitteh.eventsvc.Events/TrackIngestEvent',
+                request_serializer=eventsvc_dot_svc__pb2.IngestEventRequest.SerializeToString,
+                response_deserializer=event_dot_track__pb2.TrackIngestEventUpdate.FromString,
                 )
         self.GetEvent = channel.unary_unary(
                 '/autokitteh.eventsvc.Events/GetEvent',
@@ -60,6 +66,12 @@ class EventsServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def IngestEvent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TrackIngestEvent(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -114,6 +126,11 @@ def add_EventsServicer_to_server(servicer, server):
                     servicer.IngestEvent,
                     request_deserializer=eventsvc_dot_svc__pb2.IngestEventRequest.FromString,
                     response_serializer=eventsvc_dot_svc__pb2.IngestEventResponse.SerializeToString,
+            ),
+            'TrackIngestEvent': grpc.unary_stream_rpc_method_handler(
+                    servicer.TrackIngestEvent,
+                    request_deserializer=eventsvc_dot_svc__pb2.IngestEventRequest.FromString,
+                    response_serializer=event_dot_track__pb2.TrackIngestEventUpdate.SerializeToString,
             ),
             'GetEvent': grpc.unary_unary_rpc_method_handler(
                     servicer.GetEvent,
@@ -174,6 +191,23 @@ class Events(object):
         return grpc.experimental.unary_unary(request, target, '/autokitteh.eventsvc.Events/IngestEvent',
             eventsvc_dot_svc__pb2.IngestEventRequest.SerializeToString,
             eventsvc_dot_svc__pb2.IngestEventResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TrackIngestEvent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/autokitteh.eventsvc.Events/TrackIngestEvent',
+            eventsvc_dot_svc__pb2.IngestEventRequest.SerializeToString,
+            event_dot_track__pb2.TrackIngestEventUpdate.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

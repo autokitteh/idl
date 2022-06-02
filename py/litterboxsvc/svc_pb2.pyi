@@ -3,7 +3,6 @@
 isort:skip_file
 """
 import builtins
-import event.project_state_pb2
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
@@ -15,13 +14,38 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class SetupRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    NAME_FIELD_NUMBER: builtins.int
-    name: typing.Text
+    class SourcesMapEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: typing.Text
+        value: builtins.bytes
+        def __init__(self,
+            *,
+            key: typing.Text = ...,
+            value: builtins.bytes = ...,
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+    ID_FIELD_NUMBER: builtins.int
+    SOURCES_MAP_FIELD_NUMBER: builtins.int
+    MAIN_SOURCE_NAME_FIELD_NUMBER: builtins.int
+    SOURCES_FIELD_NUMBER: builtins.int
+    id: typing.Text
+    @property
+    def sources_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]: ...
+    main_source_name: typing.Text
+    sources: builtins.bytes
+    """in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar)."""
+
     def __init__(self,
         *,
-        name: typing.Text = ...,
+        id: typing.Text = ...,
+        sources_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
+        main_source_name: typing.Text = ...,
+        sources: builtins.bytes = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["name",b"name"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["id",b"id","main_source_name",b"main_source_name","sources",b"sources","sources_map",b"sources_map"]) -> None: ...
 global___SetupRequest = SetupRequest
 
 class SetupResponse(google.protobuf.message.Message):
@@ -88,39 +112,18 @@ class LitterBoxEvent(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src_binding",b"src_binding","type",b"type"]) -> None: ...
 global___LitterBoxEvent = LitterBoxEvent
 
-class RunRequest(google.protobuf.message.Message):
+class EventRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ID_FIELD_NUMBER: builtins.int
-    SOURCE_FIELD_NUMBER: builtins.int
     EVENT_FIELD_NUMBER: builtins.int
     id: typing.Text
-    """If id is empty, run will setup, use and scoop the litterbox by itself."""
-
-    source: typing.Text
     @property
     def event(self) -> global___LitterBoxEvent: ...
     def __init__(self,
         *,
         id: typing.Text = ...,
-        source: typing.Text = ...,
         event: typing.Optional[global___LitterBoxEvent] = ...,
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["event",b"event"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id","source",b"source"]) -> None: ...
-global___RunRequest = RunRequest
-
-class RunUpdate(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    ID_FIELD_NUMBER: builtins.int
-    STATE_FIELD_NUMBER: builtins.int
-    id: typing.Text
-    @property
-    def state(self) -> event.project_state_pb2.ProjectEventStateRecord: ...
-    def __init__(self,
-        *,
-        id: typing.Text = ...,
-        state: typing.Optional[event.project_state_pb2.ProjectEventStateRecord] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["state",b"state"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["id",b"id","state",b"state"]) -> None: ...
-global___RunUpdate = RunUpdate
+    def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id"]) -> None: ...
+global___EventRequest = EventRequest

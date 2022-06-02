@@ -45,12 +45,14 @@ class IngestEventRequest(google.protobuf.message.Message):
             ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
+    EVENT_ID_FIELD_NUMBER: builtins.int
     SRC_ID_FIELD_NUMBER: builtins.int
     ASSOCIATION_TOKEN_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     DATA_FIELD_NUMBER: builtins.int
     ORIGINAL_ID_FIELD_NUMBER: builtins.int
     MEMO_FIELD_NUMBER: builtins.int
+    event_id: typing.Text
     src_id: typing.Text
     association_token: typing.Text
     type: typing.Text
@@ -63,6 +65,7 @@ class IngestEventRequest(google.protobuf.message.Message):
         pass
     def __init__(self,
         *,
+        event_id: typing.Text = ...,
         src_id: typing.Text = ...,
         association_token: typing.Text = ...,
         type: typing.Text = ...,
@@ -70,7 +73,7 @@ class IngestEventRequest(google.protobuf.message.Message):
         original_id: typing.Text = ...,
         memo: typing.Optional[typing.Mapping[typing.Text, typing.Text]] = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["association_token",b"association_token","data",b"data","memo",b"memo","original_id",b"original_id","src_id",b"src_id","type",b"type"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["association_token",b"association_token","data",b"data","event_id",b"event_id","memo",b"memo","original_id",b"original_id","src_id",b"src_id","type",b"type"]) -> None: ...
 global___IngestEventRequest = IngestEventRequest
 
 class IngestEventResponse(google.protobuf.message.Message):

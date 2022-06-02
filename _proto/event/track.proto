@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package autokitteh.event;
+
+option go_package = "go.autokitteh.dev/idl/go/event";
+
+import "validate/validate.proto";
+
+import "event/event_state.proto";
+import "event/project_state.proto";
+
+
+message TrackIngestEventUpdate {
+  string           event_id    = 1 {{ EventID }};
+  EventStateRecord event_state = 2;
+
+  string                  project_id          = 3 {{ MaybeProjectID }};
+  ProjectEventStateRecord project_event_state = 4; // set if project_id is set
+}

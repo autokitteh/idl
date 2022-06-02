@@ -41,6 +41,8 @@ func (m *IngestEventRequest) Validate() error {
 		return nil
 	}
 
+	// no validation rules for EventId
+
 	if !_IngestEventRequest_SrcId_Pattern.MatchString(m.GetSrcId()) {
 		return IngestEventRequestValidationError{
 			field:  "SrcId",

@@ -4,6 +4,7 @@ package litterboxsvc
 
 import (
 	context "context"
+	event "go.autokitteh.dev/idl/go/event"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -19,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LitterBoxClient interface {
 	Setup(ctx context.Context, in *SetupRequest, opts ...grpc.CallOption) (*SetupResponse, error)
-	Run(ctx context.Context, in *RunRequest, opts ...grpc.CallOption) (LitterBox_RunClient, error)
+	Event(ctx context.Context, in *EventRequest, opts ...grpc.CallOption) (LitterBox_EventClient, error)
 	Scoop(ctx context.Context, in *ScoopRequest, opts ...grpc.CallOption) (*ScoopResponse, error)
 }
 
@@ -40,12 +41,12 @@ func (c *litterBoxClient) Setup(ctx context.Context, in *SetupRequest, opts ...g
 	return out, nil
 }
 
-func (c *litterBoxClient) Run(ctx context.Context, in *RunRequest, opts ...grpc.CallOption) (LitterBox_RunClient, error) {
-	stream, err := c.cc.NewStream(ctx, &LitterBox_ServiceDesc.Streams[0], "/autokitteh.litterbox.LitterBox/Run", opts...)
+func (c *litterBoxClient) Event(ctx context.Context, in *EventRequest, opts ...grpc.CallOption) (LitterBox_EventClient, error) {
+	stream, err := c.cc.NewStream(ctx, &LitterBox_ServiceDesc.Streams[0], "/autokitteh.litterbox.LitterBox/Event", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &litterBoxRunClient{stream}
+	x := &litterBoxEventClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -55,17 +56,17 @@ func (c *litterBoxClient) Run(ctx context.Context, in *RunRequest, opts ...grpc.
 	return x, nil
 }
 
-type LitterBox_RunClient interface {
-	Recv() (*RunUpdate, error)
+type LitterBox_EventClient interface {
+	Recv() (*event.TrackIngestEventUpdate, error)
 	grpc.ClientStream
 }
 
-type litterBoxRunClient struct {
+type litterBoxEventClient struct {
 	grpc.ClientStream
 }
 
-func (x *litterBoxRunClient) Recv() (*RunUpdate, error) {
-	m := new(RunUpdate)
+func (x *litterBoxEventClient) Recv() (*event.TrackIngestEventUpdate, error) {
+	m := new(event.TrackIngestEventUpdate)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -86,7 +87,7 @@ func (c *litterBoxClient) Scoop(ctx context.Context, in *ScoopRequest, opts ...g
 // for forward compatibility
 type LitterBoxServer interface {
 	Setup(context.Context, *SetupRequest) (*SetupResponse, error)
-	Run(*RunRequest, LitterBox_RunServer) error
+	Event(*EventRequest, LitterBox_EventServer) error
 	Scoop(context.Context, *ScoopRequest) (*ScoopResponse, error)
 	mustEmbedUnimplementedLitterBoxServer()
 }
@@ -98,8 +99,8 @@ type UnimplementedLitterBoxServer struct {
 func (UnimplementedLitterBoxServer) Setup(context.Context, *SetupRequest) (*SetupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Setup not implemented")
 }
-func (UnimplementedLitterBoxServer) Run(*RunRequest, LitterBox_RunServer) error {
-	return status.Errorf(codes.Unimplemented, "method Run not implemented")
+func (UnimplementedLitterBoxServer) Event(*EventRequest, LitterBox_EventServer) error {
+	return status.Errorf(codes.Unimplemented, "method Event not implemented")
 }
 func (UnimplementedLitterBoxServer) Scoop(context.Context, *ScoopRequest) (*ScoopResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Scoop not implemented")
@@ -135,24 +136,24 @@ func _LitterBox_Setup_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LitterBox_Run_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(RunRequest)
+func _LitterBox_Event_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(EventRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LitterBoxServer).Run(m, &litterBoxRunServer{stream})
+	return srv.(LitterBoxServer).Event(m, &litterBoxEventServer{stream})
 }
 
-type LitterBox_RunServer interface {
-	Send(*RunUpdate) error
+type LitterBox_EventServer interface {
+	Send(*event.TrackIngestEventUpdate) error
 	grpc.ServerStream
 }
 
-type litterBoxRunServer struct {
+type litterBoxEventServer struct {
 	grpc.ServerStream
 }
 
-func (x *litterBoxRunServer) Send(m *RunUpdate) error {
+func (x *litterBoxEventServer) Send(m *event.TrackIngestEventUpdate) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -192,8 +193,8 @@ var LitterBox_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Run",
-			Handler:       _LitterBox_Run_Handler,
+			StreamName:    "Event",
+			Handler:       _LitterBox_Event_Handler,
 			ServerStreams: true,
 		},
 	},

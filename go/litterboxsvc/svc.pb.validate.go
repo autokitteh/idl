@@ -41,7 +41,22 @@ func (m *SetupRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if m.GetId() != "" {
+
+		if !_SetupRequest_Id_Pattern.MatchString(m.GetId()) {
+			return SetupRequestValidationError{
+				field:  "Id",
+				reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]+$\"",
+			}
+		}
+
+	}
+
+	// no validation rules for SourcesMap
+
+	// no validation rules for MainSourceName
+
+	// no validation rules for Sources
 
 	return nil
 }
@@ -100,6 +115,8 @@ var _ interface {
 	ErrorName() string
 } = SetupRequestValidationError{}
 
+var _SetupRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")
+
 // Validate checks the field values on SetupResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -111,7 +128,7 @@ func (m *SetupResponse) Validate() error {
 	if !_SetupResponse_Id_Pattern.MatchString(m.GetId()) {
 		return SetupResponseValidationError{
 			field:  "Id",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]+$\"",
 		}
 	}
 
@@ -172,7 +189,7 @@ var _ interface {
 	ErrorName() string
 } = SetupResponseValidationError{}
 
-var _SetupResponse_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
+var _SetupResponse_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")
 
 // Validate checks the field values on ScoopRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -185,7 +202,7 @@ func (m *ScoopRequest) Validate() error {
 	if !_ScoopRequest_Id_Pattern.MatchString(m.GetId()) {
 		return ScoopRequestValidationError{
 			field:  "Id",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]+$\"",
 		}
 	}
 
@@ -246,7 +263,7 @@ var _ interface {
 	ErrorName() string
 } = ScoopRequestValidationError{}
 
-var _ScoopRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
+var _ScoopRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")
 
 // Validate checks the field values on ScoopResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -422,28 +439,23 @@ var _LitterBoxEvent_SrcBinding_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-
 
 var _LitterBoxEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
-// Validate checks the field values on RunRequest with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *RunRequest) Validate() error {
+// Validate checks the field values on EventRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *EventRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if m.GetId() != "" {
-
-		if !_RunRequest_Id_Pattern.MatchString(m.GetId()) {
-			return RunRequestValidationError{
-				field:  "Id",
-				reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
-			}
+	if !_EventRequest_Id_Pattern.MatchString(m.GetId()) {
+		return EventRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]+$\"",
 		}
-
 	}
 
-	// no validation rules for Source
-
 	if m.GetEvent() == nil {
-		return RunRequestValidationError{
+		return EventRequestValidationError{
 			field:  "Event",
 			reason: "value is required",
 		}
@@ -451,7 +463,7 @@ func (m *RunRequest) Validate() error {
 
 	if v, ok := interface{}(m.GetEvent()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RunRequestValidationError{
+			return EventRequestValidationError{
 				field:  "Event",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -462,9 +474,9 @@ func (m *RunRequest) Validate() error {
 	return nil
 }
 
-// RunRequestValidationError is the validation error returned by
-// RunRequest.Validate if the designated constraints aren't met.
-type RunRequestValidationError struct {
+// EventRequestValidationError is the validation error returned by
+// EventRequest.Validate if the designated constraints aren't met.
+type EventRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -472,22 +484,22 @@ type RunRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RunRequestValidationError) Field() string { return e.field }
+func (e EventRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RunRequestValidationError) Reason() string { return e.reason }
+func (e EventRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RunRequestValidationError) Cause() error { return e.cause }
+func (e EventRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RunRequestValidationError) Key() bool { return e.key }
+func (e EventRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RunRequestValidationError) ErrorName() string { return "RunRequestValidationError" }
+func (e EventRequestValidationError) ErrorName() string { return "EventRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e RunRequestValidationError) Error() string {
+func (e EventRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -499,14 +511,14 @@ func (e RunRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRunRequest.%s: %s%s",
+		"invalid %sEventRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RunRequestValidationError{}
+var _ error = EventRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -514,96 +526,6 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RunRequestValidationError{}
+} = EventRequestValidationError{}
 
-var _RunRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
-
-// Validate checks the field values on RunUpdate with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *RunUpdate) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if !_RunUpdate_Id_Pattern.MatchString(m.GetId()) {
-		return RunUpdateValidationError{
-			field:  "Id",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]$\"",
-		}
-	}
-
-	if m.GetState() == nil {
-		return RunUpdateValidationError{
-			field:  "State",
-			reason: "value is required",
-		}
-	}
-
-	if v, ok := interface{}(m.GetState()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RunUpdateValidationError{
-				field:  "State",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// RunUpdateValidationError is the validation error returned by
-// RunUpdate.Validate if the designated constraints aren't met.
-type RunUpdateValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e RunUpdateValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e RunUpdateValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e RunUpdateValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e RunUpdateValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e RunUpdateValidationError) ErrorName() string { return "RunUpdateValidationError" }
-
-// Error satisfies the builtin error interface
-func (e RunUpdateValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sRunUpdate.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = RunUpdateValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = RunUpdateValidationError{}
-
-var _RunUpdate_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]$")
+var _EventRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")

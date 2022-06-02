@@ -321,6 +321,47 @@
           "Events"
         ]
       }
+    },
+    "/api/v1/tracked-events": {
+      "post": {
+        "operationId": "Events_TrackIngestEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/eventTrackIngestEventUpdate"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of eventTrackIngestEventUpdate"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/eventsvcIngestEventRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
     }
   },
   "definitions": {
@@ -551,6 +592,23 @@
         }
       }
     },
+    "eventTrackIngestEventUpdate": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string"
+        },
+        "eventState": {
+          "$ref": "#/definitions/eventEventStateRecord"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "projectEventState": {
+          "$ref": "#/definitions/eventProjectEventStateRecord"
+        }
+      }
+    },
     "eventWaitingProjectEventState": {
       "type": "object",
       "properties": {
@@ -609,6 +667,9 @@
     "eventsvcIngestEventRequest": {
       "type": "object",
       "properties": {
+        "eventId": {
+          "type": "string"
+        },
         "srcId": {
           "type": "string"
         },

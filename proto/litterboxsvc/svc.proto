@@ -8,19 +8,23 @@ import "google/api/annotations.proto";
 import "validate/validate.proto";
 
 import "event/project_state.proto";
+import "event/track.proto";
 import "values/values.proto";
 
 
 message SetupRequest {
-  string name = 1;
+  string             id               = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z0-9_-]+$" }];
+  map<string, bytes> sources_map      = 2;
+  string             main_source_name = 3;
+  bytes              sources          = 4; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
 }
 
 message SetupResponse {
-  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]$"];
+  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]+$"];
 }
 
 message ScoopRequest {
-  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]$"];
+  string id = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]+$"];
 }
 
 message ScoopResponse {}
@@ -32,30 +36,29 @@ message LitterBoxEvent {
   string                    original_id = 4;
 }
 
-message RunRequest {
-  // If id is empty, run will setup, use and scoop the litterbox by itself.
-  string         id     = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z0-9_-]$" }];
-  string         source = 2;
-  LitterBoxEvent event  = 3 [(validate.rules).message.required = true];
-}
-
-message RunUpdate {
-  string                        id    = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]$"];
-  event.ProjectEventStateRecord state = 2 [(validate.rules).message.required = true];
+message EventRequest {
+  string         id     = 1 [(validate.rules).string.pattern = "^[a-zA-Z0-9_-]+$"];
+  LitterBoxEvent event  = 2 [(validate.rules).message.required = true];
 }
 
 service LitterBox {
   rpc Setup(SetupRequest) returns (SetupResponse) {
     option (google.api.http) = {
       post: "/api/v1/litterboxes",
-      body: "*"
+      body: "sources"
+      additional_bindings: [
+        {
+          post: "/api/v1/litterboxes/{id}"
+          body: "sources"
+        }
+      ]
     };
   }
 
-  rpc Run(RunRequest) returns (stream RunUpdate) {
+  rpc Event(EventRequest) returns (stream event.TrackIngestEventUpdate) {
     option (google.api.http) = {
-      post: "/api/v1/litterboxes/{id}/run",
-      body: "*"
+      post: "/api/v1/litterboxes/{id}/events",
+      body: "event"
     };
   }
 
