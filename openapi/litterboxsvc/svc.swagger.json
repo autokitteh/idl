@@ -390,6 +390,9 @@
         },
         "projectEventState": {
           "$ref": "#/definitions/eventProjectEventStateRecord"
+        },
+        "flattenedRunSummary": {
+          "$ref": "#/definitions/langRunSummary"
         }
       }
     },

@@ -79,6 +79,16 @@ func (m *TrackIngestEventUpdate) Validate() error {
 		}
 	}
 
+	if v, ok := interface{}(m.GetFlattenedRunSummary()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TrackIngestEventUpdateValidationError{
+				field:  "FlattenedRunSummary",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	return nil
 }
 

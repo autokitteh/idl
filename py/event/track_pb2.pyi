@@ -7,6 +7,7 @@ import event.event_state_pb2
 import event.project_state_pb2
 import google.protobuf.descriptor
 import google.protobuf.message
+import lang.run_pb2
 import typing
 import typing_extensions
 
@@ -18,6 +19,7 @@ class TrackIngestEventUpdate(google.protobuf.message.Message):
     EVENT_STATE_FIELD_NUMBER: builtins.int
     PROJECT_ID_FIELD_NUMBER: builtins.int
     PROJECT_EVENT_STATE_FIELD_NUMBER: builtins.int
+    FLATTENED_RUN_SUMMARY_FIELD_NUMBER: builtins.int
     event_id: typing.Text
     @property
     def event_state(self) -> event.event_state_pb2.EventStateRecord: ...
@@ -26,13 +28,16 @@ class TrackIngestEventUpdate(google.protobuf.message.Message):
     def project_event_state(self) -> event.project_state_pb2.ProjectEventStateRecord:
         """set if project_id is set"""
         pass
+    @property
+    def flattened_run_summary(self) -> lang.run_pb2.RunSummary: ...
     def __init__(self,
         *,
         event_id: typing.Text = ...,
         event_state: typing.Optional[event.event_state_pb2.EventStateRecord] = ...,
         project_id: typing.Text = ...,
         project_event_state: typing.Optional[event.project_state_pb2.ProjectEventStateRecord] = ...,
+        flattened_run_summary: typing.Optional[lang.run_pb2.RunSummary] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["event_state",b"event_state","project_event_state",b"project_event_state"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["event_id",b"event_id","event_state",b"event_state","project_event_state",b"project_event_state","project_id",b"project_id"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["event_state",b"event_state","flattened_run_summary",b"flattened_run_summary","project_event_state",b"project_event_state"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["event_id",b"event_id","event_state",b"event_state","flattened_run_summary",b"flattened_run_summary","project_event_state",b"project_event_state","project_id",b"project_id"]) -> None: ...
 global___TrackIngestEventUpdate = TrackIngestEventUpdate

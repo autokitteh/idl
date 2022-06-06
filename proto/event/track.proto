@@ -8,12 +8,14 @@ import "validate/validate.proto";
 
 import "event/event_state.proto";
 import "event/project_state.proto";
+import "lang/run.proto";
 
 
 message TrackIngestEventUpdate {
   string           event_id    = 1 [(validate.rules).string.pattern = "^E[0-9a-f]+$"];
   EventStateRecord event_state = 2;
 
-  string                  project_id          = 3 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$" }];
-  ProjectEventStateRecord project_event_state = 4; // set if project_id is set
+  string                  project_id            = 3 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$" }];
+  ProjectEventStateRecord project_event_state   = 4; // set if project_id is set
+  lang.RunSummary         flattened_run_summary = 5;
 }

@@ -8,12 +8,14 @@ import "validate/validate.proto";
 
 import "event/event_state.proto";
 import "event/project_state.proto";
+import "lang/run.proto";
 
 
 message TrackIngestEventUpdate {
   string           event_id    = 1 {{ EventID }};
   EventStateRecord event_state = 2;
 
-  string                  project_id          = 3 {{ MaybeProjectID }};
-  ProjectEventStateRecord project_event_state = 4; // set if project_id is set
+  string                  project_id            = 3 {{ MaybeProjectID }};
+  ProjectEventStateRecord project_event_state   = 4; // set if project_id is set
+  lang.RunSummary         flattened_run_summary = 5;
 }

@@ -19,8 +19,8 @@ message RunStateLogRecord {
 }
 
 message RunSummary {
-  repeated RunStateLogRecord log    = 1 [(validate.rules).repeated.items.message.required = true];
-  repeated string            prints = 2;
+  repeated RunStateLogRecord log    = 2 [(validate.rules).repeated.items.message.required = true];
+  repeated string            prints = 3;
 }
 
 message RunState {
