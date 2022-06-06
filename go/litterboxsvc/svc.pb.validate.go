@@ -52,11 +52,11 @@ func (m *SetupRequest) Validate() error {
 
 	}
 
-	// no validation rules for SourcesMap
+	// no validation rules for FilesMap
 
-	// no validation rules for MainSourceName
+	// no validation rules for MainFileName
 
-	// no validation rules for Sources
+	// no validation rules for FilesTxtar
 
 	return nil
 }
@@ -338,9 +338,9 @@ func (m *LitterBoxEvent) Validate() error {
 		return nil
 	}
 
-	if !_LitterBoxEvent_SrcBinding_Pattern.MatchString(m.GetSrcBinding()) {
+	if !_LitterBoxEvent_Src_Pattern.MatchString(m.GetSrc()) {
 		return LitterBoxEventValidationError{
-			field:  "SrcBinding",
+			field:  "Src",
 			reason: "value does not match regex pattern \"^[a-zA-Z_][a-zA-Z0-9_]*$\"",
 		}
 	}
@@ -435,7 +435,7 @@ var _ interface {
 	ErrorName() string
 } = LitterBoxEventValidationError{}
 
-var _LitterBoxEvent_SrcBinding_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
+var _LitterBoxEvent_Src_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 var _LitterBoxEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 

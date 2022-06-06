@@ -14,7 +14,7 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class SetupRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    class SourcesMapEntry(google.protobuf.message.Message):
+    class FilesMapEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
@@ -28,24 +28,26 @@ class SetupRequest(google.protobuf.message.Message):
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
     ID_FIELD_NUMBER: builtins.int
-    SOURCES_MAP_FIELD_NUMBER: builtins.int
-    MAIN_SOURCE_NAME_FIELD_NUMBER: builtins.int
-    SOURCES_FIELD_NUMBER: builtins.int
+    FILES_MAP_FIELD_NUMBER: builtins.int
+    MAIN_FILE_NAME_FIELD_NUMBER: builtins.int
+    FILES_TXTAR_FIELD_NUMBER: builtins.int
     id: typing.Text
     @property
-    def sources_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]: ...
-    main_source_name: typing.Text
-    sources: builtins.bytes
+    def files_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]:
+        """name -> file."""
+        pass
+    main_file_name: typing.Text
+    files_txtar: builtins.bytes
     """in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar)."""
 
     def __init__(self,
         *,
         id: typing.Text = ...,
-        sources_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
-        main_source_name: typing.Text = ...,
-        sources: builtins.bytes = ...,
+        files_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
+        main_file_name: typing.Text = ...,
+        files_txtar: builtins.bytes = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["id",b"id","main_source_name",b"main_source_name","sources",b"sources","sources_map",b"sources_map"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["files_map",b"files_map","files_txtar",b"files_txtar","id",b"id","main_file_name",b"main_file_name"]) -> None: ...
 global___SetupRequest = SetupRequest
 
 class SetupResponse(google.protobuf.message.Message):
@@ -93,23 +95,23 @@ class LitterBoxEvent(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
-    SRC_BINDING_FIELD_NUMBER: builtins.int
+    SRC_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     DATA_FIELD_NUMBER: builtins.int
     ORIGINAL_ID_FIELD_NUMBER: builtins.int
-    src_binding: typing.Text
+    src: typing.Text
     type: typing.Text
     @property
     def data(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, values.values_pb2.Value]: ...
     original_id: typing.Text
     def __init__(self,
         *,
-        src_binding: typing.Text = ...,
+        src: typing.Text = ...,
         type: typing.Text = ...,
         data: typing.Optional[typing.Mapping[typing.Text, values.values_pb2.Value]] = ...,
         original_id: typing.Text = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src_binding",b"src_binding","type",b"type"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src",b"src","type",b"type"]) -> None: ...
 global___LitterBoxEvent = LitterBoxEvent
 
 class EventRequest(google.protobuf.message.Message):

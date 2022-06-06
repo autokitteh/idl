@@ -13,10 +13,10 @@ import "values/values.proto";
 
 
 message SetupRequest {
-  string             id               = 1 {{ MaybeLitterBoxID }};
-  map<string, bytes> sources_map      = 2;
-  string             main_source_name = 3;
-  bytes              sources          = 4; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
+  string             id             = 1 {{ MaybeLitterBoxID }};
+  map<string, bytes> files_map      = 2; // name -> file.
+  string             main_file_name = 3;
+  bytes              files_txtar    = 4; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
 }
 
 message SetupResponse {
@@ -30,7 +30,7 @@ message ScoopRequest {
 message ScoopResponse {}
 
 message LitterBoxEvent {
-  string                    src_binding = 1 {{ VarName }};
+  string                    src         = 1 {{ VarName }};
   string                    type        = 2;
   map<string, values.Value> data        = 3 {{ VarMap }};
   string                    original_id = 4;
@@ -45,11 +45,11 @@ service LitterBox {
   rpc Setup(SetupRequest) returns (SetupResponse) {
     option (google.api.http) = {
       post: "/api/v1/litterboxes",
-      body: "sources"
+      body: "files_txtar"
       additional_bindings: [
         {
           post: "/api/v1/litterboxes/{id}"
-          body: "sources"
+          body: "files_txtar"
         }
       ]
     };

@@ -50,7 +50,7 @@
             "type": "string"
           },
           {
-            "name": "mainSourceName",
+            "name": "mainFileName",
             "in": "query",
             "required": false,
             "type": "string"
@@ -95,7 +95,7 @@
             }
           },
           {
-            "name": "mainSourceName",
+            "name": "mainFileName",
             "in": "query",
             "required": false,
             "type": "string"
@@ -590,7 +590,7 @@
     "litterboxLitterBoxEvent": {
       "type": "object",
       "properties": {
-        "srcBinding": {
+        "src": {
           "type": "string"
         },
         "type": {

@@ -32,7 +32,7 @@ var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
 var (
-	filter_LitterBox_Setup_0 = &utilities.DoubleArray{Encoding: map[string]int{"sources": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_LitterBox_Setup_0 = &utilities.DoubleArray{Encoding: map[string]int{"files_txtar": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_LitterBox_Setup_0(ctx context.Context, marshaler runtime.Marshaler, client LitterBoxClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -43,7 +43,7 @@ func request_LitterBox_Setup_0(ctx context.Context, marshaler runtime.Marshaler,
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Sources); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.FilesTxtar); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -67,7 +67,7 @@ func local_request_LitterBox_Setup_0(ctx context.Context, marshaler runtime.Mars
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Sources); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.FilesTxtar); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -84,7 +84,7 @@ func local_request_LitterBox_Setup_0(ctx context.Context, marshaler runtime.Mars
 }
 
 var (
-	filter_LitterBox_Setup_1 = &utilities.DoubleArray{Encoding: map[string]int{"sources": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_LitterBox_Setup_1 = &utilities.DoubleArray{Encoding: map[string]int{"files_txtar": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_LitterBox_Setup_1(ctx context.Context, marshaler runtime.Marshaler, client LitterBoxClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -95,7 +95,7 @@ func request_LitterBox_Setup_1(ctx context.Context, marshaler runtime.Marshaler,
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Sources); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.FilesTxtar); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -136,7 +136,7 @@ func local_request_LitterBox_Setup_1(ctx context.Context, marshaler runtime.Mars
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Sources); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.FilesTxtar); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
