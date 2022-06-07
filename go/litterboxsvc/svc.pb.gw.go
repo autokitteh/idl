@@ -211,6 +211,40 @@ func request_LitterBox_Event_0(ctx context.Context, marshaler runtime.Marshaler,
 
 }
 
+func request_LitterBox_Run_0(ctx context.Context, marshaler runtime.Marshaler, client LitterBoxClient, req *http.Request, pathParams map[string]string) (LitterBox_RunClient, runtime.ServerMetadata, error) {
+	var protoReq RunRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	stream, err := client.Run(ctx, &protoReq)
+	if err != nil {
+		return nil, metadata, err
+	}
+	header, err := stream.Header()
+	if err != nil {
+		return nil, metadata, err
+	}
+	metadata.HeaderMD = header
+	return stream, metadata, nil
+
+}
+
 func request_LitterBox_Scoop_0(ctx context.Context, marshaler runtime.Marshaler, client LitterBoxClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ScoopRequest
 	var metadata runtime.ServerMetadata
@@ -316,6 +350,13 @@ func RegisterLitterBoxHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 	})
 
 	mux.Handle("POST", pattern_LitterBox_Event_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
+		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+		return
+	})
+
+	mux.Handle("POST", pattern_LitterBox_Run_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -446,6 +487,26 @@ func RegisterLitterBoxHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 
 	})
 
+	mux.Handle("POST", pattern_LitterBox_Run_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/autokitteh.litterbox.LitterBox/Run", runtime.WithHTTPPathPattern("/api/v1/litterboxes/{id}/run"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_LitterBox_Run_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_LitterBox_Run_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("POST", pattern_LitterBox_Scoop_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -476,6 +537,8 @@ var (
 
 	pattern_LitterBox_Event_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "litterboxes", "id", "events"}, ""))
 
+	pattern_LitterBox_Run_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "litterboxes", "id", "run"}, ""))
+
 	pattern_LitterBox_Scoop_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "litterboxes", "id", "scoop"}, ""))
 )
 
@@ -485,6 +548,8 @@ var (
 	forward_LitterBox_Setup_1 = runtime.ForwardResponseMessage
 
 	forward_LitterBox_Event_0 = runtime.ForwardResponseStream
+
+	forward_LitterBox_Run_0 = runtime.ForwardResponseStream
 
 	forward_LitterBox_Scoop_0 = runtime.ForwardResponseMessage
 )

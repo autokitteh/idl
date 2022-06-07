@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 type EventsClient interface {
 	IngestEvent(ctx context.Context, in *IngestEventRequest, opts ...grpc.CallOption) (*IngestEventResponse, error)
 	TrackIngestEvent(ctx context.Context, in *IngestEventRequest, opts ...grpc.CallOption) (Events_TrackIngestEventClient, error)
+	MonitorProjectEvents(ctx context.Context, in *MonitorProjectEventsRequest, opts ...grpc.CallOption) (Events_MonitorProjectEventsClient, error)
 	GetEvent(ctx context.Context, in *GetEventRequest, opts ...grpc.CallOption) (*GetEventResponse, error)
 	GetEventState(ctx context.Context, in *GetEventStateRequest, opts ...grpc.CallOption) (*GetEventStateResponse, error)
 	UpdateEventState(ctx context.Context, in *UpdateEventStateRequest, opts ...grpc.CallOption) (*UpdateEventStateResponse, error)
@@ -72,6 +73,38 @@ type eventsTrackIngestEventClient struct {
 }
 
 func (x *eventsTrackIngestEventClient) Recv() (*event.TrackIngestEventUpdate, error) {
+	m := new(event.TrackIngestEventUpdate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *eventsClient) MonitorProjectEvents(ctx context.Context, in *MonitorProjectEventsRequest, opts ...grpc.CallOption) (Events_MonitorProjectEventsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Events_ServiceDesc.Streams[1], "/autokitteh.eventsvc.Events/MonitorProjectEvents", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &eventsMonitorProjectEventsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Events_MonitorProjectEventsClient interface {
+	Recv() (*event.TrackIngestEventUpdate, error)
+	grpc.ClientStream
+}
+
+type eventsMonitorProjectEventsClient struct {
+	grpc.ClientStream
+}
+
+func (x *eventsMonitorProjectEventsClient) Recv() (*event.TrackIngestEventUpdate, error) {
 	m := new(event.TrackIngestEventUpdate)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -148,6 +181,7 @@ func (c *eventsClient) GetProjectWaitingEvents(ctx context.Context, in *GetProje
 type EventsServer interface {
 	IngestEvent(context.Context, *IngestEventRequest) (*IngestEventResponse, error)
 	TrackIngestEvent(*IngestEventRequest, Events_TrackIngestEventServer) error
+	MonitorProjectEvents(*MonitorProjectEventsRequest, Events_MonitorProjectEventsServer) error
 	GetEvent(context.Context, *GetEventRequest) (*GetEventResponse, error)
 	GetEventState(context.Context, *GetEventStateRequest) (*GetEventStateResponse, error)
 	UpdateEventState(context.Context, *UpdateEventStateRequest) (*UpdateEventStateResponse, error)
@@ -167,6 +201,9 @@ func (UnimplementedEventsServer) IngestEvent(context.Context, *IngestEventReques
 }
 func (UnimplementedEventsServer) TrackIngestEvent(*IngestEventRequest, Events_TrackIngestEventServer) error {
 	return status.Errorf(codes.Unimplemented, "method TrackIngestEvent not implemented")
+}
+func (UnimplementedEventsServer) MonitorProjectEvents(*MonitorProjectEventsRequest, Events_MonitorProjectEventsServer) error {
+	return status.Errorf(codes.Unimplemented, "method MonitorProjectEvents not implemented")
 }
 func (UnimplementedEventsServer) GetEvent(context.Context, *GetEventRequest) (*GetEventResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEvent not implemented")
@@ -238,6 +275,27 @@ type eventsTrackIngestEventServer struct {
 }
 
 func (x *eventsTrackIngestEventServer) Send(m *event.TrackIngestEventUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Events_MonitorProjectEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(MonitorProjectEventsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(EventsServer).MonitorProjectEvents(m, &eventsMonitorProjectEventsServer{stream})
+}
+
+type Events_MonitorProjectEventsServer interface {
+	Send(*event.TrackIngestEventUpdate) error
+	grpc.ServerStream
+}
+
+type eventsMonitorProjectEventsServer struct {
+	grpc.ServerStream
+}
+
+func (x *eventsMonitorProjectEventsServer) Send(m *event.TrackIngestEventUpdate) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -411,6 +469,11 @@ var Events_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "TrackIngestEvent",
 			Handler:       _Events_TrackIngestEvent_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "MonitorProjectEvents",
+			Handler:       _Events_MonitorProjectEvents_Handler,
 			ServerStreams: true,
 		},
 	},

@@ -86,11 +86,15 @@ message ListEventsResponse {
 }
 
 message GetProjectWaitingEventsRequest {
-  string project_id = 1; // if not set, all events.
+  string project_id = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$" }]; // if not set, all events.
 }
 
 message GetProjectWaitingEventsResponse {
   repeated string event_ids = 1 [(validate.rules).repeated.items.string.pattern = "^E[0-9a-f]+$"];
+}
+
+message MonitorProjectEventsRequest {
+  string project_id = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
 }
 
 service Events {
@@ -105,6 +109,12 @@ service Events {
     option (google.api.http) = {
       post: "/api/v1/tracked-events",
       body: "*"
+    };
+  }
+
+  rpc MonitorProjectEvents(MonitorProjectEventsRequest) returns (stream event.TrackIngestEventUpdate) {
+    option (google.api.http) = {
+      get: "/api/v1/projects/{project_id}/monitor-events"
     };
   }
 

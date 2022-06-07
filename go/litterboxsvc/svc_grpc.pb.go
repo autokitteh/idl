@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion7
 type LitterBoxClient interface {
 	Setup(ctx context.Context, in *SetupRequest, opts ...grpc.CallOption) (*SetupResponse, error)
 	Event(ctx context.Context, in *EventRequest, opts ...grpc.CallOption) (LitterBox_EventClient, error)
+	// Enable live sources and track all incoming events.
+	Run(ctx context.Context, in *RunRequest, opts ...grpc.CallOption) (LitterBox_RunClient, error)
 	Scoop(ctx context.Context, in *ScoopRequest, opts ...grpc.CallOption) (*ScoopResponse, error)
 }
 
@@ -73,6 +75,38 @@ func (x *litterBoxEventClient) Recv() (*event.TrackIngestEventUpdate, error) {
 	return m, nil
 }
 
+func (c *litterBoxClient) Run(ctx context.Context, in *RunRequest, opts ...grpc.CallOption) (LitterBox_RunClient, error) {
+	stream, err := c.cc.NewStream(ctx, &LitterBox_ServiceDesc.Streams[1], "/autokitteh.litterbox.LitterBox/Run", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &litterBoxRunClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type LitterBox_RunClient interface {
+	Recv() (*event.TrackIngestEventUpdate, error)
+	grpc.ClientStream
+}
+
+type litterBoxRunClient struct {
+	grpc.ClientStream
+}
+
+func (x *litterBoxRunClient) Recv() (*event.TrackIngestEventUpdate, error) {
+	m := new(event.TrackIngestEventUpdate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *litterBoxClient) Scoop(ctx context.Context, in *ScoopRequest, opts ...grpc.CallOption) (*ScoopResponse, error) {
 	out := new(ScoopResponse)
 	err := c.cc.Invoke(ctx, "/autokitteh.litterbox.LitterBox/Scoop", in, out, opts...)
@@ -88,6 +122,8 @@ func (c *litterBoxClient) Scoop(ctx context.Context, in *ScoopRequest, opts ...g
 type LitterBoxServer interface {
 	Setup(context.Context, *SetupRequest) (*SetupResponse, error)
 	Event(*EventRequest, LitterBox_EventServer) error
+	// Enable live sources and track all incoming events.
+	Run(*RunRequest, LitterBox_RunServer) error
 	Scoop(context.Context, *ScoopRequest) (*ScoopResponse, error)
 	mustEmbedUnimplementedLitterBoxServer()
 }
@@ -101,6 +137,9 @@ func (UnimplementedLitterBoxServer) Setup(context.Context, *SetupRequest) (*Setu
 }
 func (UnimplementedLitterBoxServer) Event(*EventRequest, LitterBox_EventServer) error {
 	return status.Errorf(codes.Unimplemented, "method Event not implemented")
+}
+func (UnimplementedLitterBoxServer) Run(*RunRequest, LitterBox_RunServer) error {
+	return status.Errorf(codes.Unimplemented, "method Run not implemented")
 }
 func (UnimplementedLitterBoxServer) Scoop(context.Context, *ScoopRequest) (*ScoopResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Scoop not implemented")
@@ -157,6 +196,27 @@ func (x *litterBoxEventServer) Send(m *event.TrackIngestEventUpdate) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _LitterBox_Run_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(RunRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(LitterBoxServer).Run(m, &litterBoxRunServer{stream})
+}
+
+type LitterBox_RunServer interface {
+	Send(*event.TrackIngestEventUpdate) error
+	grpc.ServerStream
+}
+
+type litterBoxRunServer struct {
+	grpc.ServerStream
+}
+
+func (x *litterBoxRunServer) Send(m *event.TrackIngestEventUpdate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _LitterBox_Scoop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ScoopRequest)
 	if err := dec(in); err != nil {
@@ -195,6 +255,11 @@ var LitterBox_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Event",
 			Handler:       _LitterBox_Event_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "Run",
+			Handler:       _LitterBox_Run_Handler,
 			ServerStreams: true,
 		},
 	},

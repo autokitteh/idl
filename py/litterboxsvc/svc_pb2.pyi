@@ -129,3 +129,14 @@ class EventRequest(google.protobuf.message.Message):
     def HasField(self, field_name: typing_extensions.Literal["event",b"event"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["event",b"event","id",b"id"]) -> None: ...
 global___EventRequest = EventRequest
+
+class RunRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ID_FIELD_NUMBER: builtins.int
+    id: typing.Text
+    def __init__(self,
+        *,
+        id: typing.Text = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["id",b"id"]) -> None: ...
+global___RunRequest = RunRequest

@@ -529,3 +529,76 @@ var _ interface {
 } = EventRequestValidationError{}
 
 var _EventRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")
+
+// Validate checks the field values on RunRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *RunRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if !_RunRequest_Id_Pattern.MatchString(m.GetId()) {
+		return RunRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9_-]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// RunRequestValidationError is the validation error returned by
+// RunRequest.Validate if the designated constraints aren't met.
+type RunRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RunRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RunRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RunRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RunRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RunRequestValidationError) ErrorName() string { return "RunRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RunRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRunRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RunRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RunRequestValidationError{}
+
+var _RunRequest_Id_Pattern = regexp.MustCompile("^[a-zA-Z0-9_-]+$")

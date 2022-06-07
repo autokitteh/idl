@@ -41,6 +41,10 @@ message EventRequest {
   LitterBoxEvent event  = 2 [(validate.rules).message.required = true];
 }
 
+message RunRequest {
+  string id     = 1 {{ LitterBoxID }};
+}
+
 service LitterBox {
   rpc Setup(SetupRequest) returns (SetupResponse) {
     option (google.api.http) = {
@@ -59,6 +63,13 @@ service LitterBox {
     option (google.api.http) = {
       post: "/api/v1/litterboxes/{id}/events",
       body: "event"
+    };
+  }
+
+  // Enable live sources and track all incoming events.
+  rpc Run(RunRequest) returns (stream event.TrackIngestEventUpdate) {
+    option (google.api.http) = {
+      post: "/api/v1/litterboxes/{id}/run"
     };
   }
 

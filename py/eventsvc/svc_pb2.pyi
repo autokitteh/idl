@@ -279,3 +279,14 @@ class GetProjectWaitingEventsResponse(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["event_ids",b"event_ids"]) -> None: ...
 global___GetProjectWaitingEventsResponse = GetProjectWaitingEventsResponse
+
+class MonitorProjectEventsRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROJECT_ID_FIELD_NUMBER: builtins.int
+    project_id: typing.Text
+    def __init__(self,
+        *,
+        project_id: typing.Text = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["project_id",b"project_id"]) -> None: ...
+global___MonitorProjectEventsRequest = MonitorProjectEventsRequest

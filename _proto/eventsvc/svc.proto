@@ -86,11 +86,15 @@ message ListEventsResponse {
 }
 
 message GetProjectWaitingEventsRequest {
-  string project_id = 1; // if not set, all events.
+  string project_id = 1 {{ MaybeProjectID }}; // if not set, all events.
 }
 
 message GetProjectWaitingEventsResponse {
   repeated string event_ids = 1 {{ RepeatedEventID }};
+}
+
+message MonitorProjectEventsRequest {
+  string project_id = 1 {{ ProjectID }};
 }
 
 service Events {
@@ -105,6 +109,12 @@ service Events {
     option (google.api.http) = {
       post: "/api/v1/tracked-events",
       body: "*"
+    };
+  }
+
+  rpc MonitorProjectEvents(MonitorProjectEventsRequest) returns (stream event.TrackIngestEventUpdate) {
+    option (google.api.http) = {
+      get: "/api/v1/projects/{project_id}/monitor-events"
     };
   }
 

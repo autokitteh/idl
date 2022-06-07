@@ -292,6 +292,45 @@
         ]
       }
     },
+    "/api/v1/projects/{projectId}/monitor-events": {
+      "get": {
+        "operationId": "Events_MonitorProjectEvents",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/eventTrackIngestEventUpdate"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of eventTrackIngestEventUpdate"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Events"
+        ]
+      }
+    },
     "/api/v1/projects/{projectId}/waiting": {
       "get": {
         "operationId": "Events_GetProjectWaitingEvents",

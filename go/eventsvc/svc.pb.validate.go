@@ -1339,7 +1339,16 @@ func (m *GetProjectWaitingEventsRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ProjectId
+	if m.GetProjectId() != "" {
+
+		if !_GetProjectWaitingEventsRequest_ProjectId_Pattern.MatchString(m.GetProjectId()) {
+			return GetProjectWaitingEventsRequestValidationError{
+				field:  "ProjectId",
+				reason: "value does not match regex pattern \"^[a-zA-Z][0-9a-zA-Z_-]+\\\\.[a-zA-Z0-9_-]+$\"",
+			}
+		}
+
+	}
 
 	return nil
 }
@@ -1400,6 +1409,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetProjectWaitingEventsRequestValidationError{}
+
+var _GetProjectWaitingEventsRequest_ProjectId_Pattern = regexp.MustCompile("^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$")
 
 // Validate checks the field values on GetProjectWaitingEventsResponse with the
 // rules defined in the proto definition for this message. If any rules are
@@ -1482,3 +1493,80 @@ var _ interface {
 } = GetProjectWaitingEventsResponseValidationError{}
 
 var _GetProjectWaitingEventsResponse_EventIds_Pattern = regexp.MustCompile("^E[0-9a-f]+$")
+
+// Validate checks the field values on MonitorProjectEventsRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *MonitorProjectEventsRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if !_MonitorProjectEventsRequest_ProjectId_Pattern.MatchString(m.GetProjectId()) {
+		return MonitorProjectEventsRequestValidationError{
+			field:  "ProjectId",
+			reason: "value does not match regex pattern \"^[a-zA-Z][0-9a-zA-Z_-]+\\\\.[a-zA-Z0-9_-]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// MonitorProjectEventsRequestValidationError is the validation error returned
+// by MonitorProjectEventsRequest.Validate if the designated constraints
+// aren't met.
+type MonitorProjectEventsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MonitorProjectEventsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MonitorProjectEventsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MonitorProjectEventsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MonitorProjectEventsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MonitorProjectEventsRequestValidationError) ErrorName() string {
+	return "MonitorProjectEventsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e MonitorProjectEventsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMonitorProjectEventsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MonitorProjectEventsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MonitorProjectEventsRequestValidationError{}
+
+var _MonitorProjectEventsRequest_ProjectId_Pattern = regexp.MustCompile("^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$")

@@ -153,6 +153,46 @@
         ]
       }
     },
+    "/api/v1/litterboxes/{id}/run": {
+      "post": {
+        "summary": "Enable live sources and track all incoming events.",
+        "operationId": "LitterBox_Run",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/eventTrackIngestEventUpdate"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of eventTrackIngestEventUpdate"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      }
+    },
     "/api/v1/litterboxes/{id}/scoop": {
       "post": {
         "operationId": "LitterBox_Scoop",

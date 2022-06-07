@@ -25,6 +25,11 @@ class LitterBoxStub(object):
                 request_serializer=litterboxsvc_dot_svc__pb2.EventRequest.SerializeToString,
                 response_deserializer=event_dot_track__pb2.TrackIngestEventUpdate.FromString,
                 )
+        self.Run = channel.unary_stream(
+                '/autokitteh.litterbox.LitterBox/Run',
+                request_serializer=litterboxsvc_dot_svc__pb2.RunRequest.SerializeToString,
+                response_deserializer=event_dot_track__pb2.TrackIngestEventUpdate.FromString,
+                )
         self.Scoop = channel.unary_unary(
                 '/autokitteh.litterbox.LitterBox/Scoop',
                 request_serializer=litterboxsvc_dot_svc__pb2.ScoopRequest.SerializeToString,
@@ -47,6 +52,13 @@ class LitterBoxServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Run(self, request, context):
+        """Enable live sources and track all incoming events.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Scoop(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -64,6 +76,11 @@ def add_LitterBoxServicer_to_server(servicer, server):
             'Event': grpc.unary_stream_rpc_method_handler(
                     servicer.Event,
                     request_deserializer=litterboxsvc_dot_svc__pb2.EventRequest.FromString,
+                    response_serializer=event_dot_track__pb2.TrackIngestEventUpdate.SerializeToString,
+            ),
+            'Run': grpc.unary_stream_rpc_method_handler(
+                    servicer.Run,
+                    request_deserializer=litterboxsvc_dot_svc__pb2.RunRequest.FromString,
                     response_serializer=event_dot_track__pb2.TrackIngestEventUpdate.SerializeToString,
             ),
             'Scoop': grpc.unary_unary_rpc_method_handler(
@@ -111,6 +128,23 @@ class LitterBox(object):
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/autokitteh.litterbox.LitterBox/Event',
             litterboxsvc_dot_svc__pb2.EventRequest.SerializeToString,
+            event_dot_track__pb2.TrackIngestEventUpdate.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Run(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/autokitteh.litterbox.LitterBox/Run',
+            litterboxsvc_dot_svc__pb2.RunRequest.SerializeToString,
             event_dot_track__pb2.TrackIngestEventUpdate.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
