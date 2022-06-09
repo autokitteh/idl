@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "programsvc/svc.proto",
+    "title": "programssvc/svc.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Projects"
+      "name": "Programs"
     }
   ],
   "consumes": [
@@ -18,7 +18,7 @@
   "paths": {
     "/api/v1/programs/{projectId}": {
       "post": {
-        "operationId": "Projects_Get",
+        "operationId": "Programs_Get",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -42,7 +42,7 @@
           }
         ],
         "tags": [
-          "Projects"
+          "Programs"
         ]
       }
     }

@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from programsvc import svc_pb2 as programsvc_dot_svc__pb2
+from programssvc import svc_pb2 as programssvc_dot_svc__pb2
 
 
-class ProjectsStub(object):
+class ProgramsStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,18 +15,18 @@ class ProjectsStub(object):
             channel: A grpc.Channel.
         """
         self.Update = channel.unary_unary(
-                '/autokitteh.programsvc.Projects/Update',
-                request_serializer=programsvc_dot_svc__pb2.UpdateRequest.SerializeToString,
-                response_deserializer=programsvc_dot_svc__pb2.UpdateResponse.FromString,
+                '/autokitteh.programsvc.Programs/Update',
+                request_serializer=programssvc_dot_svc__pb2.UpdateRequest.SerializeToString,
+                response_deserializer=programssvc_dot_svc__pb2.UpdateResponse.FromString,
                 )
         self.Get = channel.unary_unary(
-                '/autokitteh.programsvc.Projects/Get',
-                request_serializer=programsvc_dot_svc__pb2.GetRequest.SerializeToString,
-                response_deserializer=programsvc_dot_svc__pb2.GetResponse.FromString,
+                '/autokitteh.programsvc.Programs/Get',
+                request_serializer=programssvc_dot_svc__pb2.GetRequest.SerializeToString,
+                response_deserializer=programssvc_dot_svc__pb2.GetResponse.FromString,
                 )
 
 
-class ProjectsServicer(object):
+class ProgramsServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Update(self, request, context):
@@ -42,26 +42,26 @@ class ProjectsServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ProjectsServicer_to_server(servicer, server):
+def add_ProgramsServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
-                    request_deserializer=programsvc_dot_svc__pb2.UpdateRequest.FromString,
-                    response_serializer=programsvc_dot_svc__pb2.UpdateResponse.SerializeToString,
+                    request_deserializer=programssvc_dot_svc__pb2.UpdateRequest.FromString,
+                    response_serializer=programssvc_dot_svc__pb2.UpdateResponse.SerializeToString,
             ),
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
-                    request_deserializer=programsvc_dot_svc__pb2.GetRequest.FromString,
-                    response_serializer=programsvc_dot_svc__pb2.GetResponse.SerializeToString,
+                    request_deserializer=programssvc_dot_svc__pb2.GetRequest.FromString,
+                    response_serializer=programssvc_dot_svc__pb2.GetResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'autokitteh.programsvc.Projects', rpc_method_handlers)
+            'autokitteh.programsvc.Programs', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Projects(object):
+class Programs(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -75,9 +75,9 @@ class Projects(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Projects/Update',
-            programsvc_dot_svc__pb2.UpdateRequest.SerializeToString,
-            programsvc_dot_svc__pb2.UpdateResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Programs/Update',
+            programssvc_dot_svc__pb2.UpdateRequest.SerializeToString,
+            programssvc_dot_svc__pb2.UpdateResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -92,8 +92,8 @@ class Projects(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Projects/Get',
-            programsvc_dot_svc__pb2.GetRequest.SerializeToString,
-            programsvc_dot_svc__pb2.GetResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Programs/Get',
+            programssvc_dot_svc__pb2.GetRequest.SerializeToString,
+            programssvc_dot_svc__pb2.GetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package autokitteh.programsvc;
 
-option go_package = "go.autokitteh.dev/idl/go/programsvc";
+option go_package = "go.autokitteh.dev/idl/go/programssvc";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -40,7 +40,7 @@ message GetResponse {
   bool          no_content = 2; // just list, don't fetch actual content.
 }
 
-service Projects {
+service Programs {
   rpc Update(UpdateRequest) returns (UpdateResponse) {
     option (google.api.http) = {
       post: "/api/v1/programs/{project_id}",
