@@ -328,6 +328,8 @@ func (m *GetRequest) Validate() error {
 
 	}
 
+	// no validation rules for NoContent
+
 	return nil
 }
 
@@ -416,8 +418,6 @@ func (m *GetResponse) Validate() error {
 		}
 
 	}
-
-	// no validation rules for NoContent
 
 	return nil
 }

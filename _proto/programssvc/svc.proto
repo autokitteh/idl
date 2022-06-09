@@ -32,12 +32,16 @@ message UpdateResponse {
 
 message GetRequest {
   string                project_id = 1 {{ ProjectID }};
+
+  // If `paths` is nil, returns all.
   repeated program.Path paths      = 2 [(validate.rules).repeated.items.message.required = true];
+
+  // just list, don't fetch actual content.
+  bool                  no_content = 3;
 }
 
 message GetResponse {
   repeated File files      = 1 [(validate.rules).repeated.items.message.required = true];
-  bool          no_content = 2; // just list, don't fetch actual content.
 }
 
 service Programs {

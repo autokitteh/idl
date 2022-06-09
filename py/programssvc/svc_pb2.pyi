@@ -72,30 +72,32 @@ class GetRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     PROJECT_ID_FIELD_NUMBER: builtins.int
     PATHS_FIELD_NUMBER: builtins.int
+    NO_CONTENT_FIELD_NUMBER: builtins.int
     project_id: typing.Text
     @property
-    def paths(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[program.program_pb2.Path]: ...
-    def __init__(self,
-        *,
-        project_id: typing.Text = ...,
-        paths: typing.Optional[typing.Iterable[program.program_pb2.Path]] = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["paths",b"paths","project_id",b"project_id"]) -> None: ...
-global___GetRequest = GetRequest
-
-class GetResponse(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    FILES_FIELD_NUMBER: builtins.int
-    NO_CONTENT_FIELD_NUMBER: builtins.int
-    @property
-    def files(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___File]: ...
+    def paths(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[program.program_pb2.Path]:
+        """If `paths` is nil, returns all."""
+        pass
     no_content: builtins.bool
     """just list, don't fetch actual content."""
 
     def __init__(self,
         *,
-        files: typing.Optional[typing.Iterable[global___File]] = ...,
+        project_id: typing.Text = ...,
+        paths: typing.Optional[typing.Iterable[program.program_pb2.Path]] = ...,
         no_content: builtins.bool = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["files",b"files","no_content",b"no_content"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["no_content",b"no_content","paths",b"paths","project_id",b"project_id"]) -> None: ...
+global___GetRequest = GetRequest
+
+class GetResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    FILES_FIELD_NUMBER: builtins.int
+    @property
+    def files(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___File]: ...
+    def __init__(self,
+        *,
+        files: typing.Optional[typing.Iterable[global___File]] = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["files",b"files"]) -> None: ...
 global___GetResponse = GetResponse

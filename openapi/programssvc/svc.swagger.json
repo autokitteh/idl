@@ -86,9 +86,6 @@
           "items": {
             "$ref": "#/definitions/programsvcFile"
           }
-        },
-        "noContent": {
-          "type": "boolean"
         }
       }
     },

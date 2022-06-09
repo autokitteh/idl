@@ -18,7 +18,7 @@ from validate import validate_pb2 as validate_dot_validate__pb2
 from program import program_pb2 as program_dot_program__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15programssvc/svc.proto\x12\x15\x61utokitteh.programsvc\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x15program/program.proto\"o\n\x04\x46ile\x12&\n\x04path\x18\x01 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\x0c\x12.\n\nfetched_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xd0\x01\n\rUpdateRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12+\n\tmain_path\x18\x02 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x39\n\x05\x66iles\x18\x03 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nonly_files\x18\x04 \x01(\x08\"\x10\n\x0eUpdateResponse\"\x89\x01\n\nGetRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12\x36\n\x05paths\x18\x02 \x03(\x0b\x32\x18.autokitteh.program.PathB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\"\\\n\x0bGetResponse\x12\x39\n\x05\x66iles\x18\x01 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nno_content\x18\x02 \x01(\x08\x32\x80\x02\n\x08Programs\x12\x7f\n\x06Update\x12$.autokitteh.programsvc.UpdateRequest\x1a%.autokitteh.programsvc.UpdateResponse\"(\x82\xd3\xe4\x93\x02\"\"\x1d/api/v1/programs/{project_id}:\x01*\x12s\n\x03Get\x12!.autokitteh.programsvc.GetRequest\x1a\".autokitteh.programsvc.GetResponse\"%\x82\xd3\xe4\x93\x02\x1f\"\x1d/api/v1/programs/{project_id}B&Z$go.autokitteh.dev/idl/go/programssvcb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15programssvc/svc.proto\x12\x15\x61utokitteh.programsvc\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x15program/program.proto\"o\n\x04\x46ile\x12&\n\x04path\x18\x01 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\x0c\x12.\n\nfetched_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xd0\x01\n\rUpdateRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12+\n\tmain_path\x18\x02 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x39\n\x05\x66iles\x18\x03 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nonly_files\x18\x04 \x01(\x08\"\x10\n\x0eUpdateResponse\"\x9d\x01\n\nGetRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12\x36\n\x05paths\x18\x02 \x03(\x0b\x32\x18.autokitteh.program.PathB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nno_content\x18\x03 \x01(\x08\"H\n\x0bGetResponse\x12\x39\n\x05\x66iles\x18\x01 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x32\x80\x02\n\x08Programs\x12\x7f\n\x06Update\x12$.autokitteh.programsvc.UpdateRequest\x1a%.autokitteh.programsvc.UpdateResponse\"(\x82\xd3\xe4\x93\x02\"\"\x1d/api/v1/programs/{project_id}:\x01*\x12s\n\x03Get\x12!.autokitteh.programsvc.GetRequest\x1a\".autokitteh.programsvc.GetResponse\"%\x82\xd3\xe4\x93\x02\x1f\"\x1d/api/v1/programs/{project_id}B&Z$go.autokitteh.dev/idl/go/programssvcb\x06proto3')
 
 
 
@@ -88,8 +88,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATERESPONSE._serialized_start=483
   _UPDATERESPONSE._serialized_end=499
   _GETREQUEST._serialized_start=502
-  _GETREQUEST._serialized_end=639
-  _GETRESPONSE._serialized_start=641
+  _GETREQUEST._serialized_end=659
+  _GETRESPONSE._serialized_start=661
   _GETRESPONSE._serialized_end=733
   _PROGRAMS._serialized_start=736
   _PROGRAMS._serialized_end=992
