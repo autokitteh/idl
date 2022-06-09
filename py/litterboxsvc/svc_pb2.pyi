@@ -61,6 +61,45 @@ class SetupResponse(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["id",b"id"]) -> None: ...
 global___SetupResponse = SetupResponse
 
+class GetRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ID_FIELD_NUMBER: builtins.int
+    id: typing.Text
+    def __init__(self,
+        *,
+        id: typing.Text = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["id",b"id"]) -> None: ...
+global___GetRequest = GetRequest
+
+class GetResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    class FilesMapEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: typing.Text
+        value: builtins.bytes
+        def __init__(self,
+            *,
+            key: typing.Text = ...,
+            value: builtins.bytes = ...,
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+    MAIN_FILE_NAME_FIELD_NUMBER: builtins.int
+    FILES_MAP_FIELD_NUMBER: builtins.int
+    main_file_name: typing.Text
+    @property
+    def files_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]: ...
+    def __init__(self,
+        *,
+        main_file_name: typing.Text = ...,
+        files_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["files_map",b"files_map","main_file_name",b"main_file_name"]) -> None: ...
+global___GetResponse = GetResponse
+
 class ScoopRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ID_FIELD_NUMBER: builtins.int

@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LitterBoxClient interface {
 	Setup(ctx context.Context, in *SetupRequest, opts ...grpc.CallOption) (*SetupResponse, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	Event(ctx context.Context, in *EventRequest, opts ...grpc.CallOption) (LitterBox_EventClient, error)
 	// Enable live sources and track all incoming events.
 	Run(ctx context.Context, in *RunRequest, opts ...grpc.CallOption) (LitterBox_RunClient, error)
@@ -37,6 +38,15 @@ func NewLitterBoxClient(cc grpc.ClientConnInterface) LitterBoxClient {
 func (c *litterBoxClient) Setup(ctx context.Context, in *SetupRequest, opts ...grpc.CallOption) (*SetupResponse, error) {
 	out := new(SetupResponse)
 	err := c.cc.Invoke(ctx, "/autokitteh.litterbox.LitterBox/Setup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *litterBoxClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, "/autokitteh.litterbox.LitterBox/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,6 +131,7 @@ func (c *litterBoxClient) Scoop(ctx context.Context, in *ScoopRequest, opts ...g
 // for forward compatibility
 type LitterBoxServer interface {
 	Setup(context.Context, *SetupRequest) (*SetupResponse, error)
+	Get(context.Context, *GetRequest) (*GetResponse, error)
 	Event(*EventRequest, LitterBox_EventServer) error
 	// Enable live sources and track all incoming events.
 	Run(*RunRequest, LitterBox_RunServer) error
@@ -134,6 +145,9 @@ type UnimplementedLitterBoxServer struct {
 
 func (UnimplementedLitterBoxServer) Setup(context.Context, *SetupRequest) (*SetupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Setup not implemented")
+}
+func (UnimplementedLitterBoxServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedLitterBoxServer) Event(*EventRequest, LitterBox_EventServer) error {
 	return status.Errorf(codes.Unimplemented, "method Event not implemented")
@@ -171,6 +185,24 @@ func _LitterBox_Setup_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LitterBoxServer).Setup(ctx, req.(*SetupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LitterBox_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LitterBoxServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/autokitteh.litterbox.LitterBox/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LitterBoxServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -245,6 +277,10 @@ var LitterBox_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Setup",
 			Handler:    _LitterBox_Setup_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _LitterBox_Get_Handler,
 		},
 		{
 			MethodName: "Scoop",

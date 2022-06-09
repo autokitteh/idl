@@ -20,6 +20,11 @@ class LitterBoxStub(object):
                 request_serializer=litterboxsvc_dot_svc__pb2.SetupRequest.SerializeToString,
                 response_deserializer=litterboxsvc_dot_svc__pb2.SetupResponse.FromString,
                 )
+        self.Get = channel.unary_unary(
+                '/autokitteh.litterbox.LitterBox/Get',
+                request_serializer=litterboxsvc_dot_svc__pb2.GetRequest.SerializeToString,
+                response_deserializer=litterboxsvc_dot_svc__pb2.GetResponse.FromString,
+                )
         self.Event = channel.unary_stream(
                 '/autokitteh.litterbox.LitterBox/Event',
                 request_serializer=litterboxsvc_dot_svc__pb2.EventRequest.SerializeToString,
@@ -41,6 +46,12 @@ class LitterBoxServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Setup(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -72,6 +83,11 @@ def add_LitterBoxServicer_to_server(servicer, server):
                     servicer.Setup,
                     request_deserializer=litterboxsvc_dot_svc__pb2.SetupRequest.FromString,
                     response_serializer=litterboxsvc_dot_svc__pb2.SetupResponse.SerializeToString,
+            ),
+            'Get': grpc.unary_unary_rpc_method_handler(
+                    servicer.Get,
+                    request_deserializer=litterboxsvc_dot_svc__pb2.GetRequest.FromString,
+                    response_serializer=litterboxsvc_dot_svc__pb2.GetResponse.SerializeToString,
             ),
             'Event': grpc.unary_stream_rpc_method_handler(
                     servicer.Event,
@@ -112,6 +128,23 @@ class LitterBox(object):
         return grpc.experimental.unary_unary(request, target, '/autokitteh.litterbox.LitterBox/Setup',
             litterboxsvc_dot_svc__pb2.SetupRequest.SerializeToString,
             litterboxsvc_dot_svc__pb2.SetupResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Get(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/autokitteh.litterbox.LitterBox/Get',
+            litterboxsvc_dot_svc__pb2.GetRequest.SerializeToString,
+            litterboxsvc_dot_svc__pb2.GetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

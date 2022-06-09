@@ -23,6 +23,15 @@ message SetupResponse {
   string id = 1 {{ LitterBoxID }};
 }
 
+message GetRequest {
+  string id = 1 {{ LitterBoxID }};
+}
+
+message GetResponse {
+  string             main_file_name = 1;
+  map<string, bytes> files_map = 2;
+}
+
 message ScoopRequest {
   string id = 1 {{ LitterBoxID }};
 }
@@ -56,6 +65,12 @@ service LitterBox {
           body: "files_txtar"
         }
       ]
+    };
+  }
+
+  rpc Get(GetRequest) returns (GetResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/litterboxes/{id}",
     };
   }
 

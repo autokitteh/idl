@@ -62,6 +62,34 @@
       }
     },
     "/api/v1/litterboxes/{id}": {
+      "get": {
+        "operationId": "LitterBox_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/litterboxGetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LitterBox"
+        ]
+      },
       "post": {
         "operationId": "LitterBox_Setup2",
         "responses": {
@@ -626,6 +654,21 @@
     },
     "langRunningRunState": {
       "type": "object"
+    },
+    "litterboxGetResponse": {
+      "type": "object",
+      "properties": {
+        "mainFileName": {
+          "type": "string"
+        },
+        "filesMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      }
     },
     "litterboxLitterBoxEvent": {
       "type": "object",
