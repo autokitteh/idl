@@ -291,6 +291,14 @@
         }
       }
     },
+    "eventCompletedProjectEventState": {
+      "type": "object",
+      "properties": {
+        "runSummary": {
+          "$ref": "#/definitions/langRunSummary"
+        }
+      }
+    },
     "eventErrorEventState": {
       "type": "object",
       "properties": {
@@ -358,6 +366,25 @@
         }
       }
     },
+    "eventLoadedProjectEventState": {
+      "type": "object",
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/programPath"
+          }
+        }
+      }
+    },
+    "eventLoadingProjectEventState": {
+      "type": "object",
+      "properties": {
+        "mainPath": {
+          "$ref": "#/definitions/programPath"
+        }
+      }
+    },
     "eventPendingEventState": {
       "type": "object"
     },
@@ -381,14 +408,6 @@
         }
       }
     },
-    "eventProcessedProjectEventState": {
-      "type": "object",
-      "properties": {
-        "runSummary": {
-          "$ref": "#/definitions/langRunSummary"
-        }
-      }
-    },
     "eventProcessingEventState": {
       "type": "object",
       "properties": {
@@ -406,9 +425,6 @@
         }
       }
     },
-    "eventProcessingProjectEventState": {
-      "type": "object"
-    },
     "eventProjectEventState": {
       "type": "object",
       "properties": {
@@ -421,14 +437,20 @@
         "pending": {
           "$ref": "#/definitions/eventPendingProjectEventState"
         },
-        "processing": {
-          "$ref": "#/definitions/eventProcessingProjectEventState"
+        "loading": {
+          "$ref": "#/definitions/eventLoadingProjectEventState"
+        },
+        "loaded": {
+          "$ref": "#/definitions/eventLoadedProjectEventState"
+        },
+        "running": {
+          "$ref": "#/definitions/eventRunningProjectEventState"
         },
         "waiting": {
           "$ref": "#/definitions/eventWaitingProjectEventState"
         },
-        "processed": {
-          "$ref": "#/definitions/eventProcessedProjectEventState"
+        "completed": {
+          "$ref": "#/definitions/eventCompletedProjectEventState"
         }
       }
     },
@@ -443,6 +465,9 @@
           "$ref": "#/definitions/eventProjectEventState"
         }
       }
+    },
+    "eventRunningProjectEventState": {
+      "type": "object"
     },
     "eventTrackIngestEventUpdate": {
       "type": "object",

@@ -170,12 +170,36 @@ func (m *ProjectEventState) Validate() error {
 			}
 		}
 
-	case *ProjectEventState_Processing:
+	case *ProjectEventState_Loading:
 
-		if v, ok := interface{}(m.GetProcessing()).(interface{ Validate() error }); ok {
+		if v, ok := interface{}(m.GetLoading()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return ProjectEventStateValidationError{
-					field:  "Processing",
+					field:  "Loading",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *ProjectEventState_Loaded:
+
+		if v, ok := interface{}(m.GetLoaded()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ProjectEventStateValidationError{
+					field:  "Loaded",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *ProjectEventState_Running:
+
+		if v, ok := interface{}(m.GetRunning()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ProjectEventStateValidationError{
+					field:  "Running",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -194,12 +218,12 @@ func (m *ProjectEventState) Validate() error {
 			}
 		}
 
-	case *ProjectEventState_Processed:
+	case *ProjectEventState_Completed:
 
-		if v, ok := interface{}(m.GetProcessed()).(interface{ Validate() error }); ok {
+		if v, ok := interface{}(m.GetCompleted()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return ProjectEventStateValidationError{
-					field:  "Processed",
+					field:  "Completed",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -488,21 +512,37 @@ var _ interface {
 	ErrorName() string
 } = PendingProjectEventStateValidationError{}
 
-// Validate checks the field values on ProcessingProjectEventState with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on LoadingProjectEventState with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *ProcessingProjectEventState) Validate() error {
+func (m *LoadingProjectEventState) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetMainPath() == nil {
+		return LoadingProjectEventStateValidationError{
+			field:  "MainPath",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMainPath()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return LoadingProjectEventStateValidationError{
+				field:  "MainPath",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
 	}
 
 	return nil
 }
 
-// ProcessingProjectEventStateValidationError is the validation error returned
-// by ProcessingProjectEventState.Validate if the designated constraints
-// aren't met.
-type ProcessingProjectEventStateValidationError struct {
+// LoadingProjectEventStateValidationError is the validation error returned by
+// LoadingProjectEventState.Validate if the designated constraints aren't met.
+type LoadingProjectEventStateValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -510,24 +550,24 @@ type ProcessingProjectEventStateValidationError struct {
 }
 
 // Field function returns field value.
-func (e ProcessingProjectEventStateValidationError) Field() string { return e.field }
+func (e LoadingProjectEventStateValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ProcessingProjectEventStateValidationError) Reason() string { return e.reason }
+func (e LoadingProjectEventStateValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ProcessingProjectEventStateValidationError) Cause() error { return e.cause }
+func (e LoadingProjectEventStateValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ProcessingProjectEventStateValidationError) Key() bool { return e.key }
+func (e LoadingProjectEventStateValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ProcessingProjectEventStateValidationError) ErrorName() string {
-	return "ProcessingProjectEventStateValidationError"
+func (e LoadingProjectEventStateValidationError) ErrorName() string {
+	return "LoadingProjectEventStateValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ProcessingProjectEventStateValidationError) Error() string {
+func (e LoadingProjectEventStateValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -539,14 +579,14 @@ func (e ProcessingProjectEventStateValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sProcessingProjectEventState.%s: %s%s",
+		"invalid %sLoadingProjectEventState.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ProcessingProjectEventStateValidationError{}
+var _ error = LoadingProjectEventStateValidationError{}
 
 var _ interface {
 	Field() string
@@ -554,19 +594,175 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ProcessingProjectEventStateValidationError{}
+} = LoadingProjectEventStateValidationError{}
 
-// Validate checks the field values on ProcessedProjectEventState with the
+// Validate checks the field values on LoadedProjectEventState with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *LoadedProjectEventState) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetPaths() {
+		_, _ = idx, item
+
+		if item == nil {
+			return LoadedProjectEventStateValidationError{
+				field:  fmt.Sprintf("Paths[%v]", idx),
+				reason: "value is required",
+			}
+		}
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LoadedProjectEventStateValidationError{
+					field:  fmt.Sprintf("Paths[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// LoadedProjectEventStateValidationError is the validation error returned by
+// LoadedProjectEventState.Validate if the designated constraints aren't met.
+type LoadedProjectEventStateValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LoadedProjectEventStateValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LoadedProjectEventStateValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LoadedProjectEventStateValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LoadedProjectEventStateValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LoadedProjectEventStateValidationError) ErrorName() string {
+	return "LoadedProjectEventStateValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LoadedProjectEventStateValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLoadedProjectEventState.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LoadedProjectEventStateValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LoadedProjectEventStateValidationError{}
+
+// Validate checks the field values on RunningProjectEventState with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RunningProjectEventState) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// RunningProjectEventStateValidationError is the validation error returned by
+// RunningProjectEventState.Validate if the designated constraints aren't met.
+type RunningProjectEventStateValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RunningProjectEventStateValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RunningProjectEventStateValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RunningProjectEventStateValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RunningProjectEventStateValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RunningProjectEventStateValidationError) ErrorName() string {
+	return "RunningProjectEventStateValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RunningProjectEventStateValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRunningProjectEventState.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RunningProjectEventStateValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RunningProjectEventStateValidationError{}
+
+// Validate checks the field values on CompletedProjectEventState with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *ProcessedProjectEventState) Validate() error {
+func (m *CompletedProjectEventState) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetRunSummary()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ProcessedProjectEventStateValidationError{
+			return CompletedProjectEventStateValidationError{
 				field:  "RunSummary",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -577,9 +773,9 @@ func (m *ProcessedProjectEventState) Validate() error {
 	return nil
 }
 
-// ProcessedProjectEventStateValidationError is the validation error returned
-// by ProcessedProjectEventState.Validate if the designated constraints aren't met.
-type ProcessedProjectEventStateValidationError struct {
+// CompletedProjectEventStateValidationError is the validation error returned
+// by CompletedProjectEventState.Validate if the designated constraints aren't met.
+type CompletedProjectEventStateValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -587,24 +783,24 @@ type ProcessedProjectEventStateValidationError struct {
 }
 
 // Field function returns field value.
-func (e ProcessedProjectEventStateValidationError) Field() string { return e.field }
+func (e CompletedProjectEventStateValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ProcessedProjectEventStateValidationError) Reason() string { return e.reason }
+func (e CompletedProjectEventStateValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ProcessedProjectEventStateValidationError) Cause() error { return e.cause }
+func (e CompletedProjectEventStateValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ProcessedProjectEventStateValidationError) Key() bool { return e.key }
+func (e CompletedProjectEventStateValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ProcessedProjectEventStateValidationError) ErrorName() string {
-	return "ProcessedProjectEventStateValidationError"
+func (e CompletedProjectEventStateValidationError) ErrorName() string {
+	return "CompletedProjectEventStateValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ProcessedProjectEventStateValidationError) Error() string {
+func (e CompletedProjectEventStateValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -616,14 +812,14 @@ func (e ProcessedProjectEventStateValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sProcessedProjectEventState.%s: %s%s",
+		"invalid %sCompletedProjectEventState.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ProcessedProjectEventStateValidationError{}
+var _ error = CompletedProjectEventStateValidationError{}
 
 var _ interface {
 	Field() string
@@ -631,7 +827,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ProcessedProjectEventStateValidationError{}
+} = CompletedProjectEventStateValidationError{}
 
 // Validate checks the field values on WaitingProjectEventState with the rules
 // defined in the proto definition for this message. If any rules are

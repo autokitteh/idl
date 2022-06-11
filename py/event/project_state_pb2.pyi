@@ -8,6 +8,7 @@ import google.protobuf.internal.containers
 import google.protobuf.message
 import google.protobuf.timestamp_pb2
 import lang.run_pb2
+import program.program_pb2
 import typing
 import typing_extensions
 
@@ -35,9 +36,11 @@ class ProjectEventState(google.protobuf.message.Message):
     ERROR_FIELD_NUMBER: builtins.int
     IGNORED_FIELD_NUMBER: builtins.int
     PENDING_FIELD_NUMBER: builtins.int
-    PROCESSING_FIELD_NUMBER: builtins.int
+    LOADING_FIELD_NUMBER: builtins.int
+    LOADED_FIELD_NUMBER: builtins.int
+    RUNNING_FIELD_NUMBER: builtins.int
     WAITING_FIELD_NUMBER: builtins.int
-    PROCESSED_FIELD_NUMBER: builtins.int
+    COMPLETED_FIELD_NUMBER: builtins.int
     @property
     def error(self) -> global___ErrorProjectEventState: ...
     @property
@@ -45,23 +48,29 @@ class ProjectEventState(google.protobuf.message.Message):
     @property
     def pending(self) -> global___PendingProjectEventState: ...
     @property
-    def processing(self) -> global___ProcessingProjectEventState: ...
+    def loading(self) -> global___LoadingProjectEventState: ...
+    @property
+    def loaded(self) -> global___LoadedProjectEventState: ...
+    @property
+    def running(self) -> global___RunningProjectEventState: ...
     @property
     def waiting(self) -> global___WaitingProjectEventState: ...
     @property
-    def processed(self) -> global___ProcessedProjectEventState: ...
+    def completed(self) -> global___CompletedProjectEventState: ...
     def __init__(self,
         *,
         error: typing.Optional[global___ErrorProjectEventState] = ...,
         ignored: typing.Optional[global___IgnoredProjectEventState] = ...,
         pending: typing.Optional[global___PendingProjectEventState] = ...,
-        processing: typing.Optional[global___ProcessingProjectEventState] = ...,
+        loading: typing.Optional[global___LoadingProjectEventState] = ...,
+        loaded: typing.Optional[global___LoadedProjectEventState] = ...,
+        running: typing.Optional[global___RunningProjectEventState] = ...,
         waiting: typing.Optional[global___WaitingProjectEventState] = ...,
-        processed: typing.Optional[global___ProcessedProjectEventState] = ...,
+        completed: typing.Optional[global___CompletedProjectEventState] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["error",b"error","ignored",b"ignored","pending",b"pending","processed",b"processed","processing",b"processing","type",b"type","waiting",b"waiting"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["error",b"error","ignored",b"ignored","pending",b"pending","processed",b"processed","processing",b"processing","type",b"type","waiting",b"waiting"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["type",b"type"]) -> typing.Optional[typing_extensions.Literal["error","ignored","pending","processing","waiting","processed"]]: ...
+    def HasField(self, field_name: typing_extensions.Literal["completed",b"completed","error",b"error","ignored",b"ignored","loaded",b"loaded","loading",b"loading","pending",b"pending","running",b"running","type",b"type","waiting",b"waiting"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["completed",b"completed","error",b"error","ignored",b"ignored","loaded",b"loaded","loading",b"loading","pending",b"pending","running",b"running","type",b"type","waiting",b"waiting"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["type",b"type"]) -> typing.Optional[typing_extensions.Literal["error","ignored","pending","loading","loaded","running","waiting","completed"]]: ...
 global___ProjectEventState = ProjectEventState
 
 class ErrorProjectEventState(google.protobuf.message.Message):
@@ -97,13 +106,38 @@ class PendingProjectEventState(google.protobuf.message.Message):
         ) -> None: ...
 global___PendingProjectEventState = PendingProjectEventState
 
-class ProcessingProjectEventState(google.protobuf.message.Message):
+class LoadingProjectEventState(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    MAIN_PATH_FIELD_NUMBER: builtins.int
+    @property
+    def main_path(self) -> program.program_pb2.Path: ...
+    def __init__(self,
+        *,
+        main_path: typing.Optional[program.program_pb2.Path] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["main_path",b"main_path"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["main_path",b"main_path"]) -> None: ...
+global___LoadingProjectEventState = LoadingProjectEventState
+
+class LoadedProjectEventState(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PATHS_FIELD_NUMBER: builtins.int
+    @property
+    def paths(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[program.program_pb2.Path]: ...
+    def __init__(self,
+        *,
+        paths: typing.Optional[typing.Iterable[program.program_pb2.Path]] = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["paths",b"paths"]) -> None: ...
+global___LoadedProjectEventState = LoadedProjectEventState
+
+class RunningProjectEventState(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     def __init__(self,
         ) -> None: ...
-global___ProcessingProjectEventState = ProcessingProjectEventState
+global___RunningProjectEventState = RunningProjectEventState
 
-class ProcessedProjectEventState(google.protobuf.message.Message):
+class CompletedProjectEventState(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     RUN_SUMMARY_FIELD_NUMBER: builtins.int
     @property
@@ -114,7 +148,7 @@ class ProcessedProjectEventState(google.protobuf.message.Message):
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["run_summary",b"run_summary"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["run_summary",b"run_summary"]) -> None: ...
-global___ProcessedProjectEventState = ProcessedProjectEventState
+global___CompletedProjectEventState = CompletedProjectEventState
 
 class WaitingProjectEventState(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor

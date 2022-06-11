@@ -15,9 +15,10 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from validate import validate_pb2 as validate_dot_validate__pb2
 from lang import run_pb2 as lang_dot_run__pb2
+from program import program_pb2 as program_dot_program__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x65vent/project_state.proto\x12\x10\x61utokitteh.event\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x0elang/run.proto\"\x88\x01\n\x17ProjectEventStateRecord\x12/\n\x01t\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x08\x01\x12<\n\x05state\x18\x02 \x01(\x0b\x32#.autokitteh.event.ProjectEventStateB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"\xa0\x03\n\x11ProjectEventState\x12\x39\n\x05\x65rror\x18\x01 \x01(\x0b\x32(.autokitteh.event.ErrorProjectEventStateH\x00\x12=\n\x07ignored\x18\x02 \x01(\x0b\x32*.autokitteh.event.IgnoredProjectEventStateH\x00\x12=\n\x07pending\x18\x03 \x01(\x0b\x32*.autokitteh.event.PendingProjectEventStateH\x00\x12\x43\n\nprocessing\x18\x04 \x01(\x0b\x32-.autokitteh.event.ProcessingProjectEventStateH\x00\x12=\n\x07waiting\x18\x05 \x01(\x0b\x32*.autokitteh.event.WaitingProjectEventStateH\x00\x12\x41\n\tprocessed\x18\x06 \x01(\x0b\x32,.autokitteh.event.ProcessedProjectEventStateH\x00\x42\x0b\n\x04type\x12\x03\xf8\x42\x01\"Y\n\x16\x45rrorProjectEventState\x12\x30\n\x0brun_summary\x18\x01 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummary\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"*\n\x18IgnoredProjectEventState\x12\x0e\n\x06reason\x18\x01 \x01(\t\"\x1a\n\x18PendingProjectEventState\"\x1d\n\x1bProcessingProjectEventState\"N\n\x1aProcessedProjectEventState\x12\x30\n\x0brun_summary\x18\x01 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummary\"[\n\x18WaitingProjectEventState\x12\r\n\x05names\x18\x01 \x03(\t\x12\x30\n\x0brun_summary\x18\x02 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummaryB Z\x1ego.autokitteh.dev/idl/go/eventb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x65vent/project_state.proto\x12\x10\x61utokitteh.event\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x0elang/run.proto\x1a\x15program/program.proto\"\x88\x01\n\x17ProjectEventStateRecord\x12/\n\x01t\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x08\x01\x12<\n\x05state\x18\x02 \x01(\x0b\x32#.autokitteh.event.ProjectEventStateB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"\x96\x04\n\x11ProjectEventState\x12\x39\n\x05\x65rror\x18\x01 \x01(\x0b\x32(.autokitteh.event.ErrorProjectEventStateH\x00\x12=\n\x07ignored\x18\x02 \x01(\x0b\x32*.autokitteh.event.IgnoredProjectEventStateH\x00\x12=\n\x07pending\x18\x03 \x01(\x0b\x32*.autokitteh.event.PendingProjectEventStateH\x00\x12=\n\x07loading\x18\x04 \x01(\x0b\x32*.autokitteh.event.LoadingProjectEventStateH\x00\x12;\n\x06loaded\x18\x05 \x01(\x0b\x32).autokitteh.event.LoadedProjectEventStateH\x00\x12=\n\x07running\x18\x06 \x01(\x0b\x32*.autokitteh.event.RunningProjectEventStateH\x00\x12=\n\x07waiting\x18\x07 \x01(\x0b\x32*.autokitteh.event.WaitingProjectEventStateH\x00\x12\x41\n\tcompleted\x18\x08 \x01(\x0b\x32,.autokitteh.event.CompletedProjectEventStateH\x00\x42\x0b\n\x04type\x12\x03\xf8\x42\x01\"Y\n\x16\x45rrorProjectEventState\x12\x30\n\x0brun_summary\x18\x01 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummary\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"*\n\x18IgnoredProjectEventState\x12\x0e\n\x06reason\x18\x01 \x01(\t\"\x1a\n\x18PendingProjectEventState\"Q\n\x18LoadingProjectEventState\x12\x35\n\tmain_path\x18\x01 \x01(\x0b\x32\x18.autokitteh.program.PathB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"Q\n\x17LoadedProjectEventState\x12\x36\n\x05paths\x18\x01 \x03(\x0b\x32\x18.autokitteh.program.PathB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\"\x1a\n\x18RunningProjectEventState\"N\n\x1a\x43ompletedProjectEventState\x12\x30\n\x0brun_summary\x18\x01 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummary\"[\n\x18WaitingProjectEventState\x12\r\n\x05names\x18\x01 \x03(\t\x12\x30\n\x0brun_summary\x18\x02 \x01(\x0b\x32\x1b.autokitteh.lang.RunSummaryB Z\x1ego.autokitteh.dev/idl/go/eventb\x06proto3')
 
 
 
@@ -26,8 +27,10 @@ _PROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['ProjectEventState']
 _ERRORPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['ErrorProjectEventState']
 _IGNOREDPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['IgnoredProjectEventState']
 _PENDINGPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['PendingProjectEventState']
-_PROCESSINGPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['ProcessingProjectEventState']
-_PROCESSEDPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['ProcessedProjectEventState']
+_LOADINGPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['LoadingProjectEventState']
+_LOADEDPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['LoadedProjectEventState']
+_RUNNINGPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['RunningProjectEventState']
+_COMPLETEDPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['CompletedProjectEventState']
 _WAITINGPROJECTEVENTSTATE = DESCRIPTOR.message_types_by_name['WaitingProjectEventState']
 ProjectEventStateRecord = _reflection.GeneratedProtocolMessageType('ProjectEventStateRecord', (_message.Message,), {
   'DESCRIPTOR' : _PROJECTEVENTSTATERECORD,
@@ -64,19 +67,33 @@ PendingProjectEventState = _reflection.GeneratedProtocolMessageType('PendingProj
   })
 _sym_db.RegisterMessage(PendingProjectEventState)
 
-ProcessingProjectEventState = _reflection.GeneratedProtocolMessageType('ProcessingProjectEventState', (_message.Message,), {
-  'DESCRIPTOR' : _PROCESSINGPROJECTEVENTSTATE,
+LoadingProjectEventState = _reflection.GeneratedProtocolMessageType('LoadingProjectEventState', (_message.Message,), {
+  'DESCRIPTOR' : _LOADINGPROJECTEVENTSTATE,
   '__module__' : 'event.project_state_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.event.ProcessingProjectEventState)
+  # @@protoc_insertion_point(class_scope:autokitteh.event.LoadingProjectEventState)
   })
-_sym_db.RegisterMessage(ProcessingProjectEventState)
+_sym_db.RegisterMessage(LoadingProjectEventState)
 
-ProcessedProjectEventState = _reflection.GeneratedProtocolMessageType('ProcessedProjectEventState', (_message.Message,), {
-  'DESCRIPTOR' : _PROCESSEDPROJECTEVENTSTATE,
+LoadedProjectEventState = _reflection.GeneratedProtocolMessageType('LoadedProjectEventState', (_message.Message,), {
+  'DESCRIPTOR' : _LOADEDPROJECTEVENTSTATE,
   '__module__' : 'event.project_state_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.event.ProcessedProjectEventState)
+  # @@protoc_insertion_point(class_scope:autokitteh.event.LoadedProjectEventState)
   })
-_sym_db.RegisterMessage(ProcessedProjectEventState)
+_sym_db.RegisterMessage(LoadedProjectEventState)
+
+RunningProjectEventState = _reflection.GeneratedProtocolMessageType('RunningProjectEventState', (_message.Message,), {
+  'DESCRIPTOR' : _RUNNINGPROJECTEVENTSTATE,
+  '__module__' : 'event.project_state_pb2'
+  # @@protoc_insertion_point(class_scope:autokitteh.event.RunningProjectEventState)
+  })
+_sym_db.RegisterMessage(RunningProjectEventState)
+
+CompletedProjectEventState = _reflection.GeneratedProtocolMessageType('CompletedProjectEventState', (_message.Message,), {
+  'DESCRIPTOR' : _COMPLETEDPROJECTEVENTSTATE,
+  '__module__' : 'event.project_state_pb2'
+  # @@protoc_insertion_point(class_scope:autokitteh.event.CompletedProjectEventState)
+  })
+_sym_db.RegisterMessage(CompletedProjectEventState)
 
 WaitingProjectEventState = _reflection.GeneratedProtocolMessageType('WaitingProjectEventState', (_message.Message,), {
   'DESCRIPTOR' : _WAITINGPROJECTEVENTSTATE,
@@ -95,20 +112,28 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _PROJECTEVENTSTATERECORD.fields_by_name['state']._serialized_options = b'\372B\005\212\001\002\020\001'
   _PROJECTEVENTSTATE.oneofs_by_name['type']._options = None
   _PROJECTEVENTSTATE.oneofs_by_name['type']._serialized_options = b'\370B\001'
-  _PROJECTEVENTSTATERECORD._serialized_start=122
-  _PROJECTEVENTSTATERECORD._serialized_end=258
-  _PROJECTEVENTSTATE._serialized_start=261
-  _PROJECTEVENTSTATE._serialized_end=677
-  _ERRORPROJECTEVENTSTATE._serialized_start=679
-  _ERRORPROJECTEVENTSTATE._serialized_end=768
-  _IGNOREDPROJECTEVENTSTATE._serialized_start=770
-  _IGNOREDPROJECTEVENTSTATE._serialized_end=812
-  _PENDINGPROJECTEVENTSTATE._serialized_start=814
-  _PENDINGPROJECTEVENTSTATE._serialized_end=840
-  _PROCESSINGPROJECTEVENTSTATE._serialized_start=842
-  _PROCESSINGPROJECTEVENTSTATE._serialized_end=871
-  _PROCESSEDPROJECTEVENTSTATE._serialized_start=873
-  _PROCESSEDPROJECTEVENTSTATE._serialized_end=951
-  _WAITINGPROJECTEVENTSTATE._serialized_start=953
-  _WAITINGPROJECTEVENTSTATE._serialized_end=1044
+  _LOADINGPROJECTEVENTSTATE.fields_by_name['main_path']._options = None
+  _LOADINGPROJECTEVENTSTATE.fields_by_name['main_path']._serialized_options = b'\372B\005\212\001\002\020\001'
+  _LOADEDPROJECTEVENTSTATE.fields_by_name['paths']._options = None
+  _LOADEDPROJECTEVENTSTATE.fields_by_name['paths']._serialized_options = b'\372B\n\222\001\007\"\005\212\001\002\020\001'
+  _PROJECTEVENTSTATERECORD._serialized_start=145
+  _PROJECTEVENTSTATERECORD._serialized_end=281
+  _PROJECTEVENTSTATE._serialized_start=284
+  _PROJECTEVENTSTATE._serialized_end=818
+  _ERRORPROJECTEVENTSTATE._serialized_start=820
+  _ERRORPROJECTEVENTSTATE._serialized_end=909
+  _IGNOREDPROJECTEVENTSTATE._serialized_start=911
+  _IGNOREDPROJECTEVENTSTATE._serialized_end=953
+  _PENDINGPROJECTEVENTSTATE._serialized_start=955
+  _PENDINGPROJECTEVENTSTATE._serialized_end=981
+  _LOADINGPROJECTEVENTSTATE._serialized_start=983
+  _LOADINGPROJECTEVENTSTATE._serialized_end=1064
+  _LOADEDPROJECTEVENTSTATE._serialized_start=1066
+  _LOADEDPROJECTEVENTSTATE._serialized_end=1147
+  _RUNNINGPROJECTEVENTSTATE._serialized_start=1149
+  _RUNNINGPROJECTEVENTSTATE._serialized_end=1175
+  _COMPLETEDPROJECTEVENTSTATE._serialized_start=1177
+  _COMPLETEDPROJECTEVENTSTATE._serialized_end=1255
+  _WAITINGPROJECTEVENTSTATE._serialized_start=1257
+  _WAITINGPROJECTEVENTSTATE._serialized_end=1348
 # @@protoc_insertion_point(module_scope)

@@ -8,6 +8,7 @@ import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
 
 import "lang/run.proto";
+import "program/program.proto";
 
 
 message ProjectEventStateRecord {
@@ -22,9 +23,11 @@ message ProjectEventState {
     ErrorProjectEventState      error      = 1;
     IgnoredProjectEventState    ignored    = 2;
     PendingProjectEventState    pending    = 3;
-    ProcessingProjectEventState processing = 4;
-    WaitingProjectEventState    waiting    = 5;
-    ProcessedProjectEventState  processed  = 6;
+    LoadingProjectEventState    loading    = 4;
+    LoadedProjectEventState     loaded     = 5;
+    RunningProjectEventState    running    = 6;
+    WaitingProjectEventState    waiting    = 7;
+    CompletedProjectEventState  completed  = 8;
   }
 }
 
@@ -41,10 +44,18 @@ message IgnoredProjectEventState {
 
 message PendingProjectEventState {}
 
-message ProcessingProjectEventState {
+message LoadingProjectEventState {
+  program.Path main_path = 1 [(validate.rules).message.required = true];
 }
 
-message ProcessedProjectEventState {
+message LoadedProjectEventState {
+  repeated program.Path paths = 1 [(validate.rules).repeated.items.message.required = true];
+}
+
+message RunningProjectEventState {
+}
+
+message CompletedProjectEventState {
   lang.RunSummary run_summary = 1;
 }
 
