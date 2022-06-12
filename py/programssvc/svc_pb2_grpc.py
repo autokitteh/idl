@@ -14,13 +14,8 @@ class ProgramsStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Update = channel.unary_unary(
-                '/autokitteh.programsvc.Programs/Update',
-                request_serializer=programssvc_dot_svc__pb2.UpdateRequest.SerializeToString,
-                response_deserializer=programssvc_dot_svc__pb2.UpdateResponse.FromString,
-                )
         self.Get = channel.unary_unary(
-                '/autokitteh.programsvc.Programs/Get',
+                '/autokitteh.programssvc.Programs/Get',
                 request_serializer=programssvc_dot_svc__pb2.GetRequest.SerializeToString,
                 response_deserializer=programssvc_dot_svc__pb2.GetResponse.FromString,
                 )
@@ -28,12 +23,6 @@ class ProgramsStub(object):
 
 class ProgramsServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def Update(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -44,11 +33,6 @@ class ProgramsServicer(object):
 
 def add_ProgramsServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Update': grpc.unary_unary_rpc_method_handler(
-                    servicer.Update,
-                    request_deserializer=programssvc_dot_svc__pb2.UpdateRequest.FromString,
-                    response_serializer=programssvc_dot_svc__pb2.UpdateResponse.SerializeToString,
-            ),
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
                     request_deserializer=programssvc_dot_svc__pb2.GetRequest.FromString,
@@ -56,30 +40,13 @@ def add_ProgramsServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'autokitteh.programsvc.Programs', rpc_method_handlers)
+            'autokitteh.programssvc.Programs', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
 class Programs(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def Update(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Programs/Update',
-            programssvc_dot_svc__pb2.UpdateRequest.SerializeToString,
-            programssvc_dot_svc__pb2.UpdateResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -92,7 +59,7 @@ class Programs(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/autokitteh.programsvc.Programs/Get',
+        return grpc.experimental.unary_unary(request, target, '/autokitteh.programssvc.Programs/Get',
             programssvc_dot_svc__pb2.GetRequest.SerializeToString,
             programssvc_dot_svc__pb2.GetResponse.FromString,
             options, channel_credentials,

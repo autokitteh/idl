@@ -4,7 +4,6 @@ isort:skip_file
 """
 import builtins
 import google.protobuf.descriptor
-import google.protobuf.internal.containers
 import google.protobuf.message
 import google.protobuf.timestamp_pb2
 import program.program_pb2
@@ -13,91 +12,48 @@ import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-class File(google.protobuf.message.Message):
+class GetRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROJECT_ID_FIELD_NUMBER: builtins.int
+    PATH_FIELD_NUMBER: builtins.int
+    RAW_PATH_FIELD_NUMBER: builtins.int
+    OMIT_SOURCE_FIELD_NUMBER: builtins.int
+    project_id: typing.Text
+    @property
+    def path(self) -> program.program_pb2.Path: ...
+    raw_path: typing.Text
+    """if set, overrides path."""
+
+    omit_source: builtins.bool
+    """if set, source is not returned."""
+
+    def __init__(self,
+        *,
+        project_id: typing.Text = ...,
+        path: typing.Optional[program.program_pb2.Path] = ...,
+        raw_path: typing.Text = ...,
+        omit_source: builtins.bool = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["path",b"path"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["omit_source",b"omit_source","path",b"path","project_id",b"project_id","raw_path",b"raw_path"]) -> None: ...
+global___GetRequest = GetRequest
+
+class GetResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     PATH_FIELD_NUMBER: builtins.int
-    CONTENT_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
     FETCHED_AT_FIELD_NUMBER: builtins.int
     @property
     def path(self) -> program.program_pb2.Path: ...
-    content: builtins.bytes
+    source: builtins.bytes
     @property
     def fetched_at(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     def __init__(self,
         *,
         path: typing.Optional[program.program_pb2.Path] = ...,
-        content: builtins.bytes = ...,
+        source: builtins.bytes = ...,
         fetched_at: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["fetched_at",b"fetched_at","path",b"path"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["content",b"content","fetched_at",b"fetched_at","path",b"path"]) -> None: ...
-global___File = File
-
-class UpdateRequest(google.protobuf.message.Message):
-    """Update the program store.
-    Will first try `files`. If `only_files` if false, will try to
-    find the files itself.
-    """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    PROJECT_ID_FIELD_NUMBER: builtins.int
-    MAIN_PATH_FIELD_NUMBER: builtins.int
-    FILES_FIELD_NUMBER: builtins.int
-    ONLY_FILES_FIELD_NUMBER: builtins.int
-    project_id: typing.Text
-    @property
-    def main_path(self) -> program.program_pb2.Path: ...
-    @property
-    def files(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___File]: ...
-    only_files: builtins.bool
-    """do not try to fetch files that are not in `files`."""
-
-    def __init__(self,
-        *,
-        project_id: typing.Text = ...,
-        main_path: typing.Optional[program.program_pb2.Path] = ...,
-        files: typing.Optional[typing.Iterable[global___File]] = ...,
-        only_files: builtins.bool = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["main_path",b"main_path"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["files",b"files","main_path",b"main_path","only_files",b"only_files","project_id",b"project_id"]) -> None: ...
-global___UpdateRequest = UpdateRequest
-
-class UpdateResponse(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    def __init__(self,
-        ) -> None: ...
-global___UpdateResponse = UpdateResponse
-
-class GetRequest(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    PROJECT_ID_FIELD_NUMBER: builtins.int
-    PATHS_FIELD_NUMBER: builtins.int
-    NO_CONTENT_FIELD_NUMBER: builtins.int
-    project_id: typing.Text
-    @property
-    def paths(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[program.program_pb2.Path]:
-        """If `paths` is nil, returns all."""
-        pass
-    no_content: builtins.bool
-    """just list, don't fetch actual content."""
-
-    def __init__(self,
-        *,
-        project_id: typing.Text = ...,
-        paths: typing.Optional[typing.Iterable[program.program_pb2.Path]] = ...,
-        no_content: builtins.bool = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["no_content",b"no_content","paths",b"paths","project_id",b"project_id"]) -> None: ...
-global___GetRequest = GetRequest
-
-class GetResponse(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    FILES_FIELD_NUMBER: builtins.int
-    @property
-    def files(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___File]: ...
-    def __init__(self,
-        *,
-        files: typing.Optional[typing.Iterable[global___File]] = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["files",b"files"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["fetched_at",b"fetched_at","path",b"path","source",b"source"]) -> None: ...
 global___GetResponse = GetResponse

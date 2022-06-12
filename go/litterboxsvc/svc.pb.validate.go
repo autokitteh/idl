@@ -52,10 +52,6 @@ func (m *SetupRequest) Validate() error {
 
 	}
 
-	// no validation rules for FilesMap
-
-	// no validation rules for MainFileName
-
 	// no validation rules for FilesTxtar
 
 	return nil
@@ -272,9 +268,7 @@ func (m *GetResponse) Validate() error {
 		return nil
 	}
 
-	// no validation rules for MainFileName
-
-	// no validation rules for FilesMap
+	// no validation rules for FilesTxtar
 
 	return nil
 }

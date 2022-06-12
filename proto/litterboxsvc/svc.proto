@@ -14,9 +14,7 @@ import "values/values.proto";
 
 message SetupRequest {
   string             id             = 1 [(validate.rules).string = {ignore_empty:true, pattern: "^[a-zA-Z0-9_-]+$" }];
-  map<string, bytes> files_map      = 2; // name -> file.
-  string             main_file_name = 3;
-  bytes              files_txtar    = 4; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
+  bytes              files_txtar    = 2; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
 }
 
 message SetupResponse {
@@ -28,8 +26,7 @@ message GetRequest {
 }
 
 message GetResponse {
-  string             main_file_name = 1;
-  map<string, bytes> files_map = 2;
+  bytes files_txtar = 1; // in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar).
 }
 
 message ScoopRequest {
@@ -61,7 +58,11 @@ service LitterBox {
       body: "files_txtar"
       additional_bindings: [
         {
-          post: "/api/v1/litterboxes/{id}"
+          post: "/api/v1/litterboxes/{id}",
+          body: "files_txtar"
+        },
+        {
+          post: "/api/v1/litterboxes/{id}/files",
           body: "files_txtar"
         }
       ]
@@ -71,6 +72,13 @@ service LitterBox {
   rpc Get(GetRequest) returns (GetResponse) {
     option (google.api.http) = {
       get: "/api/v1/litterboxes/{id}",
+      response_body: "files_txtar",
+      additional_bindings: [
+        {
+          get: "/api/v1/litterboxes/{id}/files",
+          response_body: "files_txtar"
+        }
+      ]
     };
   }
 

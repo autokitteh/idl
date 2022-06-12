@@ -18,47 +18,23 @@ from validate import validate_pb2 as validate_dot_validate__pb2
 from program import program_pb2 as program_dot_program__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15programssvc/svc.proto\x12\x15\x61utokitteh.programsvc\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x15program/program.proto\"o\n\x04\x46ile\x12&\n\x04path\x18\x01 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\x0c\x12.\n\nfetched_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xd0\x01\n\rUpdateRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12+\n\tmain_path\x18\x02 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x39\n\x05\x66iles\x18\x03 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nonly_files\x18\x04 \x01(\x08\"\x10\n\x0eUpdateResponse\"\x9d\x01\n\nGetRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12\x36\n\x05paths\x18\x02 \x03(\x0b\x32\x18.autokitteh.program.PathB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x12\x12\n\nno_content\x18\x03 \x01(\x08\"H\n\x0bGetResponse\x12\x39\n\x05\x66iles\x18\x01 \x03(\x0b\x32\x1b.autokitteh.programsvc.FileB\r\xfa\x42\n\x92\x01\x07\"\x05\x8a\x01\x02\x10\x01\x32\x80\x02\n\x08Programs\x12\x7f\n\x06Update\x12$.autokitteh.programsvc.UpdateRequest\x1a%.autokitteh.programsvc.UpdateResponse\"(\x82\xd3\xe4\x93\x02\"\"\x1d/api/v1/programs/{project_id}:\x01*\x12s\n\x03Get\x12!.autokitteh.programsvc.GetRequest\x1a\".autokitteh.programsvc.GetResponse\"%\x82\xd3\xe4\x93\x02\x1f\"\x1d/api/v1/programs/{project_id}B&Z$go.autokitteh.dev/idl/go/programssvcb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15programssvc/svc.proto\x12\x16\x61utokitteh.programssvc\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\x1a\x15program/program.proto\"\xa0\x01\n\nGetRequest\x12\x43\n\nproject_id\x18\x01 \x01(\tB/\xfa\x42,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$\x12&\n\x04path\x18\x02 \x01(\x0b\x32\x18.autokitteh.program.Path\x12\x10\n\x08raw_path\x18\x03 \x01(\t\x12\x13\n\x0bomit_source\x18\x04 \x01(\x08\"\x7f\n\x0bGetResponse\x12\x30\n\x04path\x18\x01 \x01(\x0b\x32\x18.autokitteh.program.PathB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\x12\x0e\n\x06source\x18\x02 \x01(\x0c\x12.\n\nfetched_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp2\x90\x01\n\x08Programs\x12\x83\x01\n\x03Get\x12\".autokitteh.programssvc.GetRequest\x1a#.autokitteh.programssvc.GetResponse\"3\x82\xd3\xe4\x93\x02-\x12+/api/v1/programs/{project_id}/{raw_path=**}B&Z$go.autokitteh.dev/idl/go/programssvcb\x06proto3')
 
 
 
-_FILE = DESCRIPTOR.message_types_by_name['File']
-_UPDATEREQUEST = DESCRIPTOR.message_types_by_name['UpdateRequest']
-_UPDATERESPONSE = DESCRIPTOR.message_types_by_name['UpdateResponse']
 _GETREQUEST = DESCRIPTOR.message_types_by_name['GetRequest']
 _GETRESPONSE = DESCRIPTOR.message_types_by_name['GetResponse']
-File = _reflection.GeneratedProtocolMessageType('File', (_message.Message,), {
-  'DESCRIPTOR' : _FILE,
-  '__module__' : 'programssvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.programsvc.File)
-  })
-_sym_db.RegisterMessage(File)
-
-UpdateRequest = _reflection.GeneratedProtocolMessageType('UpdateRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEREQUEST,
-  '__module__' : 'programssvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.programsvc.UpdateRequest)
-  })
-_sym_db.RegisterMessage(UpdateRequest)
-
-UpdateResponse = _reflection.GeneratedProtocolMessageType('UpdateResponse', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATERESPONSE,
-  '__module__' : 'programssvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.programsvc.UpdateResponse)
-  })
-_sym_db.RegisterMessage(UpdateResponse)
-
 GetRequest = _reflection.GeneratedProtocolMessageType('GetRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETREQUEST,
   '__module__' : 'programssvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.programsvc.GetRequest)
+  # @@protoc_insertion_point(class_scope:autokitteh.programssvc.GetRequest)
   })
 _sym_db.RegisterMessage(GetRequest)
 
 GetResponse = _reflection.GeneratedProtocolMessageType('GetResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETRESPONSE,
   '__module__' : 'programssvc.svc_pb2'
-  # @@protoc_insertion_point(class_scope:autokitteh.programsvc.GetResponse)
+  # @@protoc_insertion_point(class_scope:autokitteh.programssvc.GetResponse)
   })
 _sym_db.RegisterMessage(GetResponse)
 
@@ -67,30 +43,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z$go.autokitteh.dev/idl/go/programssvc'
-  _UPDATEREQUEST.fields_by_name['project_id']._options = None
-  _UPDATEREQUEST.fields_by_name['project_id']._serialized_options = b'\372B,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$'
-  _UPDATEREQUEST.fields_by_name['files']._options = None
-  _UPDATEREQUEST.fields_by_name['files']._serialized_options = b'\372B\n\222\001\007\"\005\212\001\002\020\001'
   _GETREQUEST.fields_by_name['project_id']._options = None
   _GETREQUEST.fields_by_name['project_id']._serialized_options = b'\372B,r*2(^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$'
-  _GETREQUEST.fields_by_name['paths']._options = None
-  _GETREQUEST.fields_by_name['paths']._serialized_options = b'\372B\n\222\001\007\"\005\212\001\002\020\001'
-  _GETRESPONSE.fields_by_name['files']._options = None
-  _GETRESPONSE.fields_by_name['files']._serialized_options = b'\372B\n\222\001\007\"\005\212\001\002\020\001'
-  _PROGRAMS.methods_by_name['Update']._options = None
-  _PROGRAMS.methods_by_name['Update']._serialized_options = b'\202\323\344\223\002\"\"\035/api/v1/programs/{project_id}:\001*'
+  _GETRESPONSE.fields_by_name['path']._options = None
+  _GETRESPONSE.fields_by_name['path']._serialized_options = b'\372B\005\212\001\002\020\001'
   _PROGRAMS.methods_by_name['Get']._options = None
-  _PROGRAMS.methods_by_name['Get']._serialized_options = b'\202\323\344\223\002\037\"\035/api/v1/programs/{project_id}'
-  _FILE._serialized_start=159
-  _FILE._serialized_end=270
-  _UPDATEREQUEST._serialized_start=273
-  _UPDATEREQUEST._serialized_end=481
-  _UPDATERESPONSE._serialized_start=483
-  _UPDATERESPONSE._serialized_end=499
-  _GETREQUEST._serialized_start=502
-  _GETREQUEST._serialized_end=659
-  _GETRESPONSE._serialized_start=661
-  _GETRESPONSE._serialized_end=733
-  _PROGRAMS._serialized_start=736
-  _PROGRAMS._serialized_end=992
+  _PROGRAMS.methods_by_name['Get']._serialized_options = b'\202\323\344\223\002-\022+/api/v1/programs/{project_id}/{raw_path=**}'
+  _GETREQUEST._serialized_start=161
+  _GETREQUEST._serialized_end=321
+  _GETRESPONSE._serialized_start=323
+  _GETRESPONSE._serialized_end=450
+  _PROGRAMS._serialized_start=453
+  _PROGRAMS._serialized_end=597
 # @@protoc_insertion_point(module_scope)

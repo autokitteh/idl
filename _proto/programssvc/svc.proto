@@ -12,7 +12,7 @@ import "program/program.proto";
 
 
 message GetRequest {
-  string       project_id  = 1 [(validate.rules).string.pattern = "^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$"];
+  string       project_id  = 1 {{ ProjectID }};
   program.Path path        = 2;
   string       raw_path    = 3; // if set, overrides path.
   bool         omit_source = 4; // if set, source is not returned.

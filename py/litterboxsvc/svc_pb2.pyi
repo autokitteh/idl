@@ -14,40 +14,18 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class SetupRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    class FilesMapEntry(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor
-        KEY_FIELD_NUMBER: builtins.int
-        VALUE_FIELD_NUMBER: builtins.int
-        key: typing.Text
-        value: builtins.bytes
-        def __init__(self,
-            *,
-            key: typing.Text = ...,
-            value: builtins.bytes = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
-
     ID_FIELD_NUMBER: builtins.int
-    FILES_MAP_FIELD_NUMBER: builtins.int
-    MAIN_FILE_NAME_FIELD_NUMBER: builtins.int
     FILES_TXTAR_FIELD_NUMBER: builtins.int
     id: typing.Text
-    @property
-    def files_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]:
-        """name -> file."""
-        pass
-    main_file_name: typing.Text
     files_txtar: builtins.bytes
     """in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar)."""
 
     def __init__(self,
         *,
         id: typing.Text = ...,
-        files_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
-        main_file_name: typing.Text = ...,
         files_txtar: builtins.bytes = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["files_map",b"files_map","files_txtar",b"files_txtar","id",b"id","main_file_name",b"main_file_name"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["files_txtar",b"files_txtar","id",b"id"]) -> None: ...
 global___SetupRequest = SetupRequest
 
 class SetupResponse(google.protobuf.message.Message):
@@ -74,30 +52,15 @@ global___GetRequest = GetRequest
 
 class GetResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    class FilesMapEntry(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor
-        KEY_FIELD_NUMBER: builtins.int
-        VALUE_FIELD_NUMBER: builtins.int
-        key: typing.Text
-        value: builtins.bytes
-        def __init__(self,
-            *,
-            key: typing.Text = ...,
-            value: builtins.bytes = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+    FILES_TXTAR_FIELD_NUMBER: builtins.int
+    files_txtar: builtins.bytes
+    """in txtar format (see https://pkg.go.dev/golang.org/x/tools/txtar)."""
 
-    MAIN_FILE_NAME_FIELD_NUMBER: builtins.int
-    FILES_MAP_FIELD_NUMBER: builtins.int
-    main_file_name: typing.Text
-    @property
-    def files_map(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.bytes]: ...
     def __init__(self,
         *,
-        main_file_name: typing.Text = ...,
-        files_map: typing.Optional[typing.Mapping[typing.Text, builtins.bytes]] = ...,
+        files_txtar: builtins.bytes = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["files_map",b"files_map","main_file_name",b"main_file_name"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["files_txtar",b"files_txtar"]) -> None: ...
 global___GetResponse = GetResponse
 
 class ScoopRequest(google.protobuf.message.Message):

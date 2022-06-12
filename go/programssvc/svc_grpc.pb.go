@@ -18,7 +18,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProgramsClient interface {
-	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 }
 
@@ -30,18 +29,9 @@ func NewProgramsClient(cc grpc.ClientConnInterface) ProgramsClient {
 	return &programsClient{cc}
 }
 
-func (c *programsClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
-	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, "/autokitteh.programsvc.Programs/Update", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *programsClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, "/autokitteh.programsvc.Programs/Get", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/autokitteh.programssvc.Programs/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +42,6 @@ func (c *programsClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.C
 // All implementations must embed UnimplementedProgramsServer
 // for forward compatibility
 type ProgramsServer interface {
-	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	Get(context.Context, *GetRequest) (*GetResponse, error)
 	mustEmbedUnimplementedProgramsServer()
 }
@@ -61,9 +50,6 @@ type ProgramsServer interface {
 type UnimplementedProgramsServer struct {
 }
 
-func (UnimplementedProgramsServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
-}
 func (UnimplementedProgramsServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
@@ -80,24 +66,6 @@ func RegisterProgramsServer(s grpc.ServiceRegistrar, srv ProgramsServer) {
 	s.RegisterService(&Programs_ServiceDesc, srv)
 }
 
-func _Programs_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProgramsServer).Update(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/autokitteh.programsvc.Programs/Update",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProgramsServer).Update(ctx, req.(*UpdateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Programs_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetRequest)
 	if err := dec(in); err != nil {
@@ -108,7 +76,7 @@ func _Programs_Get_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/autokitteh.programsvc.Programs/Get",
+		FullMethod: "/autokitteh.programssvc.Programs/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProgramsServer).Get(ctx, req.(*GetRequest))
@@ -120,13 +88,9 @@ func _Programs_Get_Handler(srv interface{}, ctx context.Context, dec func(interf
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Programs_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "autokitteh.programsvc.Programs",
+	ServiceName: "autokitteh.programssvc.Programs",
 	HandlerType: (*ProgramsServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Update",
-			Handler:    _Programs_Update_Handler,
-		},
 		{
 			MethodName: "Get",
 			Handler:    _Programs_Get_Handler,

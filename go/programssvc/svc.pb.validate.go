@@ -33,265 +33,6 @@ var (
 	_ = anypb.Any{}
 )
 
-// Validate checks the field values on File with the rules defined in the proto
-// definition for this message. If any rules are violated, an error is returned.
-func (m *File) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if v, ok := interface{}(m.GetPath()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return FileValidationError{
-				field:  "Path",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	// no validation rules for Content
-
-	if v, ok := interface{}(m.GetFetchedAt()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return FileValidationError{
-				field:  "FetchedAt",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// FileValidationError is the validation error returned by File.Validate if the
-// designated constraints aren't met.
-type FileValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e FileValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e FileValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e FileValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e FileValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e FileValidationError) ErrorName() string { return "FileValidationError" }
-
-// Error satisfies the builtin error interface
-func (e FileValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sFile.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = FileValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = FileValidationError{}
-
-// Validate checks the field values on UpdateRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *UpdateRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if !_UpdateRequest_ProjectId_Pattern.MatchString(m.GetProjectId()) {
-		return UpdateRequestValidationError{
-			field:  "ProjectId",
-			reason: "value does not match regex pattern \"^[a-zA-Z][0-9a-zA-Z_-]+\\\\.[a-zA-Z0-9_-]+$\"",
-		}
-	}
-
-	if v, ok := interface{}(m.GetMainPath()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return UpdateRequestValidationError{
-				field:  "MainPath",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	for idx, item := range m.GetFiles() {
-		_, _ = idx, item
-
-		if item == nil {
-			return UpdateRequestValidationError{
-				field:  fmt.Sprintf("Files[%v]", idx),
-				reason: "value is required",
-			}
-		}
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return UpdateRequestValidationError{
-					field:  fmt.Sprintf("Files[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
-
-	// no validation rules for OnlyFiles
-
-	return nil
-}
-
-// UpdateRequestValidationError is the validation error returned by
-// UpdateRequest.Validate if the designated constraints aren't met.
-type UpdateRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e UpdateRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e UpdateRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e UpdateRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e UpdateRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e UpdateRequestValidationError) ErrorName() string { return "UpdateRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e UpdateRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sUpdateRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = UpdateRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = UpdateRequestValidationError{}
-
-var _UpdateRequest_ProjectId_Pattern = regexp.MustCompile("^[a-zA-Z][0-9a-zA-Z_-]+\\.[a-zA-Z0-9_-]+$")
-
-// Validate checks the field values on UpdateResponse with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *UpdateResponse) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	return nil
-}
-
-// UpdateResponseValidationError is the validation error returned by
-// UpdateResponse.Validate if the designated constraints aren't met.
-type UpdateResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e UpdateResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e UpdateResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e UpdateResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e UpdateResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e UpdateResponseValidationError) ErrorName() string { return "UpdateResponseValidationError" }
-
-// Error satisfies the builtin error interface
-func (e UpdateResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sUpdateResponse.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = UpdateResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = UpdateResponseValidationError{}
-
 // Validate checks the field values on GetRequest with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *GetRequest) Validate() error {
@@ -306,29 +47,19 @@ func (m *GetRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetPaths() {
-		_, _ = idx, item
-
-		if item == nil {
+	if v, ok := interface{}(m.GetPath()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
 			return GetRequestValidationError{
-				field:  fmt.Sprintf("Paths[%v]", idx),
-				reason: "value is required",
+				field:  "Path",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return GetRequestValidationError{
-					field:  fmt.Sprintf("Paths[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
 	}
 
-	// no validation rules for NoContent
+	// no validation rules for RawPath
+
+	// no validation rules for OmitSource
 
 	return nil
 }
@@ -397,26 +128,33 @@ func (m *GetResponse) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetFiles() {
-		_, _ = idx, item
+	if m.GetPath() == nil {
+		return GetResponseValidationError{
+			field:  "Path",
+			reason: "value is required",
+		}
+	}
 
-		if item == nil {
+	if v, ok := interface{}(m.GetPath()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
 			return GetResponseValidationError{
-				field:  fmt.Sprintf("Files[%v]", idx),
-				reason: "value is required",
+				field:  "Path",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
+	}
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return GetResponseValidationError{
-					field:  fmt.Sprintf("Files[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	// no validation rules for Source
+
+	if v, ok := interface{}(m.GetFetchedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetResponseValidationError{
+				field:  "FetchedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	return nil

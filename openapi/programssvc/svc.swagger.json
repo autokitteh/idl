@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/programs/{projectId}": {
-      "post": {
+    "/api/v1/programs/{projectId}/{rawPath}": {
+      "get": {
         "operationId": "Programs_Get",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/programsvcGetResponse"
+              "$ref": "#/definitions/programssvcGetResponse"
             }
           },
           "default": {
@@ -39,6 +39,36 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "rawPath",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path.scheme",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "path.path",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "path.version",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "omitSource",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -62,13 +92,13 @@
         }
       }
     },
-    "programsvcFile": {
+    "programssvcGetResponse": {
       "type": "object",
       "properties": {
         "path": {
           "$ref": "#/definitions/programPath"
         },
-        "content": {
+        "source": {
           "type": "string",
           "format": "byte"
         },
@@ -77,20 +107,6 @@
           "format": "date-time"
         }
       }
-    },
-    "programsvcGetResponse": {
-      "type": "object",
-      "properties": {
-        "files": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/programsvcFile"
-          }
-        }
-      }
-    },
-    "programsvcUpdateResponse": {
-      "type": "object"
     },
     "protobufAny": {
       "type": "object",
