@@ -39,7 +39,7 @@
     "pluginPluginExecutionSettings": {
       "type": "object",
       "properties": {
-        "name": {
+        "path": {
           "type": "string"
         }
       }

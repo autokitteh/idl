@@ -9,7 +9,7 @@ import "validate/validate.proto";
 
 
 message PluginExecutionSettings {
-  string name = 1;
+  string path = 1;
 }
 
 message PluginSettings {

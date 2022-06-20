@@ -41,7 +41,7 @@ func (m *PluginExecutionSettings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Path
 
 	return nil
 }

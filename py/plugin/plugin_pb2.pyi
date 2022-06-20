@@ -13,13 +13,13 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class PluginExecutionSettings(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    NAME_FIELD_NUMBER: builtins.int
-    name: typing.Text
+    PATH_FIELD_NUMBER: builtins.int
+    path: typing.Text
     def __init__(self,
         *,
-        name: typing.Text = ...,
+        path: typing.Text = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["name",b"name"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["path",b"path"]) -> None: ...
 global___PluginExecutionSettings = PluginExecutionSettings
 
 class PluginSettings(google.protobuf.message.Message):
