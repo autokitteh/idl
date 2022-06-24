@@ -483,19 +483,19 @@ func (m *LitterBoxEvent) Validate() error {
 
 	// no validation rules for Type
 
-	for key, val := range m.GetData() {
+	for key, val := range m.GetValues() {
 		_ = val
 
 		if val == nil {
 			return LitterBoxEventValidationError{
-				field:  fmt.Sprintf("Data[%v]", key),
+				field:  fmt.Sprintf("Values[%v]", key),
 				reason: "value cannot be sparse, all pairs must be non-nil",
 			}
 		}
 
-		if !_LitterBoxEvent_Data_Pattern.MatchString(key) {
+		if !_LitterBoxEvent_Values_Pattern.MatchString(key) {
 			return LitterBoxEventValidationError{
-				field:  fmt.Sprintf("Data[%v]", key),
+				field:  fmt.Sprintf("Values[%v]", key),
 				reason: "value does not match regex pattern \"^[a-zA-Z_][a-zA-Z0-9_]*$\"",
 			}
 		}
@@ -503,7 +503,7 @@ func (m *LitterBoxEvent) Validate() error {
 		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return LitterBoxEventValidationError{
-					field:  fmt.Sprintf("Data[%v]", key),
+					field:  fmt.Sprintf("Values[%v]", key),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -511,6 +511,8 @@ func (m *LitterBoxEvent) Validate() error {
 		}
 
 	}
+
+	// no validation rules for Data
 
 	// no validation rules for OriginalId
 
@@ -573,7 +575,7 @@ var _ interface {
 
 var _LitterBoxEvent_Src_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
-var _LitterBoxEvent_Data_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
+var _LitterBoxEvent_Values_Pattern = regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 // Validate checks the field values on EventRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

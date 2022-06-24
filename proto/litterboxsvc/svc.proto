@@ -38,8 +38,9 @@ message ScoopResponse {}
 message LitterBoxEvent {
   string                    src         = 1 [(validate.rules).string.pattern = "^[a-zA-Z_][a-zA-Z0-9_]*$"];
   string                    type        = 2;
-  map<string, values.Value> data        = 3 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}];
-  string                    original_id = 4;
+  map<string, values.Value> values      = 3 [(validate.rules).map={no_sparse: true, keys:{string:{pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"}}}]; // values and data are mutually exclusive.
+  string                    data        = 4;              // json data to be turned into values.
+  string                    original_id = 5;
 }
 
 message EventRequest {

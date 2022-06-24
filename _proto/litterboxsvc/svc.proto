@@ -38,8 +38,9 @@ message ScoopResponse {}
 message LitterBoxEvent {
   string                    src         = 1 {{ VarName }};
   string                    type        = 2;
-  map<string, values.Value> data        = 3 {{ VarMap }};
-  string                    original_id = 4;
+  map<string, values.Value> values      = 3 {{ VarMap }}; // values and data are mutually exclusive.
+  string                    data        = 4;              // json data to be turned into values.
+  string                    original_id = 5;
 }
 
 message EventRequest {

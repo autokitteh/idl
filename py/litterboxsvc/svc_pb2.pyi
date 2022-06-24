@@ -82,7 +82,7 @@ global___ScoopResponse = ScoopResponse
 
 class LitterBoxEvent(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    class DataEntry(google.protobuf.message.Message):
+    class ValuesEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
@@ -99,21 +99,28 @@ class LitterBoxEvent(google.protobuf.message.Message):
 
     SRC_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    VALUES_FIELD_NUMBER: builtins.int
     DATA_FIELD_NUMBER: builtins.int
     ORIGINAL_ID_FIELD_NUMBER: builtins.int
     src: typing.Text
     type: typing.Text
     @property
-    def data(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, values.values_pb2.Value]: ...
+    def values(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, values.values_pb2.Value]:
+        """values and data are mutually exclusive."""
+        pass
+    data: typing.Text
+    """json data to be turned into values."""
+
     original_id: typing.Text
     def __init__(self,
         *,
         src: typing.Text = ...,
         type: typing.Text = ...,
-        data: typing.Optional[typing.Mapping[typing.Text, values.values_pb2.Value]] = ...,
+        values: typing.Optional[typing.Mapping[typing.Text, values.values_pb2.Value]] = ...,
+        data: typing.Text = ...,
         original_id: typing.Text = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src",b"src","type",b"type"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["data",b"data","original_id",b"original_id","src",b"src","type",b"type","values",b"values"]) -> None: ...
 global___LitterBoxEvent = LitterBoxEvent
 
 class EventRequest(google.protobuf.message.Message):

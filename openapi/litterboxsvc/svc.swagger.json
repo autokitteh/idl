@@ -755,11 +755,14 @@
         "type": {
           "type": "string"
         },
-        "data": {
+        "values": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/valuesValue"
           }
+        },
+        "data": {
+          "type": "string"
         },
         "originalId": {
           "type": "string"
